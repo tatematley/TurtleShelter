@@ -4,9 +4,206 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Volunteer Here</title>
+    <style>
+        /* Global Styles */
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/sewing.jpg') no-repeat center center fixed; /* Focus on the top part of the image */
+    background-size: cover;
+    color: #333;
+    line-height: 1.6;
+    position: relative; /* For overlay positioning */
+}
+
+/* Add a full-size fading overlay */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; /* Start from the top of the image */
+    left: 0;
+    width: 100%;
+    height: 100%; /* Cover the entire background */
+    background: rgba(255, 255, 255, 0.3); /* Light white overlay with 30% opacity */
+    z-index: -1; /* Behind all content */
+}
+
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255); /* Slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        legend {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            padding: 0 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1F5476;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1F5476;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #153D53;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .banner {
+            background: url('/images/sewing.jpg') no-repeat center center;
+            background-size: cover;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Nav Bar -->
+    <%- include('partials/navbar', { page: 'leads' }) %>
     
+    <!-- Form Section -->
+    <form action="/leads" method="POST">
+        <fieldset>
+            <legend>Request a Quote:</legend>
+           
+            <label for="volunteer_first_name">First Name:</label>
+            <input type="text" id="volunteer_first_name" name="volunteer_first_name" required>
+            <br><br>
+
+            <label for="volunteer_last_name">Last Name:</label>
+            <input type="text" id="volunteer_last_name" name="volunteer_last_name" required>
+            <br><br>
+
+            <label for="volunteer_age">Age:</label>
+            <input type="text" id="volunteer_age" name="volunteer_age" required>
+            <br><br>
+
+            <label for="volunteer_phone">Phone Number:</label>
+            <input type="tel" id="volunteer_phone" name="volunteer_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+            <br><br>
+
+            <label for="volunteer_email">Email Address:</label>
+            <input type="email" id="volunteer_email" name="volunteer_email">
+            <br><br>
+
+            <label for="volunteer_zip">Zip Code:</label>
+            <input type="text" id="volunteer_zip" name="volunteer_zip" required>
+            <br><br>
+
+            <label for="volunteer_sew_level">Sewing Level:</label>
+            <select id="volunteer_sew_level" name="volunteer_sew_level">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="experienced">Experienced</option>
+            </select>
+            <br><br>
+
+            <label for="volunteer_hours">Number of Hours Available:</label>
+            <input type="text" id="volunteer_hours" name="volunteer_hours" required>
+            <br><br>
+
+            <label for="volunteer_num">Number of Volunteers:</label>
+            <input type="tel" id="volunteer_num" name="volunteer_num" value="1" required>
+            <br><br>
+
+            <label for="notes">Additional Notes:</label>
+            <textarea id="notes" name="notes" placeholder="Provide additional details or instructions here"></textarea>
+            <br><br>
+
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+
+    <!-- Footer -->
+    <%- include('partials/footer') %>
+
+
+    <script>
+        document.getElementById("leadForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+        
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+        
+            try {
+                const response = await fetch('/leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+        
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message); // Show success alert
+                } else {
+                    alert(result.error || "Something went wrong."); // Show error alert
+                }
+            } catch (error) {
+                alert("Failed to send the request. Please try again.");
+            }
+        });
+        </script>
+
 </body>
 </html>
