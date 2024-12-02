@@ -4,7 +4,7 @@ let app = express();
 
 let path = require("path");
 
-const port = 5002;
+const port = process.env.PORT || 5003;
 
 let security = false;
 
@@ -16,16 +16,16 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, 'images')));
 
-const knex = require("knex")({
+/* const knex = require("knex")({
     client: "pg",
     connection: {
-        host: "localhost",
-        user: "postgres",
-        password: "turtles",
-        database: "turtle_shelter",
-        port: 5003
+        host: process.env.RDS_HOSTNAME || "localhost",
+        user: process.env.RDS_USERNAME || "postgres",
+        password: process.env.RDS_PASSWORD || "turtles",
+        database: process.env.RDS_DB_NAME || "turtle_shelter",
+        port: process.env.DB_SSL || 5003
     }
-});
+}); */
 
 
 app.listen(port, () => console.log("Express is listening"));
