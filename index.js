@@ -16,6 +16,10 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, 'images')));
 
+app.get('/', (req, res) =>{
+    res.render('index');
+});
+
 /* const knex = require("knex")({
     client: "pg",
     connection: {
