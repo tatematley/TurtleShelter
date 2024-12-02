@@ -39,20 +39,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <%= (page === 'leads') ? 'active' : '' %>" href="/volunteer">Volunteer</a>
-                    </li>
-                    <% if (security) { %>
-                        <li class="nav-item">
-                            <a class="nav-link <%= (page === 'customerManagement') ? 'active' : '' %>" href="/customerManagement">Customers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <%= (page === 'leadManagement') ? 'active' : '' %>" href="/leadManagement">Leads</a>
-                        </li> 
-                    <% } %>   
-                    <% if (!security) { %>
-                        <li class="nav-item">
-                            <a class="nav-link <%= (page === 'login') ? 'active' : '' %>" href="/login">Login</a>
-                        </li>  
-                    <% } %>              
+                    </li>       
                 </ul>
             </div>
         </div>
