@@ -31,5 +31,30 @@ app.get('/', (req, res) =>{
     }
 }); */
 
+// Route to render login.ejs for /login
+app.get('/login', (req, res) => {
+    res.render('login', {security}); // Ensure login.ejs is in the views folder
+});
+
+// Route to login the user based off of the login_info db
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    try {
+        // Query the user table to find the record
+        const user = knex('login_info')
+            .select('*')
+            .where({ username, password }) // Replace with hashed password comparison in production
+            .first(); // Returns the first matching record
+        if (user) {
+            security = true;
+        } else {
+            security = false;
+        }
+    } catch (error) {
+        res.status(500).send('Database query failed: ' + error.message);
+    }
+    res.redirect("/internalLanding")
+  });
 
 app.listen(port, () => console.log("Express is listening"));
