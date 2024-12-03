@@ -186,4 +186,143 @@ app.post('/addUser', (req, res) => {
     })
 })
 
+// get method for logging out
+app.get('/logout', (req, res) => {
+    security = false;
+    res.render("index", {security})
+  });
+
+
+
+// get route to view all volunteers
+app.get('/volunteerManagement', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1; // Default to page 1
+        const limit = 15; // Show 15 volunteers per page
+        const offset = (page - 1) * limit; // Calculate offset for the database query
+
+        // Fetch the total number of volunteer for pagination
+        const totalVolunteer = await knex("volunteer").count('* as count').first();
+        const totalPages = Math.ceil(totalVolunteer.count / limit);
+
+        // Fetch the volunteers for the current page
+        const volunteer = await knex("volunteer")
+            .select(
+                "volunteer_id",
+                "volunteer_first_name",
+                "volunteer_last_name",
+                "volunteer_age",
+                "volunteer_phone",
+                "volunteer_email",
+                "zip",
+                "sewing_level",
+                "num_monthly_hours",
+                "num_volunteers"
+            )
+            .limit(limit)
+            .offset(offset);
+
+        // Render the page
+        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).send("Error fetching data.");
+    }
+});
+
+
+// get route for the /editVolunteer action
+app.get('/editVolunteer/:id', (req, res) => {
+    let id = req.params.id;
+    // Query the Volunteer by ID first
+    knex('volunteer')
+      .where('volunteer_id', id)
+      .first()
+      .then(volunteerRec => {
+        if (!volunteerRec) {
+          return res.status(404).send('volunteer not found');
+        }
+        // Query all Volunteers
+        knex('volunteer')
+          .select("*")
+          .then(volunteer => {
+            // Render the edit form and pass both volunteer record and volunteer array
+            res.render('editVolunteer', { volunteerRec, volunteer });
+          })
+          .catch(error => {
+            console.error('Error fetching whole query of customer types:', error);
+            res.status(500).send('Internal Server Error, Error fetching whole query of volunteer types');
+          });
+      })
+      .catch(error => {
+        console.error('Error fetching the individual volunteer for editing:', error);
+        res.status(500).send('Internal Server Error, Error fetching the individual volunteer for editing');
+      });
+  });
+
+
+
+
+// post route to edit volunteer
+app.post("/editVolunteer/:id", (req,res) =>{
+    knex("volunteer").where("volunteer_id", parseInt(req.body.id)).update({
+        volunteer_first_name: req.body.volunteer_first_name,
+        volunteer_last_name: req.body.volunteer_last_name,
+        volunteer_age: req.body.volunteer_age,
+        volunteer_phone: req.body.volunteer_phone,
+        volunteer_email: req.body.volunteer_email,
+        zip: req.body.zip,
+        sewing_level: req.body.sewing_level,
+        num_monthly_hours: req.body.num_monthly_hours,
+        num_volunteers: req.body.num_volunteers
+    }).then(myvolunteer => {
+        res.redirect("/volunteerManagement");
+    });
+});
+
+
+
+
+// get route to return back to home page
+app.get("/returnHome/", (req,res) =>{
+    res.render("index");
+});
+
+
+// get route to add volunteer
+app.get("/addVolunteer/", (req,res) =>{
+    res.render("addVolunteer");
+});
+
+
+// post route to add volunteer
+app.post("/addVolunteer", (req,res) => {
+    knex("volunteer").insert({
+        volunteer_first_name: req.body.volunteer_first_name,
+        volunteer_last_name: req.body.volunteer_last_name,
+        volunteer_age: req.body.volunteer_age,
+        volunteer_phone: req.body.volunteer_phone,
+        volunteer_email: req.body.volunteer_email,
+        zip: req.body.zip,
+        sewing_level: req.body.sewing_level,
+        num_monthly_hours: req.body.num_monthly_hours,
+        num_volunteers: req.body.num_volunteers
+        notes: req.body.notes            // are we adding a notes section? 
+    }).then(myvolunteer => {
+        res.redirect("/volunteerManagement");
+    });
+});
+
+
+// post route to delete volunteer
+app.post("/deleteVolunteer/:id", (req,res) => {
+    knex("volunteer”).where(“volunteer_id", req.params.id).del().then(volunteer =>{
+        res.redirect("/volunteerManagement");
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json({err});
+    });
+});
+
+
 app.listen(port, () => console.log("Express is listening"));
