@@ -8,64 +8,63 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            background-color: white;
         }
 
         label {
-            font-size: 1.5rem;
-            color: #1F5476;
+            font-size: 2rem;
+            margin-left: 30px;
+            color: rgb(34, 34, 34);
         }
 
         table {
-            width: 100%;
+            width: 50% center;
+            margin-right: 30px;
+            margin-left: 30px;
             border-collapse: collapse;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2);
         }
 
-        th, td {
-            border: 1px solid #ddd;
+        td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #e3f3fb;
+        }
+
+        th{
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         thead {
             background-color: #1f7646;
             color: white;
+            text-align: center;
             font-weight: bold;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tbody tr:hover {
-            background-color: #e6f2ff;
         }
 
         button {
             background-color: #1f7646;
             color: white;
-            border: none;
-            border-radius: 4px;
+            border-radius: 4px !important;
             padding: 8px 12px;
+            border: none;
             font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #1f7646;
+            background-color: #0d4b29;
             transform: scale(1.05);
         }
 
         button:active {
-            background-color: #1f7646;
+            background-color: #0d4b29;
         }
 
         .pagination {
@@ -74,9 +73,9 @@
         }
 
         .pagination a {
-            color: #1F5476;
+            color: #1f7646;
             text-decoration: none;
-            margin: 0 5px;
+            margin: 10px 30px;
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -84,13 +83,13 @@
         }
 
         .pagination a:hover {
-            background-color: #f0f0f0;
+            background-color: #0d4b29;
         }
 
         .pagination .active {
-            background-color: #1f7646;
+            background-color: #0d4b29;
             color: white;
-            border-color: #1f7646;
+            border-color: #0d4b29;
         }
     </style>
 
@@ -114,6 +113,8 @@
                 <th>Sewing Level</th>
                 <th>Monthly Number of Hours</th>
                 <th>Number of Volunteers</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -139,11 +140,6 @@
                         <button type="submit">Edit</button>
                     </form>
                 </td>
-                <td>
-                    <form action="/viewVolunteer/<%= volunteer[i].volunteer_id %>" method="GET">
-                        <button type="submit">View</button>
-                    </form>
-                </td>
             </tr>
            <% } %>
         </tbody>
@@ -164,15 +160,15 @@
 
     <!-- Buttons -->
     <form action="/addVolunteer" method="GET">
-        <button type="submit">Add Volunteer</button>
+        <button style="margin-left: 30px;" type="submit">Add Volunteer</button>
     </form>
     <br>
     <form action="/returnHome" method="GET">
-        <button type="submit">Return Home</button>
+        <button style="margin-left: 30px;" type="submit">Return Home</button>
     </form>
     <br>
     <form action="/logout" method="GET">
-        <button type="submit">Log Out</button>
+        <button style="margin-left: 30px;" type="submit">Log Out</button>
     </form>
     
 </body>
