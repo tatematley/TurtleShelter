@@ -117,17 +117,17 @@
             </tr>
         </thead>
         <tbody>
-            <% for (let i = 0; i < customers.length; i++) { %>
+            <% for (let i = 0; i < volunteer.length; i++) { %>
             <tr>
-                <td><%= volunteers[i].volunteer_first_name %></td>
-                <td><%= volunteers[i].volunteer_last_name %></td>
-                <td><%= volunteers[i].volunteer_age %></td>
-                <td><%= volunteers[i].volunteer_phone %></td>
-                <td><%= volunteers[i].volunteer_email %></td>
-                <td><%= volunteers[i].zip %></td>
-                <td><%= volunteers[i].sewing_level %></td>
-                <td><%= volunteers[i].num_monthly_hours %></td>
-                <td><%= volunteers[i].num_volunteers %></td>
+                <td><%= volunteer[i].volunteer_first_name %></td>
+                <td><%= volunteer[i].volunteer_last_name %></td>
+                <td><%= volunteer[i].volunteer_age %></td>
+                <td><%= volunteer[i].volunteer_phone %></td>
+                <td><%= volunteer[i].volunteer_email %></td>
+                <td><%= volunteer[i].zip %></td>
+                <td><%= volunteer[i].sewing_level %></td>
+                <td><%= volunteer[i].num_monthly_hours %></td>
+                <td><%= volunteer[i].num_volunteers %></td>
 
                 <td>
                     <form action="/deleteVolunteer/<%= volunteer[i].volunteer_id %>" method="POST">
