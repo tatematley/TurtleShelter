@@ -23,7 +23,10 @@
             <input type="text" id="user_phone" name="user_phone" value="<%= user[0].user_phone %>">
             <br><br>
             <label for="user_position">Position: </label>
-            <input type="text" id="user_position" name="user_position" value="<%= user[0].user_position %>">
+            <select name="user_position" id="user_position">
+                <option value="OWNER">Owner</option>
+                <option value="HELPER">Helper</option>
+            </select>
             <br><br>
             <label for="user_start_year">Start Year: </label>
             <input type="date" id="user_start_year" name="user_start_year" value="<%= user[0].user_start_year %>">
@@ -37,3 +40,4 @@
     </form>
 </body>
 </html>
+
