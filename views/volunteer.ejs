@@ -7,17 +7,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Volunteer Here</title>
     <style>
-        /* Global Styles */
+        /* Custom Form Styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            width: 100vw;
-            background: url('/sewing.jpg') no-repeat center center; /* Focus on the top part of the image */
+            background: url('/sewing.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
             line-height: 1.6;
-            position: relative; /* For overlay positioning */
+            position: relative;
         }
 
         /* Add a full-size fading overlay */
@@ -28,9 +27,10 @@
             left: 0;
             width: 100%;
             height: 100%; /* Cover the entire background */
-            background: rgba(255, 255, 255, 0.3); /* Light white overlay with 30% opacity */
+            background: rgba(255, 255, 255, 0.3);
             z-index: -1; /* Behind all content */
         }
+
 
         form {
             max-width: 600px;
@@ -43,59 +43,47 @@
 
         fieldset {
             border: 2px solid #ccc;
-            border-radius: 8px;
             padding: 20px;
+            border-radius: 8px;
         }
 
-        legend {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            padding: 0 10px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        input, select, textarea {
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1rem;
-            font-family: inherit;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #1f7646;
             outline: none;
-            border-color: #1F5476;
-            box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
         }
 
-        button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #1f764b;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
+        button[type="submit"] {
+            background-color: #1f7646;
+            color: white;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease-in-out;
         }
 
-        button:hover {
-            background-color: #0e3f21;
+        button[type="submit"]:hover {
+            background-color: #1b633b;
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        .time-picker {
+            width: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
         }
 
         @media (max-width: 768px) {
@@ -104,90 +92,65 @@
                 padding: 15px;
             }
         }
+
     </style>
 </head>
 <body>
     <!-- Nav Bar -->
     <%- include('partials/navbar', { page: 'volunteer' }) %>
-    
-    <!-- Form Section -->
-    <form action="/leads" method="POST">
-        <fieldset>
-            <legend>Volunteer Info:</legend>
-           
-            <label for="volunteer_first_name">First Name:</label>
-            <input type="text" id="volunteer_first_name" name="volunteer_first_name" required>
-            <br><br>
+        
+        <!-- Form Section -->
+        <form action="/volunteer" method="POST">
+            <fieldset>
+                    <h2 style="color: #1f7646">Volunteer Information</h2>
+                    <br>
+            
+                    <label for="volunteer_first_name">First Name:</label>
+                    <input type="text" id="volunteer_first_name" name="volunteer_first_name" required>
+                    <br><br>
 
-            <label for="volunteer_last_name">Last Name:</label>
-            <input type="text" id="volunteer_last_name" name="volunteer_last_name" required>
-            <br><br>
+                    <label for="volunteer_last_name">Last Name:</label>
+                    <input type="text" id="volunteer_last_name" name="volunteer_last_name" required>
+                    <br><br>
 
-            <label for="volunteer_age">Age:</label>
-            <input type="text" id="volunteer_age" name="volunteer_age" required>
-            <br><br>
+                    <label for="volunteer_age">Age:</label>
+                    <input type="text" id="volunteer_age" name="volunteer_age" required>
+                    <br><br>
 
-            <label for="volunteer_phone">Phone Number:</label>
-            <input type="tel" id="volunteer_phone" name="volunteer_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
-            <br><br>
+                    <label for="volunteer_phone">Phone Number:</label>
+                    <input type="tel" id="volunteer_phone" name="volunteer_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                    <br><br>
 
-            <label for="volunteer_email">Email Address:</label>
-            <input type="email" id="volunteer_email" name="volunteer_email">
-            <br><br>
+                    <label for="volunteer_email">Email Address:</label>
+                    <input type="email" id="volunteer_email" name="volunteer_email">
+                    <br><br>
 
-            <label for="volunteer_zip">Zip Code:</label>
-            <input type="text" id="volunteer_zip" name="volunteer_zip" required>
-            <br><br>
+                    <label for="volunteer_zip">Zip Code:</label>
+                    <input type="text" id="volunteer_zip" name="volunteer_zip" required>
+                    <br><br>
 
-            <label for="volunteer_sew_level">Sewing Level:</label>
-            <select id="volunteer_sew_level" name="volunteer_sew_level">
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="experienced">Experienced</option>
-            </select>
-            <br><br>
+                    <label for="volunteer_sew_level">Sewing Level:</label>
+                    <select id="volunteer_sew_level" name="volunteer_sew_level">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="experienced">Experienced</option>
+                    </select>
+                    <br><br><br>
 
-            <label for="volunteer_hours">Number of Hours Available:</label>
-            <input type="number" id="volunteer_hours" name="volunteer_hours" required>
-            <br><br>
+                    <label for="volunteer_hours">Number of Hours Available:</label>
+                    <input type="text" id="volunteer_hours" name="volunteer_hours" required>
+                    <br><br>
 
-            <label for="volunteer_num">Number of Volunteers:</label>
-            <input type="number" id="volunteer_num" name="volunteer_num" value="1" required>
-            <br><br>
+                    <label for="volunteer_num">Number of Volunteers:</label>
+                    <input type="tel" id="volunteer_num" name="volunteer_num" value="1" required>
+                    <br><br>
 
-            <button type="submit">Submit</button>
-        </fieldset>
-    </form>
+                    <button type="submit">Submit</button>
+            </fieldset>
+        </form>
 
     <!-- Footer -->
     <%- include('partials/footer') %>
-
-
-    <script>
-        document.getElementById("leadForm").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent default form submission
-        
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-        
-            try {
-                const response = await fetch('/leads', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-        
-                const result = await response.json();
-                if (response.ok) {
-                    alert(result.message); // Show success alert
-                } else {
-                    alert(result.error || "Something went wrong."); // Show error alert
-                }
-            } catch (error) {
-                alert("Failed to send the request. Please try again.");
-            }
-        });
-        </script>
 
 </body>
 </html>
