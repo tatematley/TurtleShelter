@@ -17,6 +17,32 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'images')));
 
 
+
+// get route for the index page
+app.get('/', (req, res) =>{
+    res.render('index');
+});
+
+// get route for the volunteer page
+app.get('/volunteer', (req, res) =>{
+    res.render('volunteer');
+});
+
+// get route for the login page
+app.get('/login', (req, res) =>{
+    res.render('login');
+});
+
+// get route for the events page
+app.get('/events', (req, res) =>{
+    res.render('events');
+});
+
+// get route for the index page
+app.get('/jen', (req, res) =>{
+    res.render('jen');
+});
+
 const knex = require("knex")({
     client: "pg",
     connection: {
