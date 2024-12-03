@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label><b>User Information</b></label>
+    <br><br>
+    <table style="border: 1px solid black;">
+        <thead style="text-align: left;">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Position</th>
+                <th>Location</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+            
+        <tbody>
+            <% for (let iCount = 0; iCount < users.length; iCount++) { %>
+                <tr>
+                    <td><%= users[iCount].user_first_name %> <%= users[iCount].user_last_name %></td>
+                    <td><%= users[iCount].user_email %></td>
+                    <td><%= users[iCount].user_phone %></td>
+                    <td><%= users[iCount].user_position %></td>
+                    <td><%= users[iCount].zip %></td>
+                    <td>
+                        <form action="/editUser/<%= users[iCount].user_id %>" method="get">
+                            <button type="submit">Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/deleteUser/<%= users[iCount].user_id %>" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                
+            <% } %>
+        </tbody>
+    </table>
+    <br><br>
+    <form action="/addUser" method="get">
+        <button type="submit">Add User</button>
+    </form>
+</body>
+</html>
