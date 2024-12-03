@@ -54,6 +54,40 @@ const knex = require("knex")({
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
 }); 
+const requested = 'REQUESTED'
+const planned = 'PLANNED'
+const completed = 'COMPLETED'
+
+// route to event management
+app.get('/eventManagement', (req, res) =>{
+    knex('events')
+    .select(
+        'event_id',
+        'event_name',
+        'host_first_name',
+        'host_last_name',
+        'host_phone',
+        'host_email',
+        'zip',
+        'attendance_estimate',
+        'event_status',
+        'activity_type',
+        'event_date',
+        'start_time',
+        'end_time',
+        'share_story',
+        'event_lead',
+    )
+    .where('event_status', requested)
+    .orderBy('event_date', 'desc')
+    .then(requestedEvents => {
+        res.render('eventManagement', {requestedEvents})
+    })
+    .catch(error => {
+        console.error('Error fetching Pokémon for editing:', error);
+        res.status(500).send('Internal Server Error');
+      });
+    });
 
 // get route for home page
 app.get('/', (req, res) =>{
