@@ -20,16 +20,17 @@ app.get('/', (req, res) =>{
     res.render('index');
 });
 
-/* const knex = require("knex")({
+const knex = require("knex")({
     client: "pg",
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
         password: process.env.RDS_PASSWORD || "turtles",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.DB_SSL || 5003
+        port: process.env.RDS_PORT || 5003,
+        ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
-}); */
+}); 
 
 // Route to render login.ejs for /login
 app.get('/login', (req, res) => {
