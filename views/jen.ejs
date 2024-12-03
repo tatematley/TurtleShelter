@@ -14,6 +14,21 @@
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
+            line-height: 1.6;
+            position: relative;
+            background: url('/outside.jpg') no-repeat center center fixed;
+        }
+
+        /* Add a full-size fading overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; /* Start from the top of the image */
+            left: 0;
+            width: 100%;
+            height: 100%; /* Cover the entire background */
+            background: rgba(255, 255, 255, 0.3);
+            z-index: -1; /* Behind all content */
         }
 
         /* Container for the bio */

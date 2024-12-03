@@ -88,7 +88,7 @@ app.post('/login', (req, res) => {
     } catch (error) {
         res.status(500).send('Database query failed: ' + error.message);
     }
-    res.redirect("/internalLanding")
+    res.redirect("/volunteerManagement")
   });
 
 app.get('/userManagement', (req, res) => {
