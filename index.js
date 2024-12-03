@@ -4,7 +4,7 @@ let app = express();
 
 let path = require("path");
 
-const port = process.env.PORT || 5003;
+const port = process.env.PORT || 5005;
 
 let security = false;
 
@@ -15,7 +15,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, 'images')));
-
 
 
 // get route for the index page
@@ -48,9 +47,9 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "turtles",
+        password: process.env.RDS_PASSWORD || "izzy1213",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.RDS_PORT || 5432,
+        port: process.env.RDS_PORT || 5433,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
 }); 
@@ -202,11 +201,11 @@ app.get('/volunteerManagement', async (req, res) => {
         const offset = (page - 1) * limit; // Calculate offset for the database query
 
         // Fetch the total number of volunteer for pagination
-        const totalVolunteer = await knex("volunteer").count('* as count').first();
+        const totalVolunteer = await knex("volunteers").count('* as count').first();
         const totalPages = Math.ceil(totalVolunteer.count / limit);
 
         // Fetch the volunteers for the current page
-        const volunteer = await knex("volunteer")
+        const volunteer = await knex("volunteers")
             .select(
                 "volunteer_id",
                 "volunteer_first_name",
@@ -235,26 +234,16 @@ app.get('/volunteerManagement', async (req, res) => {
 app.get('/editVolunteer/:id', (req, res) => {
     let id = req.params.id;
     // Query the Volunteer by ID first
-    knex('volunteer')
+    knex('volunteers')
       .where('volunteer_id', id)
       .first()
       .then(volunteerRec => {
         if (!volunteerRec) {
           return res.status(404).send('volunteer not found');
         }
-        // Query all Volunteers
-        knex('volunteer')
-          .select("*")
-          .then(volunteer => {
-            // Render the edit form and pass both volunteer record and volunteer array
-            res.render('editVolunteer', { volunteerRec, volunteer });
-          })
-          .catch(error => {
-            console.error('Error fetching whole query of customer types:', error);
-            res.status(500).send('Internal Server Error, Error fetching whole query of volunteer types');
-          });
-      })
-      .catch(error => {
+        res.render('editVolunteer', { volunteerRec });
+    })
+        .catch(error => {
         console.error('Error fetching the individual volunteer for editing:', error);
         res.status(500).send('Internal Server Error, Error fetching the individual volunteer for editing');
       });
@@ -265,7 +254,8 @@ app.get('/editVolunteer/:id', (req, res) => {
 
 // post route to edit volunteer
 app.post("/editVolunteer/:id", (req,res) =>{
-    knex("volunteer").where("volunteer_id", parseInt(req.body.id)).update({
+    const id = req.params.id;
+    knex("volunteers").where("volunteer_id", id).update({
         volunteer_first_name: req.body.volunteer_first_name,
         volunteer_last_name: req.body.volunteer_last_name,
         volunteer_age: req.body.volunteer_age,
@@ -277,7 +267,12 @@ app.post("/editVolunteer/:id", (req,res) =>{
         num_volunteers: req.body.num_volunteers
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
-    });
+    }) .catch(error => {
+        console.error('Error fetching the individual volunteer for editing:', error);
+        res.status(500).send('Internal Server Error, Error fetching the individual volunteer for editing');
+      });
+  
+
 });
 
 
@@ -307,7 +302,6 @@ app.post("/addVolunteer", (req,res) => {
         sewing_level: req.body.sewing_level,
         num_monthly_hours: req.body.num_monthly_hours,
         num_volunteers: req.body.num_volunteers
-        notes: req.body.notes            // are we adding a notes section? 
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
     });
