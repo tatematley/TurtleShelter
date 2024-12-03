@@ -19,7 +19,7 @@
             justify-content: center;
             margin: 20px auto;
             gap: 20px;
-            max-width: 80%; /* Center container and restrict width */
+            max-width: 80%;
         }
 
         .image-text-container img {
@@ -28,25 +28,25 @@
         }
 
         .image-text-container img:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Shadow effect on hover */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         .image-text-container p {
             flex: 1;
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
 
         p {
             text-align: center;
             margin: 10px auto;
-            max-width: 80%; /* Restrict paragraph width for readability */
+            max-width: 80%;
         }
     </style>
 </head>
 <body>
     
     <!--Navigation Bar-->
-    <%- include('partials/navbar', { page: 'home' }) %> <!--we need to change the security-->
+    <%- include('partials/navbar', { page: 'home' }) %>
 
     <!-- Explain Turtle Project -->
     <p>what is a turtle shelter vest? a high tech but simple solution to help save lives -
@@ -68,8 +68,56 @@
 
     <!-- Vests Distributed -->
     <p>Over 5,5000 vests have been made and distributed by volunteers like you. </p>
-    
+
+    <!-- Carousel Section -->
+    <div id="vestCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Images from folder -->
+            <div class="carousel-item active">
+                <img src="/vest1.jpg" class="d-block w-100" alt="Vest 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest2.jpg" class="d-block w-100" alt="Vest 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest3.jpg" class="d-block w-100" alt="Vest 3">
+            </div>
+            <div class="carousel-item active">
+                <img src="/vest4.jpg" class="d-block w-100" alt="Vest 4">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest5.jpg" class="d-block w-100" alt="Vest 5">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest6.jpg" class="d-block w-100" alt="Vest 6">
+            </div>
+            <div class="carousel-item active">
+                <img src="/vest7.jpg" class="d-block w-100" alt="Vest 7">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest8.jpg" class="d-block w-100" alt="Vest 8">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest9.jpg" class="d-block w-100" alt="Vest 9">
+            </div>
+            <div class="carousel-item">
+                <img src="/vest10.jpg" class="d-block w-100" alt="Vest 10">
+            </div>
+        </div>
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#vestCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#vestCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
     <!-- Footer -->
     <%- include('partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
