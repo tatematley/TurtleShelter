@@ -4,75 +4,152 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Turtle Shelter Vests</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/styles.css">
     <style>
+        /* General Dark Mode Styling */
         body {
             font-family: Arial, sans-serif;
+            background-color: #181818; /* Darker background */
+            color: #cccccc; /* Softer light text */
+            margin: 0;
+            padding: 0;
         }
 
+        /* Banner Section with Gradient Fade */
+        .banner {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), 
+                        url('/redblueorangevests.png') no-repeat center top;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        /* Image and Text Section */
         .image-text-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 20px auto;
-            gap: 20px;
-            max-width: 80%;
+            gap: 15px;
+            margin: 15px auto;
+            max-width: 90%; /* Compact width */
         }
 
         .image-text-container img {
-            width: 50%;
+            width: 45%; /* Slightly smaller images */
+            border-radius: 8px;
             transition: box-shadow 0.3s ease;
         }
 
         .image-text-container img:hover {
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         }
 
         .image-text-container p {
             flex: 1;
             text-align: left;
+            margin: 0;
         }
 
         p {
             text-align: center;
             margin: 10px auto;
-            max-width: 80%;
+            max-width: 85%;
+        }
+
+        /* Carousel Section */
+        .carousel img {
+            max-height: 600px; /* Compact carousel */
+            object-fit: cover;
+            max-width: 500px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+
+        /* Links and Buttons */
+        a {
+            color: #7a9aff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #4a6cd1;
+        }
+
+        button {
+            background-color: #4a6cd1;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #7a9aff;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #222222;
+            padding: 15px;
+            text-align: center;
+            color: #888888;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #7a9aff;
+        }
+
+        footer a:hover {
+            color: #4a6cd1;
         }
     </style>
 </head>
 <body>
-    
-    <!--Navigation Bar-->
+    <!-- Navigation Bar -->
     <%- include('partials/navbar', { page: 'home' }) %>
 
-    <!-- Explain Turtle Project -->
-    <p>what is a turtle shelter vest? a high tech but simple solution to help save lives -
-        a portable "shelter" you can carry with you, just like a turtle...</p>
+    <!-- Banner Section -->
+    <div class="banner">
+        Saving Lives with Turtle Shelter Vests
+    </div>
 
+    <!-- Explain Turtle Project -->
+    <p>What is a turtle shelter vest? A high-tech but simple solution to help save lives - a portable "shelter" you can carry with you, just like a turtle...</p>
+
+    <!-- Image and Text Section -->
     <div class="image-text-container">
         <p>One winter when Jen was homeless, 7 of her friends froze to death.  
 
         Jen is no longer homeless and has figured out a solution:
-         High tech foam vests that are inexpensive,
-        keep a person warm to 10 degree below zero, help SAVE lives and alleviate suffering.
+        High-tech foam vests that are inexpensive,
+        keep a person warm to 10 degrees below zero, help SAVE lives, and alleviate suffering.
         
-        YOU can request vests for your community - and you can make vests and have your friends, business colleagues, church members or club make vests, too! </p>
-
+        YOU can request vests for your community - and you can make vests and have your friends, business colleagues, church members, or club make vests, too!</p>
         <img src="/redblueorangevests.png" alt="Friends in Vests">
     </div>
 
-    <!-- Stats/Dashboard --> 
-
-    <!-- Vests Distributed -->
-    <p>Over 5,5000 vests have been made and distributed by volunteers like you. </p>
+    <!-- Vests Distributed Section -->
+    <p>Over 5,500 vests have been made and distributed by volunteers like you.</p>
 
     <!-- Carousel Section -->
     <div id="vestCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <!-- Images from folder -->
             <div class="carousel-item active">
                 <img src="/vest1.jpg" class="d-block w-100" alt="Vest 1">
             </div>
@@ -82,26 +159,11 @@
             <div class="carousel-item">
                 <img src="/vest3.jpg" class="d-block w-100" alt="Vest 3">
             </div>
-            <div class="carousel-item active">
+            <div class="carousel-item">
                 <img src="/vest4.jpg" class="d-block w-100" alt="Vest 4">
             </div>
             <div class="carousel-item">
                 <img src="/vest5.jpg" class="d-block w-100" alt="Vest 5">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest6.jpg" class="d-block w-100" alt="Vest 6">
-            </div>
-            <div class="carousel-item active">
-                <img src="/vest7.jpg" class="d-block w-100" alt="Vest 7">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest8.jpg" class="d-block w-100" alt="Vest 8">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest9.jpg" class="d-block w-100" alt="Vest 9">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest10.jpg" class="d-block w-100" alt="Vest 10">
             </div>
         </div>
         <!-- Controls -->
@@ -116,7 +178,9 @@
     </div>
 
     <!-- Footer -->
-    <%- include('partials/footer') %>
+    <footer>
+        &copy; 2024 Turtle Shelter Vests | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
