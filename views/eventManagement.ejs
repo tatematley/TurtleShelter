@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <style>
+    table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-size: 12px; /* Slightly increase font size for readability */
+  border: 1px solid #007bb5; /* Teal-blue border around the table */
+  box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2); /* Subtle shadow for a clean look */
+}
+th, td {
+  border: 1px solid #007bb5; /* Teal-blue borders */
+  padding: 10px; /* Balanced padding for a cleaner appearance */
+  text-align: center;
+  line-height: 1.5; /* Better line height for readability */
+}
+th {
+  background-color: #007bb5; /* Teal-blue background for headers */
+  color: white; /* White text for contrast */
+  font-weight: bold;
+  text-transform: uppercase; /* Make header text stand out */
+}
+td {
+  background-color: #f9f9f9; /* Light background for cells */
+}
+tr:nth-child(even) td {
+  background-color: #e3f3fb; /* Light teal-blue for alternate rows */
+}
+tr:hover {
+  background-color: #c5e4f3; /* Highlight row on hover for better usability */
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+button {
+  padding: 6px 12px; /* Balanced button size */
+  margin: 4px;
+  font-size: 12px; /* Consistent font size */
+  color: white;
+  background-color: #007bb5; /* Teal-blue background */
+  border: none; /* Remove button borders */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+button:hover {
+  background-color: #005f89; /* Darker teal-blue on hover */
+  transform: scale(1.05); /* Subtle zoom effect */
+}
+button:active {
+  background-color: #004364; /* Even darker teal-blue when clicked */
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Requested Events</h1>
+    <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+<div id="Home" class="tabcontent">
+  <h3>Home</h3>
+  <p>Home is where the heart is..</p>
+</div>
+<div id="News" class="tabcontent">
+  <h3>News</h3>
+  <p>Some news this fine day!</p>
+</div>
+<div id="Contact" class="tabcontent">
+  <h3>Contact</h3>
+  <p>Get in touch, or swing by for a cup of coffee.</p>
+</div>
+<div id="About" class="tabcontent">
+  <h3>About</h3>
+  <p>Who we are and what we do.</p>
+</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Host First Name</th>
+        <th>Host Last Name</th>
+        <th>Host Phone</th>
+        <th>Host Email</th>
+        <th>Zip</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% if (requestedEvents.length > 0) { %>
+        <% requestedEvents.forEach(row => { %>
+          <tr>
+            <input type="hidden" value="event_id">
+            <td><%= row.event_name %></td>
+            <td><%= new Date(row.event_date).toLocaleDateString('en-US') %></td> <!-- Format date -->
+            <td><%= row.host_first_name %></td>
+            <td><%= row.host_last_name%></td> 
+            <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
+            <td><%= row.host_email %></td> 
+            <td><%= row.zip %></td>
+            <td>
+              <form action="/eventView/<%= row.id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                <button type="submit">View Event Details</button>
+              </form>
+              <form action="/editEvent/<%= row.id %>" method="GET" style="display:inline;">
+                <button type="submit">Edit</button>
+              </form>
+              <form action="/deleteEvent/<%= row.id %>" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                </form>
+                <form action="/confirmEvent/<%= row.id %>" method="GET" style="display:inline;">
+                    <button type="submit">confirm</button>
+                </form>
+              
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="7">No data available</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <form action="/addEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+    <button type="submit">Add</button>
+  </form>
+</body>
+</html>
