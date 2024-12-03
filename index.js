@@ -17,6 +17,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'images')));
 
 
+
 // get route for the index page
 app.get('/', (req, res) =>{
     res.render('index');
@@ -53,6 +54,16 @@ const knex = require("knex")({
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
 }); 
+
+// get route for home page
+app.get('/', (req, res) =>{
+    res.render('index');
+});
+
+// get route for Jen's story
+app.get('/jen', (req, res) =>{
+    res.render('jen');
+});
 
 // Route to render login.ejs for /login
 app.get('/login', (req, res) => {
