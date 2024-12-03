@@ -9,27 +9,28 @@
     <style>
         /* Global Styles */
         body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: url('/sewing.jpg') no-repeat center center fixed; /* Focus on the top part of the image */
-    background-size: cover;
-    color: #333;
-    line-height: 1.6;
-    position: relative; /* For overlay positioning */
-}
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            background: url('/sewing.jpg') no-repeat center center; /* Focus on the top part of the image */
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+            position: relative; /* For overlay positioning */
+        }
 
-/* Add a full-size fading overlay */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0; /* Start from the top of the image */
-    left: 0;
-    width: 100%;
-    height: 100%; /* Cover the entire background */
-    background: rgba(255, 255, 255, 0.3); /* Light white overlay with 30% opacity */
-    z-index: -1; /* Behind all content */
-}
+        /* Add a full-size fading overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; /* Start from the top of the image */
+            left: 0;
+            width: 100%;
+            height: 100%; /* Cover the entire background */
+            background: rgba(255, 255, 255, 0.3); /* Light white overlay with 30% opacity */
+            z-index: -1; /* Behind all content */
+        }
 
         form {
             max-width: 600px;
@@ -78,7 +79,7 @@ body::before {
         button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #1F5476;
+            background-color: #1f764b;
             color: #fff;
             font-size: 1rem;
             font-weight: bold;
@@ -89,25 +90,12 @@ body::before {
         }
 
         button:hover {
-            background-color: #153D53;
+            background-color: #0e3f21;
         }
 
         textarea {
             resize: vertical;
             min-height: 100px;
-        }
-
-        .banner {
-            background: url('/images/sewing.jpg') no-repeat center center;
-            background-size: cover;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            font-size: 2rem;
-            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -120,12 +108,12 @@ body::before {
 </head>
 <body>
     <!-- Nav Bar -->
-    <%- include('partials/navbar', { page: 'leads' }) %>
+    <%- include('partials/navbar', { page: 'volunteer' }) %>
     
     <!-- Form Section -->
     <form action="/leads" method="POST">
         <fieldset>
-            <legend>Request a Quote:</legend>
+            <legend>Volunteer Info:</legend>
            
             <label for="volunteer_first_name">First Name:</label>
             <input type="text" id="volunteer_first_name" name="volunteer_first_name" required>
@@ -160,15 +148,11 @@ body::before {
             <br><br>
 
             <label for="volunteer_hours">Number of Hours Available:</label>
-            <input type="text" id="volunteer_hours" name="volunteer_hours" required>
+            <input type="number" id="volunteer_hours" name="volunteer_hours" required>
             <br><br>
 
             <label for="volunteer_num">Number of Volunteers:</label>
-            <input type="tel" id="volunteer_num" name="volunteer_num" value="1" required>
-            <br><br>
-
-            <label for="notes">Additional Notes:</label>
-            <textarea id="notes" name="notes" placeholder="Provide additional details or instructions here"></textarea>
+            <input type="number" id="volunteer_num" name="volunteer_num" value="1" required>
             <br><br>
 
             <button type="submit">Submit</button>
