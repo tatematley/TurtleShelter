@@ -16,6 +16,19 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, 'images')));
 
+// connection to RDS || Local DB
+const knex = require("knex")({
+    client: "pg",
+    connection: {
+        host: process.env.RDS_HOSTNAME || "localhost",
+        user: process.env.RDS_USERNAME || "postgres",
+        password: process.env.RDS_PASSWORD || "mom#8181",
+        database: process.env.RDS_DB_NAME || "turtle_shelter",
+        port: process.env.RDS_PORT || 5432,
+        ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
+    }
+}); 
+
 
 // get route for the index page
 app.get('/', (req, res) =>{
@@ -41,18 +54,6 @@ app.get('/events', (req, res) =>{
 app.get('/jen', (req, res) =>{
     res.render('jen', {security});
 });
-
-const knex = require("knex")({
-    client: "pg",
-    connection: {
-        host: process.env.RDS_HOSTNAME || "localhost",
-        user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "turtles",
-        database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.RDS_PORT || 5432,
-        ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
-    }
-}); 
 
 // route to event management
 app.get('/eventManagement', (req, res) =>{
@@ -349,6 +350,12 @@ app.get('/userManagement', (req, res) => {
         res.render('userManagement', {users: myusers, security})
     });
 });
+
+// get method for logging out
+app.get('/logout', (req, res) => {
+    security = false;
+    res.render("index", {security})
+  });
 
 app.get('/editUser/:id', (req, res) => {
     knex.select('user_id',
