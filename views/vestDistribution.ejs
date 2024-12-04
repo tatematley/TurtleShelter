@@ -95,10 +95,8 @@
      <!-- Navbar -->
      <%- include('partials/navbar', { page: 'vestDistribution', security: security }) %>
     <br>
-
      <label><b>Vest Inventory and Distribution</b></label>
-     <br>
-
+     <br><br>
      <table>
         <thead>
             <tr>
@@ -111,7 +109,6 @@
                 <th></th>
             </tr>
         </thead>
-
         <tbody>
             <% for (let iCount = 0; iCount < vest.length; iCount++) { %>
                 <tr>
@@ -119,7 +116,7 @@
                     <td><%= vest[iCount].vest_last_name %></td>
                     <td><%= vest[iCount].vest_county %></td>
                     <td><%= vest[iCount].vest_state %></td>
-                    <td><%= vest[iCount].vest_state %></td>
+                    <td><%= vest[iCount].vest_size %></td>
                     <td>
                         <form action="/editRecipient/<%= vest[iCount].vest_id %>" method="get">
                             <button>Edit</button>
@@ -136,7 +133,7 @@
      </table>
      <br><br>
      <form action="/distributeVest" method="get">
-        <button type="submit">Add Recipient</button>
+        <button type="submit" style="margin-left: 25px;">Add Recipient</button>
      </form>
 </body>
 </html>

@@ -561,6 +561,12 @@ app.get('/volunteerManagement', async (req, res) => {
                 "volunteer_email",
                 "sewing_level",
                 "num_monthly_hours",
+                "date_created",
+                "volunteer_source",
+                "volunteer_county",
+                "volunteer_state",
+                "notes"
+
             )
             .limit(limit)
             .offset(offset);
@@ -615,8 +621,6 @@ app.post("/editVolunteer/:id", (req,res) =>{
   
 });
 
-
-
 // get route to return back to home page
 app.get("/returnHome/", (req,res) =>{
     res.render("index");
@@ -639,6 +643,8 @@ app.post("/addVolunteer", (req,res) => {
         sewing_level: req.body.sewing_level,
         num_monthly_hours: req.body.num_monthly_hours,
         num_volunteers: req.body.num_volunteers
+        
+
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
     });
@@ -653,5 +659,63 @@ app.post("/deleteVolunteer/:id", (req,res) => {
         res.status(500).json({err});
     });
 });
+
+app.get("/vestDistribution", (req, res) => {
+    knex.select().from('vest_distribution').then(myvests => {
+        res.render('vestDistribution', {vest: myvests, security});
+    });
+});
+
+app.get("/distributeVest", (req, res) => {
+    res.render('distributeVest');
+});
+
+app.post("/distributeVest", (req, res) => {
+    knex("vest_distribution").insert({
+        vest_first_name: req.body.vest_first_name.toUpperCase(),
+        vest_last_name: req.body.vest_last_name.toUpperCase(),
+        vest_county: req.body.vest_county.toUpperCase(),
+        vest_state: req.body.vest_state.toUpperCase(),
+        vest_size: req.body.vest_size.toUpperCase()
+    }).then(myvests => {
+        res.redirect("/vestDistribution");
+    });
+});
+
+app.get("/editRecipient/:id", (req, res) => {
+    knex.select('vest_id',
+                'vest_first_name',
+                'vest_last_name',
+                'vest_county',
+                'vest_state',
+                'vest_size').from("vest_distribution").where('vest_id', parseInt(req.params.id)).then(myvests => {
+                    res.render('editRecipient', {vest: myvests, security})
+                }).catch(err => {
+                    console.log(err);
+                    res.status(500).json({err});
+                });
+});
+
+app.post("/editRecipient", (req, res) => {
+    knex('vest_distribution').where('vest_id', parseInt(req.body.vest_id)).update({
+        vest_first_name: req.body.vest_first_name.toUpperCase(),
+        vest_last_name: req.body.vest_county.toUpperCase(),
+        vest_county: req.body.vest_county.toUpperCase(),
+        vest_state: req.body.vest_state.toUpperCase(),
+        vest_size: req.body.vest_size.toUpperCase()
+    }).then(myvests => {
+        res.redirect('/vestDistribution');
+    });
+});
+
+app.post("/deleteRecipient/:id", (req, res) => {
+    knex('vest_distribution').where('vest_id', parseInt(req.params.id)).del().then(myvests => {
+        res.redirect('/vestDistribution')
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({err});
+    });
+});
+
 
 app.listen(port, () => console.log("Express is listening"));
