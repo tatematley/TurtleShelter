@@ -47,7 +47,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "turtles",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -84,7 +84,7 @@ app.post('/deleteEvent/:id', (req, res) => {
   });
 
   app.get('/addRequestedEvent', (req, res) => {
-    res.render('addRequestedEvent');
+    res.render('addRequestedEvent', {security});
   });
 
   app.post('/events', (req, res) => {
@@ -128,6 +128,7 @@ app.post('/deleteEvent/:id', (req, res) => {
         });
   });
 
+  //add requested event
   app.post('/addRequestedEvent', (req, res) => {
     // Extract form values from req.body
     const event_name = req.body.event_name.toUpperCase() || '';
@@ -169,6 +170,104 @@ app.post('/deleteEvent/:id', (req, res) => {
         });
   });
 
+  //retrieve add completed event form
+  app.get('/addCompletedEvent', (req, res) => {
+    knex('users')
+        .select('user_id',
+            knex.raw(`CONCAT(user_first_name, ' ', user_last_name) as "event_lead"`)
+        )
+        .then(eventLead => {
+    res.render('addCompletedEvent', {security, eventLead});
+        })
+        .catch(error => {
+            console.error('Error fetching Pokémon types:', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+
+  //add completed event
+  app.post('/addCompletedEvent', (req, res) => {
+
+    // Insert the new event into the database
+    knex('events')
+        .insert({
+            event_name: req.body.event_name.toUpperCase() || '',
+            host_first_name: req.body.host_first_name.toUpperCase() || '',
+            host_last_name: req.body.host_last_name.toUpperCase() || '',
+            host_phone: req.body.host_phone || '',
+            host_email: req.body.host_email.toUpperCase() || '',
+            zip: parseInt(req.body.host_zip) || 0,
+            activity_type: req.body.activity_type,
+            event_date: req.body.event_date ,
+            start_time: req.body.start_time,
+            end_time: req.body.end_time,
+            attendance_estimate: parseInt(req.body.volunteer_num) || 0,
+            share_story: req.body.jen_story ? 'Y' : 'N',
+            event_status: 'COMPLETED',
+            event_lead: parseInt(req.body.event_lead),
+            actual_attendance: parseInt(req.body.actual_attendance) || 0,
+            num_pockets: parseInt(req.body.num_pockets) || 0,
+            num_collars: parseInt(req.body.num_collars) ||0,
+            num_envelopes: parseInt(req.body.num_envelopes) || 0,
+            num_vests: parseInt(req.body.num_vests) || 0,
+            num_finished_products: parseInt(req.body.num_finished_products) ||0
+
+        })
+        .then(() => {
+            res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+        })
+        .catch(error => {
+            console.error('Error adding :', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+
+
+  // retrieve planned event form
+  app.get('/addPlannedEvent', (req, res) => {
+    knex('users')
+        .select('user_id',
+            knex.raw(`CONCAT(user_first_name, ' ', user_last_name) as "event_lead"`)
+        )
+        .then(eventLead => {
+    res.render('addPlannedEvent', {security, eventLead});
+        })
+        .catch(error => {
+            console.error('Error fetching event:', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+
+
+  // add planned event
+  app.post('/addPlannedEvent', (req, res) => {
+    // Insert the new event into the database
+    knex('events')
+        .insert({
+            event_name: req.body.event_name.toUpperCase() || '',
+            host_first_name: req.body.host_first_name.toUpperCase() || '',
+            host_last_name: req.body.host_last_name.toUpperCase() || '',
+            host_phone: req.body.host_phone || '',
+            host_email: req.body.host_email.toUpperCase() || '',
+            zip: parseInt(req.body.host_zip) || 0,
+            activity_type: req.body.activity_type,
+            event_date: req.body.event_date ,
+            start_time: req.body.start_time,
+            end_time: req.body.end_time,
+            attendance_estimate: parseInt(req.body.volunteer_num) || 0,
+            share_story: req.body.jen_story ? 'Y' : 'N',
+            event_status: 'PLANNED',
+            event_lead: parseInt(req.body.event_lead),
+
+        })
+        .then(() => {
+            res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+        })
+        .catch(error => {
+            console.error('Error adding :', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
 
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {

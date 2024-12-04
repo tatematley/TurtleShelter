@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <!-- Link to Bootstrap and Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Form Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            z-index: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255); /* Slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #1f7646;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #1f7646;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1b633b;
+        }
+
+        .time-picker {
+            width: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <%- include('partials/navbar', { page: 'events' }) %>
+
+    <div class="container">
+        <!-- Form Section -->
+        <form action="/addPlannedEvent" method="POST">
+            <fieldset>
+                
+                <div class="form-section">
+                    <h2 style="color: #00bfa5">Add Completed Event</h2>
+                    <br>
+                    <label for="event_name">Group Name:</label>
+                    <input type="text" id="event_name" name="event_name" required>
+                    <br><br>
+
+                    <label for="host_first_name">Host First Name:</label>
+                    <input type="text" id="host_first_name" name="host_first_name" required>
+                    <br><br>
+
+                    <label for="host_last_name">Host Last Name:</label>
+                    <input type="text" id="host_last_name" name="host_last_name" required>
+                    <br><br>
+
+                    <label for="host_phone">Phone Number:</label>
+                    <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                    <br><br>
+
+                    <label for="host_email">Email Address:</label>
+                    <input type="email" id="host_email" name="host_email" required>
+                    <br><br>
+
+                    <label for="host_zip">Zip Code:</label>
+                    <input type="text" id="host_zip" name="host_zip" required>
+                    <br><br>
+
+                    <label for="activity_type">Activity Type:</label>
+                    <select id="activity_type" name="activity_type">
+                        <option value="sewing">Sewing</option>
+                        <option value="non-sewing">Non-Sewing</option>
+                        <option value="both">Both</option>
+                    </select>
+                    <br><br>
+
+                    <label for="event_date">Event Date:</label>
+                    <input type="date" id="event_date" name="event_date" required>
+                    <br><br>
+
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required>
+                    <br><br>
+
+                    <label for="end_time">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required>
+                    <br><br>
+
+                    <label for="volunteer_num">Estimated Attendance:</label>
+                    <input type="number" id="volunteer_num" name="volunteer_num" value="1" required>
+                    <br><br>
+
+                    <label for="jen_story">Did Jen Share Her Story?</label>
+                    <input type="checkbox" id="jen_story" name="jen_story" value="Yes">
+                    <br><br>
+
+                    <label for="event_lead">Event Lead</label>
+                        <select id="event_lead" name="event_lead" required>
+                            <% eventLead.forEach(lead => { %>
+                                <option value="<%= lead.user_id %>"><%= lead.event_lead %></option>
+                            <% }) %>
+                        </select>
+                        <br><br>
+
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#end_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+        });
+
+        flatpickr("#start_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+        });
+    </script>
+
+<!-- Footer -->
+<%- include('partials/footer') %>
+</body>
+</html>
