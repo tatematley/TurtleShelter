@@ -67,18 +67,29 @@
             <p><span class="label">Event Host:</span> <span class="value"><%= events.host_first_name + ' ' + events.host_last_name %></span></p>
             <p><span class="label">Host Phone Number:</span> <span class="value"><%= events.host_phone %></span></p>
             <p><span class="label">Host Email:</span> <span class="value"><%= events.host_email %></span></p>
+            <p><span class="label">Date Event Created:</span> <span class="value"><%= events.date_created %></span></p>
         </div>
 
         <!-- Event Location and Details -->
         <div class="section">
-            <div class="section-header">Event Details</div>
-            <p><span class="label">Zip Code:</span> <span class="value"><%= events.zip %></span></p>
-            <p><span class="label">Estimated Attendance:</span> <span class="value"><%= events.attendance_estimate %></span></p>
-            <p><span class="label">Event Status:</span> <span class="value"><%= events.event_status %></span></p>
-            <p><span class="label">Activity Type:</span> <span class="value"><%= events.activity_type %></span></p>
+            <div class="section-header">Event Location and Time</div>
+            <p><span class="label">Address:</span> <span class="value"><%= events.host_address %></span></p>
+            <p><span class="label">City:</span> <span class="value"><%= events.host_city %></span></p>
+            <p><span class="label">County:</span> <span class="value"><%= events.host_county %></span></p>
+            <p><span class="label">State:</span> <span class="value"><%= events.host_state %></span></p>
             <p><span class="label">Event Date:</span> <span class="value"><%= events.event_date %></span></p>
             <p><span class="label">Start Time:</span> <span class="value"><%= events.start_time %></span></p>
             <p><span class="label">End Time:</span> <span class="value"><%= events.end_time %></span></p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Event Details</div>
+            <p><span class="label">Estimated Attendance:</span> <span class="value"><%= events.attendance_estimate %></span></p>
+            <p><span class="label">Event Status:</span> <span class="value"><%= events.event_status %></span></p>
+            <p><span class="label">Activity Type:</span> <span class="value"><%= events.activity_type %></span></p>
+            <p><span class="label">Number of Sewing Volunteers:</span> <span class="value"><%= events.num_sewers %></span></p>
+            <p><span class="label">Number Machines from Volunteers:</span> <span class="value"><%= events.num_host_machines %></span></p>
+            <p><span class="label">Number of Turtle Shelter Machines:</span> <span class="value"><%= events.num_tsp_machine %></span></p>
             <p><span class="label">Did Jenna Share Her Story:</span> <span class="value"><%= events.share_story %></span></p>
         </div>
 
@@ -92,6 +103,12 @@
             <p><span class="label">Envelopes Prepped:</span> <span class="value"><%= events.num_envelopes %></span></p>
             <p><span class="label">Vests Prepped:</span> <span class="value"><%= events.num_vests %></span></p>
             <p><span class="label">Completed Vests:</span> <span class="value"><%= events.num_finished_products %></span></p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Additional Information</div>
+            <p><span class="label">Event Notes:</span> <span class="value"><%= events.notes %></span></p>
+            <p><span class="label">How they Heard about the Event:</span> <span class="value"><%= events.event_source %></span></p>
         </div>
     </div>
 
