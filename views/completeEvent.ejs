@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <!-- Link to Bootstrap and Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Form Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            z-index: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255); /* Slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #1f7646;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #1f7646;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1b633b;
+        }
+
+        .time-picker {
+            width: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <%- include('partials/navbar', { page: 'events' }) %>
+
+    <div class="container">
+        <!-- Form Section -->
+        <form action="/completeEvent/<%=eventName.event_id%>" method="POST">
+            <fieldset>
+                
+                <div class="form-section">
+                    <h2 style="color: #00bfa5"><%=eventName.event_name%>'s Event Outcomes</h2>
+                    
+                    <label for="actual_attendance">Event Attendance</label>
+                    <input type="number" id="actual_attendance" name="actual_attendance" value="0" min="1">
+                    <br><br>
+
+                    <label for="duration_hours">Event Duration in Hours</label>
+                    <input type="number" id="duration_hours" name="duration_hours" value="0" min="0">
+                    <br><br>
+
+                    <label for="num_pockets">Pockets Completed</label>
+                    <input type="number" id="num_pockets" name="num_pockets" value="0" min="0">
+                    <br><br>
+                    
+
+                    <label for="num_collars">Collars Completed</label>
+                    <input type="number" id="num_collars" name="num_collars" value="0" min="0">
+                    <br><br>
+                
+
+                    <label for="num_envelopes">Envelopes Completed</label>
+                    <input type="number" id="num_envelopes" name="num_envelopes" value="0" min="0">
+                    <br><br>
+
+
+                    <label for="num_vests">Vests (partial) Completed</label>
+                    <input type="number" id="num_vests" name="num_vests" value="0" min="0">
+                    <br><br>
+                
+
+                    <label for="num_finished_products">Vest (full) Completed</label>
+                    <input type="number" id="num_finished_products" name="num_finished_products" value="0" min="0">
+                    <br><br>
+                    
+                    
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+   
+
+<!-- Footer -->
+<%- include('partials/footer') %>
+</body>
+</html>
