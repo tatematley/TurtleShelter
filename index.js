@@ -409,6 +409,39 @@ app.get('/completeEvent/:id', (req, res) => {
 
 });
 
+//edit completed event
+  app.get('/editCompletedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
+    let id = req.params.id; //extracts parameter data out of the route
+    // Query the Pokémon by ID first
+    knex('events') 
+      .where('event_id', id) // where id is equal to the parameter
+      .first() //returns the first element, aka no longer an array, a single object
+      .then(eventName => { // send to pokemon, the following knex is embedded 
+        if (!eventName) {
+          return res.status(404).send('Event not found');
+        }
+        // Query all Pokémon types after fetching the Pokémon
+        knex('users')
+          .select(
+            'user_id', 
+            knex.raw(`CONCAT(user_first_name, ' ', user_last_name) as event_lead`))
+          .then(eventLead => {
+            // Render the edit form and pass both pokemon and poke_types
+            res.render('editCompletedEvent', { eventName, eventLead, security }); // returns the first record pokemon, and all poke_types
+          })
+          .catch(error => {
+            console.error('Error fetching user types:', error);
+            res.status(500).send('Internal Server Error');
+          });
+      })
+      .catch(error => {
+        console.error('Error fetching event for editing:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+  
+
+
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
     const username = req.body.username;
