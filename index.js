@@ -333,7 +333,6 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
             let id = req.params.id; //extracts parameter data out of the route
             // Query the Pokémon by ID first
             knex('events') 
-              .join('users', 'events.event_lead', '=', 'users.user_id')
               .where('event_id', id) // where id is equal to the parameter
               .first() //returns the first element, aka no longer an array, a single object
               .then(events => { // send to pokemon, the following knex is embedded 
