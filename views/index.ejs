@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turtle Shelter Vests</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* General Styling */
         body {
-            font-family: 'Palatino', sans-serif;
+            font-family: 'Oswald', sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -22,8 +21,8 @@
 
         /* Banner Section */
         .banner {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95)), 
-                        url('/redblueorangevests.png') no-repeat center center;
+            background: linear-gradient(to bottom, rgba(54, 54, 54, 0.7), rgba(55, 55, 55, 0.95)), 
+                        url('/coverphoto.jpg') no-repeat center center;
             background-size: cover;
             height: 500px;
             display: flex;
@@ -33,7 +32,6 @@
             color: #ffffff;
             font-size: 3rem;
             font-weight: bold;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
             padding: 50px 20px; /* Add some space around the text */
         }
 
@@ -85,11 +83,11 @@
 
         /* Carousel and Text Container Styling */
         .text-carousel-wrapper {
-            background-color: #333;
+            background-color: #1b1a1a;
             color: #fff;
-            padding: 40px 0; /* Only vertical padding */
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            margin: 0; /* Remove margin to prevent extra spacing */
+            padding: 0; /* Remove padding for full-width effect */
         }
 
         .text-carousel-container {
@@ -98,49 +96,36 @@
             align-items: flex-start;
             gap: 20px;
             width: 100%; /* Full width of the page */
-            padding: 0 20px; /* Optional padding for spacing near edges */
+            margin: 0; /* Remove margin to prevent extra spacing */
+            padding: 0; /* Remove padding for full-width effect */
         }
 
         .text-section {
             max-width: 50%;
+            margin-left: 8%;
+            margin-right: 5%;
+            margin-top: 10%;
             text-align: left;
             font-size: 1.5rem;
-            line-height: 1.8;
+            line-height: 2;
             color: #fff;
         }
 
         #vestCarousel {
             flex: 1;
             max-width: 500px;
-            border-radius: 10px;
+            border-radius: 0px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 0px;
+            margin: 0; /* Remove any default margin */
+            padding: 0; /* Remove any default padding */
+            display: block; /* Ensure the image behaves properly */
         }
 
         .carousel-inner img {
-            height: 500px;
-            object-fit: cover;
-        }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            filter: invert(100%);
-        }
-
-        /* Carousel Section */
-        #vestCarousel {
-            margin: 40px auto;
-            flex: 1;
-            max-width: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            margin-left: auto; /* Push the carousel to the right */
-        }
-
-        .carousel-inner img {
-            height: 500px;
-            object-fit: cover;
+            height: 100%; /* Make image fill the container vertically */
+            width: 100%; /* Ensure the image fits horizontally as well */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
         }
 
         .carousel-control-prev-icon,
@@ -148,9 +133,6 @@
             filter: invert(100%);
             color: white;
         }
-
-
-        
 
         /* Footer styling */
         footer {
@@ -171,44 +153,16 @@
             text-decoration: underline;
         }
 
-                /* General Styling */
-        body {
-            font-family: 'Georgia', sans-serif; /* Match existing font */
-            line-height: 1.6; /* Improve readability */
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Paragraph Styling */
-        p {
-            color: #333333; /* Neutral dark text */
-            font-size: 1.1rem; /* Slightly larger font for readability */
-            margin-bottom: 1rem;
-        }
-
         /* Image and Text Section Styling */
         .image-text-container {
             display: flex; /* Align image and text side-by-side */
             gap: 20px; /* Add spacing between image and text */
             align-items: flex-start; /* Align items at the top */
-            padding: 20px;
             background-color: #f9f9f9; /* Light background for separation */
-            border: 1px solid #e0e0e0; /* Subtle border */
-            border-radius: 8px; /* Rounded corners */
-            margin: 20px 0; /* Add spacing around the section */
         }
 
         .image-text-container img {
             max-width: 300px; /* Restrict image size */
-            border-radius: 8px; /* Match container corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-        }
-
-        .image-text-container p {
-            flex: 1; /* Allow text to take up remaining space */
-            color: #555555; /* Muted color for secondary information */
-            font-size: 1rem; /* Standard font size */
-            text-align: left;
         }
 
         /* Center the dashboard */
@@ -219,13 +173,60 @@
             margin: 40px auto; /* Center the dashboard horizontally */
         }
 
-        /* Vests Distributed Section */
-        p:last-of-type {
-            text-align: center; /* Center-align the last paragraph */
-            font-weight: bold; /* Highlight the text */
-            font-size: 1.2rem; /* Make it stand out */
-            color: #333333; /* Neutral dark text */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            cursor: pointer;
         }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .flip-card-front {
+            background-color: #f8f9fa;
+            font-size: 1.5rem;
+        }
+
+        .flip-card-back {
+            background-color: #ffffff;
+            transform: rotateY(180deg);
+        }
+
+        .card-title {
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .card-content {
+            text-align: center;
+            font-size: 2rem;
+        }
+        </style>
 
 
     </style>
@@ -262,31 +263,18 @@
     </script>
     </div>
 
-
     <!-- Image and Text Section -->
     <div class="text-carousel-wrapper">
-        <div class="image-text-container">
-            <img src="/vest6.jpg" alt="Example Vest">
-            <p>One winter when Jen was homeless, 7 of her friends froze to death.  
-
-            <br><br>
-            Jen is no longer homeless and has figured out a solution:
-            High-tech foam vests that are inexpensive,
-            keep a person warm to 10 degrees below zero, help SAVE lives, and alleviate suffering.
-
-            <br><br>
-            A high-tech but simple solution to help save lives - 
-            a portable "shelter" you can carry with you, just like a turtle...
-
-            <br><br>
-            YOU can request vests for your community - and you can make vests and have your friends, business colleagues, church members, or club make vests, too!</p>
-        </div>
 
         <!-- Text and Carousel Section -->
         <div class="text-carousel-container">
             <!-- Text Section -->
             <div class="text-section">
-                <h2>Over 5,900 vests have been made and distributed by volunteers like you.</h2>
+                <p>
+                    Turtle Shelter Vests are high-tech, inexpensive, foam vests. Foam clothing dramatically reduces moisture as being a threat to a person's life in the cold
+                    and can keep a person warm to 10 degree below zero. <br><br>
+                    These vests SAVE lives and alleviate suffering<br><br>
+                </p>
             </div>
 
         <!-- Carousel Section -->
@@ -333,12 +321,89 @@
         </div>
     </div>
 
+    <!-- Include Bootstrap for layout and styling -->
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Turtle Shelter Project is Making a Difference</h1>
+        </div>
+        <div class="row d-flex justify-content-center g-4">
+            <!-- Vest Start to Finish -->
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front">
+                            <p>Time To Make One Vest</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <p style="line-height: 0%;">3-4 hours</p>
+                                <p style="font-size: 1rem;">(start to finish)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vest Cost -->
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front">
+                            <p>One Vest Costs</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <p>$50</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Stat -->
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front">
+                            <p>Vests Made Last Month</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <p>908 Vests</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Total Vests Made -->
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front">
+                            <p>Total Vests Made</p>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back">
+                            <div class="card-content">
+                                <p>5,900</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <footer>
         &copy; 2024 Turtle Shelter Vests | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
     </footer>
-
-    <script src="/Users/oliviafowler/Downloads/ISWebsite/TurtleShelter/css/bootstrap.bundle.js"></script>
-    <script src="/Users/oliviafowler/Downloads/ISWebsite/TurtleShelter/css/bootstrap.min.js"></script>
 </body>
 </html>
