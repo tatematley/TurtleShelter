@@ -104,15 +104,15 @@
     <table>
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Age</th>
-                <th>Phone Number</th>
-                <th>Email Address</th>
-                <th>Zip Code</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Source</th>
+                <th>Location</th>
                 <th>Sewing Level</th>
                 <th>Monthly Number of Hours</th>
-                <th>Number of Volunteers</th>
+                <th>Notes</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -120,15 +120,15 @@
         <tbody>
             <% for (let i = 0; i < volunteer.length; i++) { %>
             <tr>
-                <td><%= volunteer[i].volunteer_first_name %></td>
-                <td><%= volunteer[i].volunteer_last_name %></td>
+                <td><%= volunteer[i].volunteer_first_name %> <%= volunteer[i].volunteer_last_name %></td>
                 <td><%= volunteer[i].volunteer_age %></td>
-                <td><%= volunteer[i].volunteer_phone %></td>
                 <td><%= volunteer[i].volunteer_email %></td>
-                <td><%= volunteer[i].zip %></td>
+                <td><%= volunteer[i].volunteer_phone %></td>
+                <td><%= volunteer[i].volunteer_source %></td>
+                <td><%= volunteer[i].volunteer_county %>, <%= volunteer[i].volunteer_state %></td>
                 <td><%= volunteer[i].sewing_level %></td>
                 <td><%= volunteer[i].num_monthly_hours %></td>
-                <td><%= volunteer[i].num_volunteers %></td>
+                <td><%= volunteer[i].notes %></td>
 
                 <td>
                     <form action="/editVolunteer/<%= volunteer[i].volunteer_id %>" method="GET">
