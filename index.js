@@ -1,60 +1,46 @@
+
 let express = require("express");
-
 let app = express();
-
 let path = require("path");
-
 const port = process.env.PORT || 5005;
-
 let security = false;
-
 app.set("view engine", "ejs");
-
 app.set("views", path.join(__dirname, "views"));
-
 app.use(express.urlencoded({extended: true}));
-
 app.use(express.static(path.join(__dirname, 'images')));
-
 // connection to RDS || Local DB
 const knex = require("knex")({
     client: "pg",
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "superuser",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
 }); 
 
-
 // get route for the index page
 app.get('/', (req, res) =>{
     res.render('index', {security});
 });
-
 // get route for the volunteer page
 app.get('/volunteer', (req, res) =>{
     res.render('volunteer', {security});
 });
-
 // get route for the login page
 app.get('/login', (req, res) =>{
     res.render('login', {security});
 });
-
 // get route for the events page
 app.get('/events', (req, res) =>{
     res.render('events', {security});
 });
-
 // get route for the index page
 app.get('/jen', (req, res) =>{
     res.render('jen', {security});
 });
-
 // route to event management
 app.get('/eventManagement', (req, res) =>{
     knex('events')
@@ -68,7 +54,6 @@ app.get('/eventManagement', (req, res) =>{
         res.status(500).send('Internal Server Error');
       });
     });
-
 // delete event
 app.post('/deleteEvent/:id', (req, res) => {
     const id = req.params.id;
@@ -83,26 +68,33 @@ app.post('/deleteEvent/:id', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
-
   app.get('/addRequestedEvent', (req, res) => {
     res.render('addRequestedEvent', {security});
   });
-
-  app.post('/events', (req, res) => {
+  app.post('/event', (req, res) => {
     // Extract form values from req.body
     const event_name = req.body.event_name.toUpperCase() || '';
     const host_first_name = req.body.host_first_name.toUpperCase() || ''; 
     const host_last_name = req.body.host_last_name.toUpperCase() || '';
     const host_phone = req.body.host_phone || '';
     const host_email = req.body.host_email.toUpperCase() || '';// Default to empty string if not provided
-    const host_zip = parseInt(req.body.host_zip); // Convert to integer
     const event_date = req.body.event_date ;
     const start_time = req.body.start_time;
     const end_time = req.body.end_time
-    const share_story = req.body.jen_story ? 'Y' : 'N'; // Checkbox returns true or undefined
-    const activity_type = req.body.activity_type; // Default to 'U' for Unknown
+    const share_story = req.body.jen_story ? 'Y' : 'N'; // Checkbox returns true or undefine
+    const activity_type = req.body.activity_type.toUpperCase() || ''; 
     const volunteer_num = parseInt(req.body.volunteer_num); // Convert to integer
     const event_status = 'REQUESTED'
+    const host_county = req.body.host_county.toUpperCase() || '';
+    const host_state = req.body.host_state || '';
+    const host_address = req.body.host_address.toUpperCase() || '';
+    const host_city = req.body.host_city.toUpperCase() || '';
+    const date_created = new Date().toISOString().split('T')[0];
+    const num_sewers = parseInt(req.body.num_sewers);
+    const num_host_machines = parseInt(req.body.num_host_machines);
+    const num_tsp_machine = parseInt(req.body.num_tsp_machine);
+    const notes = req.body.notes.toUpperCase() || '';
+    const event_source = req.body.event_source.toUpperCase() || '';
     // Insert the new Pokémon into the database
     knex('events')
         .insert({
@@ -111,14 +103,23 @@ app.post('/deleteEvent/:id', (req, res) => {
             host_last_name: host_last_name,
             host_phone: host_phone,
             host_email: host_email,
-            zip: host_zip,
             activity_type: activity_type,
             event_date: event_date,
             start_time: start_time,
             end_time: end_time,
             attendance_estimate: volunteer_num,
             share_story: share_story,
-            event_status: event_status
+            event_status: event_status,
+            date_created: date_created,
+            host_county : host_county,
+            host_state: host_state,
+            host_address : host_address,
+            host_city : host_city,
+            num_sewers: num_sewers,
+            num_host_machines: num_host_machines,
+            num_tsp_machine: num_tsp_machine,
+            notes: notes,
+            event_source: event_source
         })
         .then(() => {
             res.redirect('/events'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
@@ -128,7 +129,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
   //add requested event
   app.post('/addRequestedEvent', (req, res) => {
     // Extract form values from req.body
@@ -137,7 +137,6 @@ app.post('/deleteEvent/:id', (req, res) => {
     const host_last_name = req.body.host_last_name.toUpperCase() || '';
     const host_phone = req.body.host_phone || '';
     const host_email = req.body.host_email.toUpperCase() || '';// Default to empty string if not provided
-    const host_zip = parseInt(req.body.host_zip); // Convert to integer
     const event_date = req.body.event_date ;
     const start_time = req.body.start_time;
     const end_time = req.body.end_time
@@ -145,6 +144,16 @@ app.post('/deleteEvent/:id', (req, res) => {
     const activity_type = req.body.activity_type; // Default to 'U' for Unknown
     const volunteer_num = parseInt(req.body.volunteer_num); // Convert to integer
     const event_status = 'REQUESTED'
+    const host_county = req.body.host_county.toUpperCase() || '';
+    const host_state = req.body.host_state || '';
+    const host_address = req.body.host_address.toUpperCase() || '';
+    const host_city = req.body.host_city.toUpperCase() || '';
+    const date_created = new Date().toISOString().split('T')[0];
+    const num_sewers = parseInt(req.body.num_sewers);
+    const num_host_machines = parseInt(req.body.num_host_machines);
+    const num_tsp_machine = 0;
+    const notes = req.body.notes.toUpperCase() || '';
+    const event_source = req.body.event_source.toUpperCase() || '';
     // Insert the new Pokémon into the database
     knex('events')
         .insert({
@@ -153,14 +162,23 @@ app.post('/deleteEvent/:id', (req, res) => {
             host_last_name: host_last_name,
             host_phone: host_phone,
             host_email: host_email,
-            zip: host_zip,
             activity_type: activity_type,
             event_date: event_date,
             start_time: start_time,
             end_time: end_time,
             attendance_estimate: volunteer_num,
             share_story: share_story,
-            event_status: event_status
+            event_status: event_status,
+            date_created: date_created,
+            host_county : host_county,
+            host_state: host_state,
+            host_address : host_address,
+            host_city : host_city,
+            num_sewers: num_sewers,
+            num_host_machines: num_host_machines,
+            num_tsp_machine: num_tsp_machine,
+            notes: notes,
+            event_source: event_source
         })
         .then(() => {
             res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
@@ -170,7 +188,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
   //retrieve add completed event form
   app.get('/addCompletedEvent', (req, res) => {
     knex('users')
@@ -185,10 +202,8 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
   //add completed event
   app.post('/addCompletedEvent', (req, res) => {
-
     // Insert the new event into the database
     knex('events')
         .insert({
@@ -197,7 +212,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             host_last_name: req.body.host_last_name.toUpperCase() || '',
             host_phone: req.body.host_phone || '',
             host_email: req.body.host_email.toUpperCase() || '',
-            zip: parseInt(req.body.host_zip) || 0,
             activity_type: req.body.activity_type,
             event_date: req.body.event_date ,
             start_time: req.body.start_time,
@@ -212,8 +226,14 @@ app.post('/deleteEvent/:id', (req, res) => {
             num_collars: parseInt(req.body.num_collars) ||0,
             num_envelopes: parseInt(req.body.num_envelopes) || 0,
             num_vests: parseInt(req.body.num_vests) || 0,
-            num_finished_products: parseInt(req.body.num_finished_products) ||0
-
+            num_finished_products: parseInt(req.body.num_finished_products) ||0,
+            host_county : req.body.host_county.toUpperCase() || '',
+            host_state : req.body.host_state || '',
+            host_address : req.body.host_address.toUpperCase() || '',
+            host_city : req.body.host_city.toUpperCase() || '',
+            date_created : new Date().toISOString().split('T')[0],
+            notes : req.body.notes.toUpperCase() || '',
+            event_source : req.body.event_source.toUpperCase() || ''
         })
         .then(() => {
             res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
@@ -223,7 +243,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
 
   // retrieve planned event form
   app.get('/addPlannedEvent', (req, res) => {
@@ -240,7 +259,6 @@ app.post('/deleteEvent/:id', (req, res) => {
         });
   });
 
-
   // add planned event
   app.post('/addPlannedEvent', (req, res) => {
     // Insert the new event into the database
@@ -251,7 +269,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             host_last_name: req.body.host_last_name.toUpperCase() || '',
             host_phone: req.body.host_phone || '',
             host_email: req.body.host_email.toUpperCase() || '',
-            zip: parseInt(req.body.host_zip) || 0,
             activity_type: req.body.activity_type,
             event_date: req.body.event_date ,
             start_time: req.body.start_time,
@@ -260,7 +277,16 @@ app.post('/deleteEvent/:id', (req, res) => {
             share_story: req.body.jen_story ? 'Y' : 'N',
             event_status: 'PLANNED',
             event_lead: parseInt(req.body.event_lead),
-
+            host_county : req.body.host_county.toUpperCase() || '',
+            host_state : req.body.host_state || '',
+            host_address : req.body.host_address.toUpperCase() || '',
+            host_city : req.body.host_city.toUpperCase() || '',
+            date_created : new Date().toISOString().split('T')[0],
+            num_sewers : parseInt(req.body.num_sewers) || 0,
+            num_host_machines : parseInt(req.body.num_host_machines) || 0,
+            num_tsp_machine : parseInt(req.body.num_tsp_machine) || 0,
+            notes : req.body.notes.toUpperCase() || '',
+            event_source : req.body.event_source.toUpperCase() || 0
         })
         .then(() => {
             res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
@@ -270,7 +296,6 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
 //view completed event
 app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
     let id = req.params.id; //extracts parameter data out of the route
@@ -288,7 +313,6 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
             res.status(500).send('Internal Server Error');
           });
       });
-
       app.get('/viewPlannedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
         let id = req.params.id; //extracts parameter data out of the route
         // Query the Pokémon by ID first
@@ -305,7 +329,6 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
                 res.status(500).send('Internal Server Error');
               });
           });
-
           app.get('/viewRequestedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
             let id = req.params.id; //extracts parameter data out of the route
             // Query the Pokémon by ID first
@@ -322,7 +345,6 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
                     res.status(500).send('Internal Server Error');
                   });
               });
-
 // confirm event
  app.get('/confirmEvent/:id', (req, res) => {
     let id = req.params.id;
@@ -346,11 +368,9 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
         });
   });
 });
-
 // add confirmed event info
 app.post('/confirmEvent/:id', (req,res) => {
     let id = req.params.id
-
     knex('events')
     .where('event_id', id)
     .update({
@@ -364,9 +384,7 @@ app.post('/confirmEvent/:id', (req,res) => {
         console.error('Error adding :', error);
         res.status(500).send('Internal Server Error');
     });
-
 });
-
 //completeEvent
 app.get('/completeEvent/:id', (req, res) => {
     let id = req.params.id;
@@ -382,11 +400,9 @@ app.get('/completeEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-
   //update to completed event
   app.post('/completeEvent/:id', (req,res) => {
     let id = req.params.id
-
     knex('events')
     .where('event_id', id)
     .update({
@@ -406,9 +422,7 @@ app.get('/completeEvent/:id', (req, res) => {
         console.error('Error adding :', error);
         res.status(500).send('Internal Server Error');
     });
-
 });
-
 //edit completed event
   app.get('/editCompletedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
     let id = req.params.id; //extracts parameter data out of the route
@@ -441,7 +455,6 @@ app.get('/completeEvent/:id', (req, res) => {
   });
   
 
-
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
     const username = req.body.username;
@@ -462,19 +475,16 @@ app.post('/login', (req, res) => {
     }
     res.redirect("/volunteerManagement")
   });
-
 app.get('/userManagement', (req, res) => {
     knex.select().from('users').then(myusers => {
         res.render('userManagement', {users: myusers, security})
     });
 });
-
 // get method for logging out
 app.get('/logout', (req, res) => {
     security = false;
     res.render("index", {security})
   });
-
 app.get('/editUser/:id', (req, res) => {
     knex.select('user_id',
                 'user_first_name',
@@ -490,7 +500,6 @@ app.get('/editUser/:id', (req, res) => {
                     res.status(500).json({err});
                 });
 });
-
 app.post('/editUser', (req, res) => {
     knex('users').where('user_id', parseInt(req.body.user_id).update({
         user_first_name: req.body.user_first_name.toUpperCase(),
@@ -504,7 +513,6 @@ app.post('/editUser', (req, res) => {
         res.redirect('/userManagement');
     });
 });
-
 app.post('/deleteUser/:id', (req, res) => {
     knex('users').where('user_id', req.body.user_id).del().then(myusers => {
         res.redirect('/userManagement')
@@ -513,11 +521,9 @@ app.post('/deleteUser/:id', (req, res) => {
         res.status(500).json({err});
     });
 });
-
 app.get('/addUser', (req, res) => {
     res.render('addUser');
 });
-
 app.post('/addUser', (req, res) => {
     knex('users').insert({
         user_first_name: req.body.user_first_name.toUpperCase(),
@@ -529,13 +535,11 @@ app.post('/addUser', (req, res) => {
         zip: parseInt(req.body.zip)
     })
 })
-
 // get method for logging out
 app.get('/logout', (req, res) => {
     security = false;
     res.render("index", {security})
   });
-
 
 
 // get route to view all volunteers
@@ -544,11 +548,9 @@ app.get('/volunteerManagement', async (req, res) => {
         const page = parseInt(req.query.page) || 1; // Default to page 1
         const limit = 15; // Show 15 volunteers per page
         const offset = (page - 1) * limit; // Calculate offset for the database query
-
         // Fetch the total number of volunteer for pagination
         const totalVolunteer = await knex("volunteers").count('* as count').first();
         const totalPages = Math.ceil(totalVolunteer.count / limit);
-
         // Fetch the volunteers for the current page
         const volunteer = await knex("volunteers")
             .select(
@@ -558,14 +560,11 @@ app.get('/volunteerManagement', async (req, res) => {
                 "volunteer_age",
                 "volunteer_phone",
                 "volunteer_email",
-                "zip",
                 "sewing_level",
                 "num_monthly_hours",
-                "num_volunteers"
             )
             .limit(limit)
             .offset(offset);
-
         // Render the page
         res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
     } catch (error) {
@@ -573,7 +572,6 @@ app.get('/volunteerManagement', async (req, res) => {
         res.status(500).send("Error fetching data.");
     }
 });
-
 
 // get route for the /editVolunteer action
 app.get('/editVolunteer/:id', (req, res) => {
@@ -593,7 +591,6 @@ app.get('/editVolunteer/:id', (req, res) => {
         res.status(500).send('Internal Server Error, Error fetching the individual volunteer for editing');
       });
   });
-
 
 
 
@@ -617,9 +614,7 @@ app.post("/editVolunteer/:id", (req,res) =>{
         res.status(500).send('Internal Server Error, Error fetching the individual volunteer for editing');
       });
   
-
 });
-
 
 
 
@@ -628,12 +623,10 @@ app.get("/returnHome/", (req,res) =>{
     res.render("index");
 });
 
-
 // get route to add volunteer
 app.get("/addVolunteer/", (req,res) =>{
     res.render("addVolunteer");
 });
-
 
 // post route to add volunteer
 app.post("/addVolunteer", (req,res) => {
@@ -652,7 +645,6 @@ app.post("/addVolunteer", (req,res) => {
     });
 });
 
-
 // post route to delete volunteer
 app.post("/deleteVolunteer/:id", (req,res) => {
     knex("volunteer”).where(“volunteer_id", req.params.id).del().then(volunteer =>{
@@ -662,6 +654,5 @@ app.post("/deleteVolunteer/:id", (req,res) => {
         res.status(500).json({err});
     });
 });
-
 
 app.listen(port, () => console.log("Express is listening"));
