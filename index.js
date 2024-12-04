@@ -22,7 +22,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -322,7 +322,92 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
                     res.status(500).send('Internal Server Error');
                   });
               });
- 
+
+// confirm event
+ app.get('/confirmEvent/:id', (req, res) => {
+    let id = req.params.id;
+    knex('events')
+    .select()
+      .where('event_id', id)
+      .first()
+      .then(eventName => {if (!eventName) {
+        return res.status(404).send('event not found');
+      } 
+        knex('users')
+        .select('user_id',
+            knex.raw(`CONCAT(user_first_name, ' ', user_last_name) as "event_lead"`)
+        )
+        .then(eventLead => {
+    res.render('confirmEvent', {security, eventName, eventLead});
+        })
+        .catch(error => {
+            console.error('Error fetching event:', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+});
+
+// add confirmed event info
+app.post('/confirmEvent/:id', (req,res) => {
+    let id = req.params.id
+
+    knex('events')
+    .where('event_id', id)
+    .update({
+        event_status: 'PLANNED',
+        event_lead: parseInt(req.body.event_lead)
+})
+    .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+    })
+    .catch(error => {
+        console.error('Error adding :', error);
+        res.status(500).send('Internal Server Error');
+    });
+
+});
+
+//completeEvent
+app.get('/completeEvent/:id', (req, res) => {
+    let id = req.params.id;
+    knex('events')
+    .select()
+      .where('event_id', id)
+      .first()
+      .then(eventName => {
+    res.render('completeEvent', {security, eventName});
+        })
+        .catch(error => {
+            console.error('Error fetching event:', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+
+  //update to completed event
+  app.post('/completeEvent/:id', (req,res) => {
+    let id = req.params.id
+
+    knex('events')
+    .where('event_id', id)
+    .update({
+        event_status: 'COMPLETED',
+        actual_attendance: parseInt(req.body.actual_attendance) || 0,
+        duration_hours: parseInt(req.body.duration_hours) || 0,
+        num_pockets: parseInt(req.body.num_pockets) || 0,
+        num_collars: parseInt(req.body.num_collars) ||0,
+        num_envelopes: parseInt(req.body.num_envelopes) || 0,
+        num_vests: parseInt(req.body.num_vests) || 0,
+        num_finished_products: parseInt(req.body.num_finished_products) ||0
+})
+    .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+    })
+    .catch(error => {
+        console.error('Error adding :', error);
+        res.status(500).send('Internal Server Error');
+    });
+
+});
 
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
