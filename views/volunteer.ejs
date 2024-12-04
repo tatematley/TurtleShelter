@@ -5,53 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Volunteer Here</title>
     <style>
 
-        /* Style for the container */
-        .banner {
-            width: 100%; /* Make the container take up the full width of the page */
-            height: 500px; /* Adjust the height of the banner */
-            overflow: hidden; /* Hide any part of the image that goes beyond the container */
-        }
-
-        /* Style for the image */
-        .banner img {
-            width: 100%; /* Make the image stretch to fill the entire container width */
-            height: 100%; /* Make the image fill the container height */
-            object-fit: cover; /* Ensure the image covers the container without distorting */
-        }
-
-        /* Custom Form Styling */
-        .below {
+        body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: url('/pinning.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Add a full-size fading overlay */
-        .below::before {
-            content: "";
-            position: absolute;
-            top: 0; /* Start from the top of the image */
-            left: 0;
-            width: 100%;
-            height: 100%; /* Cover the entire background */
-            background: rgba(255, 255, 255, 0.3);
-            z-index: -1; /* Behind all content */
+        .banner {
+            background: linear-gradient( rgba(92, 88, 88, 0.7), rgba(92, 88, 88, 0.7)), 
+                        url('/group2.jpg') no-repeat center center;
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 3rem;
+            padding: 50px 20px; /* Add some space around the text */
         }
 
         form {
             max-width: 600px;
             margin: 40px auto;
             padding: 20px;
-            background: rgba(255, 255, 255); /* Slight transparency */
+            background: rgba(211, 211, 211, 0.199); /* Slight transparency */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
@@ -114,28 +96,23 @@
     <!-- Nav Bar -->
     <%- include('partials/navbar', { page: 'volunteer' }) %>
 
-    <!-- Banner of Photos -->
+    <!-- Want to get more involved? -->
     <div class="banner">
-        <img src="/group2.jpg" alt="Banner photo">
+        Want to get more involved?
     </div>
 
-    <!-- Want to get more involved? -->
-        
     <div style="margin: 0 50px; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <br><br>
-        <h1 style="font-size: 3rem;">Want to get more involved?</h1>
-        <p>
-            Fill out the form below to join our team of volunteers!
-        </p>
-        <br><br>
-    </div>
+        <p style="color:rgba(65, 62, 62, 0.7)"> Fill out the form below to join our team of volunteers!</p>
+    </div> 
 
 
-        <!-- Form Section -->
-    <div class="below">
+    <!-- Form Section -->
+    <div>
         <br>
         <form action="/volunteer" method="POST">
             <fieldset>
+                <div class="form-section">
                     <h2 style="color: #1f7646"><b>Volunteer Information</b></h2>
                     <br>
             
@@ -180,6 +157,7 @@
                     <br><br>
 
                     <button type="submit">Submit</button>
+                </div>
             </fieldset>
         </form>
         <br>

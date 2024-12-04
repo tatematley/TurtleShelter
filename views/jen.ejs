@@ -16,6 +16,7 @@
             background-color: #f9f9f9;
             line-height: 1.6;
             position: relative;
+
             background: url('/outside.jpg') no-repeat center center fixed;
             position: absolute;
             top: 0;
@@ -23,6 +24,7 @@
             width: 100%;
             height: 20%;
             background-color: #f5b041; /* Customize your color */
+            ;
         }
 
         /* Add a full-size fading overlay */
@@ -56,6 +58,7 @@
             margin: 0 auto 20px; /* Centers the image and adds spacing below */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
             object-fit: cover; /* Ensures the image fits within the circular frame */
+            border: 5px solid #00bfa5;
         }
 
 
@@ -64,7 +67,7 @@
             text-align: center;
             color: #444;
             font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         /* Paragraph Styles */
@@ -107,9 +110,14 @@
                 max-width: 120px;
             }
         }
+        .soft_text {
+            font-style: italic;
+            text-align: center;
+            color: #a0a0a0;
+        }
     </style>
 </head>
-<body>
+<body style="background-color: #80CFC4;">
     <!--Navigation Bar-->
     <%- include('partials/navbar', { page: 'jen', security: security }) %>
 
@@ -119,6 +127,7 @@
     <div class="bio-container">
         <img src="/jen.png" alt="Jen Headshot">
         <h1>Jen's Story</h1>
+        <p class="soft_text" style="color: #6c757d; text-align: center;">Founder of the Turtle Shelter Project</p>
         <p>
             My addiction led me to being homeless on several occasions throughout my life, and during that time I personally knew seven people who froze to death. When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.
         </p>
@@ -147,5 +156,7 @@
             We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it. Wearing a Turtle Shelter Vest makes having a source of heat a nicety, but not a necessity because the foam insulation in the vest will harness the body's heat and conserve it. The vests are very well made to provide durability, wind resistance, insulation, and comfort. They are a very effective way to help provide life-saving warmth.
         </p>
     </div>
+    <!-- Footer -->
+    <%- include('partials/footer') %>
 </body>
 </html>
