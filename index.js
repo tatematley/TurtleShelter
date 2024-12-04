@@ -19,27 +19,27 @@ app.use(express.static(path.join(__dirname, 'images')));
 
 // get route for the index page
 app.get('/', (req, res) =>{
-    res.render('index');
+    res.render('index', {security});
 });
 
 // get route for the volunteer page
 app.get('/volunteer', (req, res) =>{
-    res.render('volunteer');
+    res.render('volunteer', {security});
 });
 
 // get route for the login page
 app.get('/login', (req, res) =>{
-    res.render('login');
+    res.render('login', {security});
 });
 
 // get route for the events page
 app.get('/events', (req, res) =>{
-    res.render('events');
+    res.render('events', {security});
 });
 
 // get route for the index page
 app.get('/jen', (req, res) =>{
-    res.render('jen');
+    res.render('jen', {security});
 });
 
 const knex = require("knex")({
@@ -60,7 +60,7 @@ app.get('/eventManagement', (req, res) =>{
     .select()
     .orderBy('event_date', 'asc')
     .then(events => {
-        res.render('eventManagement', { events });
+        res.render('eventManagement', { events, security });
     })
     .catch(error => {
         console.error('Error fetching event for editing:', error);
@@ -168,22 +168,7 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
-  
 
-// get route for home page
-app.get('/', (req, res) =>{
-    res.render('index');
-});
-
-// get route for Jen's story
-app.get('/jen', (req, res) =>{
-    res.render('jen');
-});
-
-// Route to render login.ejs for /login
-app.get('/login', (req, res) => {
-    res.render('login', {security}); // Ensure login.ejs is in the views folder
-});
 
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
@@ -208,7 +193,7 @@ app.post('/login', (req, res) => {
 
 app.get('/userManagement', (req, res) => {
     knex.select().from('users').then(myusers => {
-        res.render('userManagement', {users: myusers})
+        res.render('userManagement', {users: myusers, security})
     });
 });
 
