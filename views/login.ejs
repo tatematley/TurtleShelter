@@ -4,62 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background-color: #F1F0F1; /* Light gray background */
-            height: 50vh; /* Full viewport height */
+            background-color: #F1F1F1; /* Light gray background */
             margin: 0;
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center vertically */
+            flex-direction: column;
             align-items: center; /* Center horizontally */
-            padding-top: 60px; /* Add padding to push content down */
+            padding-top: 60px;
+            font-family: Arial, sans-serif;
         }
 
         .card {
             width: 400px;
             padding: 20px;
-            border-radius: 0px;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 0px; /* Add margin to create space from navbar */
+            background: white;
         }
 
         .btn-primary {
-            background-color: orange;
-            border-color: darkgrey;
-    
+            background-color: #008080 !important; /* Teal button */
+            border-color: #006666 !important;/* Darker teal border */
         }
-        
+
         .btn-primary:hover {
-            background-color: orange;
+            background-color: #006666 !important; /* Darker teal on hover */
+            border-color: #004c4c !important;
         }
 
         .circle-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
-            background-color: #f1f1f1; /* Optional background color */
+            margin-bottom: 20px;
         }
 
-        /* Style the circular image */
         .circle-image {
-            width: 150px; /* Set the desired width */
-            height: 150px; /* Set the desired height */
+            width: 150px;
+            height: 150px;
             border-radius: 50%; /* Makes the image a perfect circle */
             overflow: hidden; /* Ensures the image stays within the circle */
-            border: 4px solid #00bfa5; /* Optional border around the circle */
+            border: 4px solid #008080; /* Teal border */
         }
 
-        /* Ensure the image fits the circle */
         .circle-image img {
             width: 100%;
             height: 100%;
             object-fit: cover; /* Ensures the image scales nicely */
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        footer a {
+            color: #008080;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -73,10 +85,10 @@
             <img src="logo.png" alt="Circular Photo">
         </div>
     </div>
-    
+
     <!-- Centered Login Form -->
     <div class="card">
-        <h2 class="text-center mb-4" style="color: orange;">Login</h2>
+        <h2 class="text-center mb-4" style="color: #008080;">Login</h2>
         <form action="/login" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -86,10 +98,17 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Submit</button>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
-        <form method="get"><a href="/">Return Home</a></form>
+        <form method="get">
+            <a href="/">Return Home</a>
+        </form>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Turtle Shelter Vests | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </footer>
 
     <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
