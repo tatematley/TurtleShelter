@@ -14,7 +14,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "Nakedalone12!",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -497,9 +497,10 @@ app.get('/editUser/:id', (req, res) => {
                 'user_email',
                 'user_position',
                 'user_start_year',
-                'zip',
+                'user_county',
+                'user_state',
                 'user_phone').from('users').where('user_id', req.params.id).then(myusers => {
-                    res.render('editUser', {user: myusers})
+                    res.render('editUser', {user: myusers, security})
                 }).catch(err => {
                     console.log(err);
                     res.status(500).json({err});
@@ -513,7 +514,8 @@ app.post('/editUser', (req, res) => {
         user_phone: req.body.user_phone,
         user_position: req.body.user_position,
         user_start_year: req.body.user_start_year,
-        zip: parseInt(req.body.zip)
+        user_county: req.body.user_county.toUpperCase(),
+        user_state: req.body.user_state.toUpperCase()
     })).then(myusers => {
         res.redirect('/userManagement');
     });
@@ -529,6 +531,7 @@ app.post('/deleteUser/:id', (req, res) => {
 app.get('/addUser', (req, res) => {
     res.render('addUser');
 });
+
 app.post('/addUser', (req, res) => {
     knex('users').insert({
         user_first_name: req.body.user_first_name.toUpperCase(),
@@ -537,9 +540,13 @@ app.post('/addUser', (req, res) => {
         user_phone: req.body.user_phone,
         user_position: req.body.user_position,
         user_start_year: req.body.user_start_year,
-        zip: parseInt(req.body.zip)
-    })
-})
+        user_county: req.body.user_county.toUpperCase(),
+        user_state: req.body.user_state.toUpperCase()
+    }).then(myusers => {
+        res.redirect('/userManaagement');
+    });
+});
+
 // get method for logging out
 app.get('/logout', (req, res) => {
     security = false;
@@ -609,15 +616,16 @@ app.get('/editVolunteer/:id', (req, res) => {
 app.post("/editVolunteer/:id", (req,res) =>{
     const id = req.params.id;
     knex("volunteers").where("volunteer_id", id).update({
-        volunteer_first_name: req.body.volunteer_first_name,
-        volunteer_last_name: req.body.volunteer_last_name,
-        volunteer_age: req.body.volunteer_age,
+        volunteer_first_name: req.body.volunteer_first_name.toUpperCase(),
+        volunteer_last_name: req.body.volunteer_last_name.toUpperCase(),
+        volunteer_age: parseInt(req.body.volunteer_age),
         volunteer_phone: req.body.volunteer_phone,
         volunteer_email: req.body.volunteer_email,
-        zip: req.body.zip,
         sewing_level: req.body.sewing_level,
-        num_monthly_hours: req.body.num_monthly_hours,
-        num_volunteers: req.body.num_volunteers
+        num_monthly_hours: parseInt(req.body.num_monthly_hours),
+        volunteer_source: req.body.volunteer_source.toUpperCase(),
+        volunteer_county: req.body.volunteer_county.toUpperCase(),
+        notes: req.body.notes
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
     }) .catch(error => {
@@ -640,15 +648,16 @@ app.get("/addVolunteer/", (req,res) =>{
 // post route to add volunteer
 app.post("/addVolunteer", (req,res) => {
     knex("volunteer").insert({
-        volunteer_first_name: req.body.volunteer_first_name,
-        volunteer_last_name: req.body.volunteer_last_name,
-        volunteer_age: req.body.volunteer_age,
+        volunteer_first_name: req.body.volunteer_first_name.toUpperCase(),
+        volunteer_last_name: req.body.volunteer_last_name.toUpperCase(),
+        volunteer_age: parseInt(req.body.volunteer_age),
         volunteer_phone: req.body.volunteer_phone,
         volunteer_email: req.body.volunteer_email,
-        zip: req.body.zip,
         sewing_level: req.body.sewing_level,
-        num_monthly_hours: req.body.num_monthly_hours,
-        num_volunteers: req.body.num_volunteers
+        num_monthly_hours: parseInt(req.body.num_monthly_hours),
+        volunteer_source: req.body.volunteer_source.toUpperCase(),
+        volunteer_county: req.body.volunteer_county.toUpperCase(),
+        notes: req.body.notes
         
 
     }).then(myvolunteer => {
