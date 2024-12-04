@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,6 @@
         body {
             font-family: 'Arial', sans-serif;
         }
-
         .banner {
             background: linear-gradient( rgba(92, 88, 88, 0.7), rgba(92, 88, 88, 0.7)), 
                         url('/kid.jpg') no-repeat center center;
@@ -31,7 +31,6 @@
             padding: 50px 20px; /* Add some space around the text */
         }
 
-
         form {
             max-width: 600px;
             margin: 40px auto;
@@ -40,13 +39,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-
         fieldset {
             border: 2px solid #ccc;
             padding: 20px;
             border-radius: 8px;
         }
-
         input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
             width: 100%;
             padding: 10px;
@@ -55,12 +52,10 @@
             border-radius: 4px;
             font-size: 1rem;
         }
-
         input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
             border-color: #169282ea;
             outline: none;
         }
-
         button[type="submit"] {
             background-color: #169282ea;
             color: white;
@@ -71,40 +66,33 @@
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
         }
-
         button[type="submit"]:hover {
             background-color: #0c7466ea;
         }
-
         .time-picker {
             width: 100%;
         }
-
         label {
             font-size: 1rem;
             font-weight: 600;
             color: #555;
         }
-
         @media (max-width: 768px) {
             form {
                 margin: 20px;
                 padding: 15px;
             }
         }
-
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <%- include('partials/navbar', { page: 'events' }) %>
-
     <!-- Banner Section -->
     <div class="banner">
         Every Life has Value <br>
         Every Person can Serve
     </div>
-
     <div style="margin: 0 50px; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <br><br>
         <h1>Schedule an Event</h1>
@@ -113,7 +101,6 @@
         </p>
         <p style="color: rgba(65, 62, 62, 0.7)">To get started, fill out the form below!</p>
     </div>    
-
 
     <div>
         <!-- Form Section -->
@@ -124,25 +111,17 @@
                     <label for="event_name">Group Name:</label>
                     <input type="text" id="event_name" name="event_name" required>
                     <br><br>
-
                     <label for="host_first_name">First Name:</label>
                     <input type="text" id="host_first_name" name="host_first_name" required>
                     <br><br>
-
                     <label for="host_last_name">Last Name:</label>
                     <input type="text" id="host_last_name" name="host_last_name" required>
                     <br><br>
-
                     <label for="host_phone">Phone Number:</label>
                     <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
                     <br><br>
-
                     <label for="host_email">Email Address:</label>
                     <input type="email" id="host_email" name="host_email">
-                    <br><br>
-
-                    <label for="host_zip">Zip Code:</label>
-                    <input type="text" id="host_zip" name="host_zip" required>
                     <br><br>
 
                     <label for="activity_type">Activity Type:</label>
@@ -152,33 +131,74 @@
                         <option value="both">Both</option>
                     </select>
                     <br><br>
-
+                    <label for="num_sewers">How Many in your Group can Sew?</label>
+                    <input type="number" id="num_sewers" name="num_sewers" value="0" required>
+                    <br><br>
+                    <label for="num_host_machines">How Sewing Machines can your Group Provide?</label>
+                    <input type="number" id="num_host_machines" name="num_host_machines" value="0" required>
+                    <br><br>
+                    
                     <label for="event_date">Event Date:</label>
                     <input type="date" id="event_date" name="event_date" required>
                     <br><br>
-
                     <label for="start_time">Start Time:</label>
                     <input type="time" id="start_time" name="start_time" required>
                     <br><br>
-
                     <label for="end_time">End Time:</label>
                     <input type="time" id="end_time" name="end_time" required>
                     <br><br>
-
-                    <label for="volunteer_num">Number of Volunteers:</label>
-                    <input type="number" id="volunteer_num" name="volunteer_num" value="1" required>
+                    
+                    <label for="host_address">Event Address <i>(optional)</i></label>
+                    <input type="text" id="host_address" name="host_address" >
+                    <br><br>
+                    <label for="host_city">Event city <i>(optional)</i></label>
+                    <input type="text" id="host_city" name="host_city" >
+                    <br><br>
+                    <label for="host_county">Event County <i>(required)</i></label>
+                    <input type="text" id="host_county" name="host_county" >
                     <br><br>
 
+                    <label for="state">State <i>(required)</i></label>
+                        <select id="state" name="host_state" required>
+                            <% const states = [
+                                'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+                                'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+                                'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+                                'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+                                'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+                            ]; %>
+                            <% states.forEach(state => { %>
+                                <option value="<%= state %>"><%= state %></option>
+                            <% }); %>
+                        </select>
+                        <br><br>
+                    <label for="volunteer_num">Number of Volunteers:</label>
+                    <input type="number" id="volunteer_num" name="volunteer_num" value="1" min="0" required>
+                    <br><br>
                     <label for="jen_story">Do you want Jen to share her story?</label>
                     <input type="checkbox" id="jen_story" name="jen_story" value="Yes">
                     <br><br>
+                    <label for="event_source">How did you Hear about us?:</label>
+                    <select id="event_source" name="event_source">
+                        <option value="family/friend">Family/Friend</option>
+                        <option value="church_event">Church Event</option>
+                        <option value="social_media">Social Media</option>
+                        <option value="search_engine">Search Engine Search</option>
+                        <option value="podcast">Podcast</option>
+                        <option value="word_of_mouth">Word of Mouth</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <br><br>
+                    <label for="notes">Additional Notes:</label>
+                    <input type="text" id="notes" name="notes" >
+                    <br><br>
+                    
                     
                     <button type="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr("#end_time", {
@@ -186,14 +206,12 @@
             noCalendar: true,
             dateFormat: "h:i K",
         });
-
         flatpickr("#start_time", {
             enableTime: true,
             noCalendar: true,
             dateFormat: "h:i K",
         });
     </script>
-
 <!-- Footer -->
 <%- include('partials/footer') %>
 </body>
