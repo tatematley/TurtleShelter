@@ -14,7 +14,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "SuperUser",
+        password: process.env.RDS_PASSWORD || "mom#8181",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -37,6 +37,12 @@ app.get('/login', (req, res) =>{
 app.get('/events', (req, res) =>{
     res.render('events', {security});
 });
+
+// get route for the submission page
+app.get('/submission', (req, res) =>{
+    res.render('submission', {security});
+});
+
 // get route for the index page
 app.get('/jen', (req, res) =>{
     res.render('jen', {security});
@@ -122,7 +128,7 @@ app.post('/deleteEvent/:id', (req, res) => {
             event_source: event_source
         })
         .then(() => {
-            res.redirect('/events'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+            res.redirect('/submission'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
         })
         .catch(error => {
             console.error('Error adding :', error);
@@ -647,6 +653,25 @@ app.post("/addVolunteer", (req,res) => {
 
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
+    });
+});
+
+// post route to add volunteer from the form 
+app.post("/volunteer", (req,res) => {
+    knex("volunteer").insert({
+        volunteer_first_name: req.body.volunteer_first_name,
+        volunteer_last_name: req.body.volunteer_last_name,
+        volunteer_age: req.body.volunteer_age,
+        volunteer_phone: req.body.volunteer_phone,
+        volunteer_email: req.body.volunteer_email,
+        zip: req.body.zip,
+        sewing_level: req.body.sewing_level,
+        num_monthly_hours: req.body.num_monthly_hours,
+        num_volunteers: req.body.num_volunteers
+        
+
+    }).then(myvolunteer => {
+        res.redirect("/submission");
     });
 });
 
