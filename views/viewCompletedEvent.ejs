@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .section h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #007BFF;
+        }
+        .section p {
+            margin: 5px 0;
+        }
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+        .value {
+            color: #333;
+        }
+        .section-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Event Information -->
+        <div class="section">
+            <h1>Event Name: <%= events.event_name %></h1>
+            <p><span class="label">Event Lead:</span> <span class="value"><%= events.user_first_name + ' ' + events.user_last_name %></span></p>
+            <p><span class="label">Event Host:</span> <span class="value"><%= events.host_first_name + ' ' + events.host_last_name %></span></p>
+            <p><span class="label">Host Phone Number:</span> <span class="value"><%= events.host_phone %></span></p>
+            <p><span class="label">Host Email:</span> <span class="value"><%= events.host_email %></span></p>
+        </div>
+
+        <!-- Event Location and Details -->
+        <div class="section">
+            <div class="section-header">Event Details</div>
+            <p><span class="label">Zip Code:</span> <span class="value"><%= events.zip %></span></p>
+            <p><span class="label">Estimated Attendance:</span> <span class="value"><%= events.attendance_estimate %></span></p>
+            <p><span class="label">Event Status:</span> <span class="value"><%= events.event_status %></span></p>
+            <p><span class="label">Activity Type:</span> <span class="value"><%= events.activity_type %></span></p>
+            <p><span class="label">Event Date:</span> <span class="value"><%= events.event_date %></span></p>
+            <p><span class="label">Start Time:</span> <span class="value"><%= events.start_time %></span></p>
+            <p><span class="label">End Time:</span> <span class="value"><%= events.end_time %></span></p>
+            <p><span class="label">Did Jenna Share Her Story:</span> <span class="value"><%= events.share_story %></span></p>
+        </div>
+
+        <!-- Event Outcomes -->
+        <div class="section">
+            <div class="section-header">Event Outcomes</div>
+            <p><span class="label">Actual Attendance:</span> <span class="value"><%= events.actual_attendance %></span></p>
+            <p><span class="label">Event Duration:</span> <span class="value"><%= events.duration_hours %> hours</span></p>
+            <p><span class="label">Pockets Prepped:</span> <span class="value"><%= events.num_pockets %></span></p>
+            <p><span class="label">Collars Prepped:</span> <span class="value"><%= events.num_collars %></span></p>
+            <p><span class="label">Envelopes Prepped:</span> <span class="value"><%= events.num_envelopes %></span></p>
+            <p><span class="label">Vests Prepped:</span> <span class="value"><%= events.num_vests %></span></p>
+            <p><span class="label">Completed Vests:</span> <span class="value"><%= events.num_finished_products %></span></p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Event Management System
+    </footer>
+</body>
+</html>

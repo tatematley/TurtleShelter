@@ -206,6 +206,7 @@ app.post('/deleteEvent/:id', (req, res) => {
             event_status: 'COMPLETED',
             event_lead: parseInt(req.body.event_lead),
             actual_attendance: parseInt(req.body.actual_attendance) || 0,
+            duration_hours: parseInt(req.body.duration_hours) || 0,
             num_pockets: parseInt(req.body.num_pockets) || 0,
             num_collars: parseInt(req.body.num_collars) ||0,
             num_envelopes: parseInt(req.body.num_envelopes) || 0,
@@ -268,6 +269,59 @@ app.post('/deleteEvent/:id', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
   });
+
+//view completed event
+app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
+    let id = req.params.id; //extracts parameter data out of the route
+    // Query the Pokémon by ID first
+    knex('events') 
+      .join('users', 'events.event_lead', '=', 'users.user_id')
+      .where('event_id', id) // where id is equal to the parameter
+      .first() //returns the first element, aka no longer an array, a single object
+      .then(events => { // send to pokemon, the following knex is embedded 
+            // Render the edit form and pass both pokemon and poke_types
+            res.render('viewCompletedEvent', { events }); // returns the first record pokemon, and all poke_types
+          })
+          .catch(error => {
+            console.error('Error fetching Events:', error);
+            res.status(500).send('Internal Server Error');
+          });
+      });
+
+      app.get('/viewPlannedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
+        let id = req.params.id; //extracts parameter data out of the route
+        // Query the Pokémon by ID first
+        knex('events') 
+          .join('users', 'events.event_lead', '=', 'users.user_id')
+          .where('event_id', id) // where id is equal to the parameter
+          .first() //returns the first element, aka no longer an array, a single object
+          .then(events => { // send to pokemon, the following knex is embedded 
+                // Render the edit form and pass both pokemon and poke_types
+                res.render('viewPlannedEvent', { events }); // returns the first record pokemon, and all poke_types
+              })
+              .catch(error => {
+                console.error('Error fetching Events:', error);
+                res.status(500).send('Internal Server Error');
+              });
+          });
+
+          app.get('/viewRequestedEvent/:id', (req, res) => { // /:id means parameter that was passed into a value called id (id could be anything)
+            let id = req.params.id; //extracts parameter data out of the route
+            // Query the Pokémon by ID first
+            knex('events') 
+              .join('users', 'events.event_lead', '=', 'users.user_id')
+              .where('event_id', id) // where id is equal to the parameter
+              .first() //returns the first element, aka no longer an array, a single object
+              .then(events => { // send to pokemon, the following knex is embedded 
+                    // Render the edit form and pass both pokemon and poke_types
+                    res.render('viewRequestedEvent', { events }); // returns the first record pokemon, and all poke_types
+                  })
+                  .catch(error => {
+                    console.error('Error fetching Events:', error);
+                    res.status(500).send('Internal Server Error');
+                  });
+              });
+ 
 
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
