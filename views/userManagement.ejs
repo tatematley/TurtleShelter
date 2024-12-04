@@ -10,17 +10,17 @@
   margin: 20px auto;
   border-collapse: collapse;
   font-size: 12px; /* Slightly increase font size for readability */
-  border: 1px solid #007bb5; /* Teal-blue border around the table */
+  border: 1px solid #1f7646; /* Teal-blue border around the table */
   box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2); /* Subtle shadow for a clean look */
 }
 th, td {
-  border: 1px solid #007bb5; /* Teal-blue borders */
+  border: 1px solid #1f7646; /* Teal-blue borders */
   padding: 10px; /* Balanced padding for a cleaner appearance */
   text-align: center;
   line-height: 1.5; /* Better line height for readability */
 }
 th {
-  background-color: #007bb5; /* Teal-blue background for headers */
+  background-color: #1f7646; /* Teal-blue background for headers */
   color: white; /* White text for contrast */
   font-weight: bold;
   text-transform: uppercase; /* Make header text stand out */
@@ -40,7 +40,7 @@ button {
   margin: 4px;
   font-size: 12px; /* Consistent font size */
   color: white;
-  background-color: #007bb5; /* Teal-blue background */
+  background-color: #1f7646; /* Teal-blue background */
   border: none; /* Remove button borders */
   border-radius: 4px; /* Rounded corners */
   cursor: pointer;
@@ -54,10 +54,14 @@ button:active {
   background-color: #004364; /* Even darker teal-blue when clicked */
   transform: scale(0.95); /* Slightly shrink on click */
 }
+
     </style>
 </head>
 <body>
-    <label><b>User Information</b></label>
+    <!-- Navbar -->
+    <%- include('partials/navbar', { page: 'home' }) %>
+    <div>
+        <h1>User Information</h1>
     <br><br>
     <table style="border: 1px solid black;">
         <thead style="text-align: left;">
@@ -97,7 +101,13 @@ button:active {
     </table>
     <br><br>
     <form action="/addUser" method="get">
-        <button type="submit">Add User</button>
+        <button type="submit" style="margin-left: 10%;">Add User</button>
     </form>
+    <br>
+    <form action="/" method="get">
+        <button type="submit" style="margin-left: 10%;">Return Home</button>
+    </form>
+    </div>
+    
 </body>
 </html>

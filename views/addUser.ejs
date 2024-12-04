@@ -4,11 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1F5476;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        form {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 1.2rem;
+            color: #1F5476;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #1f7646;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #1f7646;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #1f7646;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <%- include('partials/navbar', { page: 'home' }) %>
+
+    <br>
     <form action="/addUser" method="post">
         <fieldset>
-            <legend>Add User</legend>
+            <legend><h1>Add User</h1></legend>
             <input type="hidden" id="user_id" name="user_id">
             <label for="user_first_name">First Name: </label>
             <input type="text" id="user_first_name" name="user_first_name">
@@ -23,7 +91,11 @@
             <input type="text" id="user_phone" name="user_phone">
             <br><br>
             <label for="user_position">Position: </label>
-            <input type="text" id="user_position" name="user_position">
+            <select name="user_position" id="user_position">
+                <option value="OWNER">Owner</option>
+                <option value="SEWING INSTRUCTOR">Sewing Instructor</option>
+                <option value="HELPER">Helper</option>
+            </select>
             <br><br>
             <label for="user_start_year">Start Year: </label>
             <input type="date" id="user_start_year" name="user_start_year">
