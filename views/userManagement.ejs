@@ -5,67 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        table {
-  width: 80%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  font-size: 12px; /* Slightly increase font size for readability */
-  border: 1px solid #1f7646; /* Teal-blue border around the table */
-  box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2); /* Subtle shadow for a clean look */
-}
-th, td {
-  border: 1px solid #1f7646; /* Teal-blue borders */
-  padding: 10px; /* Balanced padding for a cleaner appearance */
-  text-align: center;
-  line-height: 1.5; /* Better line height for readability */
-}
-th {
-  background-color: #1f7646; /* Teal-blue background for headers */
-  color: white; /* White text for contrast */
-  font-weight: bold;
-  text-transform: uppercase; /* Make header text stand out */
-}
-td {
-  background-color: #f9f9f9; /* Light background for cells */
-  text-align: left;
-}
-tr:nth-child(even) td {
-  background-color: #e3f3fb; /* Light teal-blue for alternate rows */
-}
-tr:hover {
-  background-color: #c5e4f3; /* Highlight row on hover for better usability */
-  transition: background-color 0.3s; /* Smooth hover effect */
-}
-button {
-  padding: 6px 12px; /* Balanced button size */
-  margin: 4px;
-  font-size: 12px; /* Consistent font size */
-  color: white;
-  background-color: #1f7646; /* Teal-blue background */
-  border: none; /* Remove button borders */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
-}
-button:hover {
-  background-color: #005f89; /* Darker teal-blue on hover */
-  transform: scale(1.05); /* Subtle zoom effect */
-}
-button:active {
-  background-color: #004364; /* Even darker teal-blue when clicked */
-  transform: scale(0.95); /* Slightly shrink on click */
-}
+      body {
+          background-color: white;
+      }
 
-    </style>
+      label {
+          font-size: 2rem;
+          margin-left: 30px;
+          color: rgb(34, 34, 34);
+      }
+
+      table {
+          width: 95%;
+          margin-right: 30px;
+          margin-left: 30px;
+          border-collapse: collapse;
+          background-color: white;
+          box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2);
+      }
+
+      td {
+          padding: 5px;
+          text-align: center;
+      }
+
+      tr:nth-child(even) td {
+          background-color: #e3f3fb;
+      }
+
+      th{
+          padding: 8px;
+          text-align: center;
+      }
+
+      thead {
+          background-color: #169282ea;
+          color: white;
+          text-align: center;
+          font-weight: bold;
+      }
+
+      button {
+          background-color: #169282ea;
+          color: white;
+          border-radius: 4px !important;
+          padding: 8px 12px;
+          border: none;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: background-color 0.3s, transform 0.2s;
+      }
+
+      button:hover {
+          background-color: #0c7466ea;
+          transform: scale(1.05);
+      }
+
+      button:active {
+          background-color: #0c7466ea;
+      }
+
+      .pagination {
+          text-align: center;
+          margin: 20px 0;
+      }
+
+      .pagination a {
+          color: #0c7466ea;
+          text-decoration: none;
+          margin: 10px 30px;
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          transition: background-color 0.3s;
+      }
+
+      .pagination a:hover {
+          background-color: #0c7466ea;
+      }
+
+      .pagination .active {
+          background-color: #0c7466ea;
+          color: white;
+          border-color: #0c7466ea;
+      }
+  </style>
+
 </head>
 <body>
     <!-- Navbar -->
     <%- include('partials/navbar', { page: 'userManagement', security: security }) %>
+    <br>
     <div>
-        <h1>User Information</h1>
+        <label><b>User Information</b></label>
     <br><br>
-    <table style="border: 1px solid black;">
-        <thead style="text-align: left;">
+    <table >
+        <thead style="text-align: center;">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
@@ -102,15 +137,15 @@ button:active {
     </table>
     <br><br>
     <form action="/addUser" method="get">
-        <button type="submit" style="margin-left: 10%;">Add User</button>
+        <button type="submit" style="margin-left: 30px;">Add User</button>
     </form>
     <br>
     <form action="/" method="get">
-        <button type="submit" style="margin-left: 10%;">Return Home</button>
+        <button type="submit" style="margin-left: 30px;">Return Home</button>
     </form>
     <br>
     <form action="/logout" method="get">
-      <button type="submit" style="margin-left: 10%;">Log Out</button>
+      <button type="submit" style="margin-left: 30px;">Log Out</button>
   </form>
     </div>
     
