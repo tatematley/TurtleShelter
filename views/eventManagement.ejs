@@ -143,10 +143,10 @@
             <tr>
               <th>Event Name</th>
               <th>Event Date</th>
-              <th>Host First Name</th>
-              <th>Host Last Name</th>
-              <th>Host Phone</th>
-              <th>Host Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Phone</th>
+              <th>Email</th>
               <th></th>
               <th></th>
               <th></th>
@@ -168,7 +168,7 @@
                     <td><%= row.host_email %></td>
                     <td>
                       <form action="/viewRequestedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
-                        <button class="info" type="submit">View Event</button>
+                        <button class="info" type="submit">View</button>
                       </form>
                     </td>
                     <td>
@@ -183,7 +183,7 @@
                     </td>
                     <td>
                     <form action="/confirmEvent/<%= row.event_id %>" method="GET" class="unique" style="display:inline;">
-                        <button class="info2" type="submit">Confirm Event</button>
+                        <button class="info2" type="submit">Confirm</button>
                     </form>
                     </td>
                   </tr>
@@ -210,10 +210,10 @@
       <tr>
         <th>Event Name</th>
         <th>Event Date</th>
-        <th>Host First Name</th>
-        <th>Host Last Name</th>
-        <th>Host Phone</th>
-        <th>Host Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>Email</th>
         <th>Event Lead</th>
         <th></th>
         <th></th>
@@ -237,7 +237,7 @@
               <td><%= row.event_lead %></td>
               <td>
                 <form action="/viewPlannedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
-                  <button class="info" type="submit">View Event</button>
+                  <button class="info" type="submit">View</button>
                 </form>
               </td>
               <td>
@@ -252,7 +252,7 @@
               </td>
               <td>
               <form action="/completeEvent/<%= row.event_id %>" method="GET" class="unique" style="display:inline;">
-                  <button class="info2" type="submit">Event Occurred</button>
+                  <button class="info2" type="submit">Completed</button>
               </form>
               </td>
             </tr>
@@ -312,7 +312,7 @@
               <td><%= row.num_finished_products%></td>
               <td>
                 <form action="/viewCompletedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
-                  <button class="info" type="submit">View Event</button>
+                  <button class="info" type="submit">View</button>
                 </form>
               </td>
               <td>
@@ -346,7 +346,7 @@
 <br>
   <!--Log out button-->
   <form action="/logout" method="get">
-    <button type="submit" style="margin-left: 30px;">Log Out</button>
+    <button type="submit" style="margin-left: 50px;">Log Out</button>
   </form>
 
 <script>
