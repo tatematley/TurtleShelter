@@ -11,12 +11,13 @@
     <style>
         body {
             background-color: #F1F0F1; /* Light gray background */
-            height: 100vh; /* Full viewport height */
+            height: 50vh; /* Full viewport height */
             margin: 0;
             display: flex;
             flex-direction: column; /* Stack items vertically */
             justify-content: center; /* Center vertically */
             align-items: center; /* Center horizontally */
+            padding-top: 60px; /* Add padding to push content down */
         }
 
         .card {
@@ -24,25 +25,28 @@
             padding: 20px;
             border-radius: 0px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 0px; /* Add margin to create space from navbar */
         }
 
         .btn-primary {
-            background-color: #1F5476;
+            background-color: orange;
             border-color: darkgrey;
     
         }
         
         .btn-primary:hover {
-            background-color: #153D53;
+            background-color: orange;
         }
 
     </style>
 </head>
 <body>
+    <!--Navigation Bar-->
+    <%- include('partials/navbar', { page: 'login', security: security }) %>
     
     <!-- Centered Login Form -->
     <div class="card">
-        <h2 class="text-center mb-4" style="color: #1F5476;">Login</h2>
+        <h2 class="text-center mb-4" style="color: orange;">Login</h2>
         <form action="/login" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
