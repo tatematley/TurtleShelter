@@ -38,10 +38,10 @@
         height: 100%;
         }
 
-        #Home {background-color: #00bfa5;}
-        #News {background-color: purple;}
-        #Contact {background-color: orange;}
-        #About {background-color: orange;}
+        #requested {background-color: #00bfa5;}
+        #planned {background-color: purple;}
+        #completed {background-color: orange;}
+        
     table {
   width: 80%;
   margin: 20px auto;
@@ -104,9 +104,9 @@ h1{
   color: white;
   border-radius: 5px;
 }
-.info:hover {
+.info2:hover {
   color: white;
-  border-color: #007bb5;
+  background-color: #00699a;
 }
 
     </style>
@@ -117,79 +117,190 @@ h1{
 
 
     <h1 >Event Management</h1>
-    <button class="tablink" onclick="openPage('Home', this, '#00bfa5')">Requested Events</button>
-<button class="tablink" onclick="openPage('News', this, 'purple')" id="defaultOpen">Upcoming Events</button>
-<button class="tablink" onclick="openPage('Contact', this, 'orange')">Completed Events</button>
+    <button class="tablink" onclick="openPage('requested', this, '#00bfa5')" id="defaultOpen">Requested Events</button>
+<button class="tablink" onclick="openPage('planned', this, 'purple')" >Upcoming Events</button>
+<button class="tablink" onclick="openPage('completed', this, 'orange')">Completed Events</button>
 
-<div id="Home" class="tabcontent">
-    <table>
-        <thead>
-          <tr>
-            <th>Event Name</th>
-            <th>Event Date</th>
-            <th>Host First Name</th>
-            <th>Host Last Name</th>
-            <th>Host Phone</th>
-            <th>Host Email</th>
-            <th>Zip</th>
-            <th>Actions</th>
-            <th></th>
-          </tr>
-        </thead>
-        
-        <tbody>
-          <% if (requestedEvents.length > 0) { %>
-            <% requestedEvents.forEach(row => { %>
-              <tr>
-                <input type="hidden" value="event_id">
-                <td><%= row.event_name %></td>
-                <td><%= new Date(row.event_date).toLocaleDateString('en-US') %></td> <!-- Format date -->
-                <td><%= row.host_first_name %></td>
-                <td><%= row.host_last_name%></td> 
-                <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
-                <td><%= row.host_email %></td> 
-                <td><%= row.zip %></td>
-                <td>
-                  <form action="/eventView/<%= row.id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
-                    <button class="info" type="submit">View Event Details</button>
-                  </form>
-                  <form action="/editEvent/<%= row.id %>" method="GET" style="display:inline;">
-                    <button class="info" type="submit">Edit</button>
-                  </form>
-                  <form action="/deleteEvent/<%= row.id %>" method="POST" style="display:inline;">
-                    <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-                    </form>
-                  
-                </td>
-                <td>
-                <form action="/confirmEvent/<%= row.id %>" method="GET" class="unique" style="display:inline;">
-                    <button class="info2" type="submit">Confirm Event</button>
-                </form>
-                </td>
-              </tr>
-            <% }) %>
-          <% } else { %>
+<!-- requested events tab-->
+<div id="requested" class="tabcontent">
+      <table>
+          <thead>
             <tr>
-              <td colspan="7">No data available</td>
+              <th>Event Name</th>
+              <th>Event Date</th>
+              <th>Host First Name</th>
+              <th>Host Last Name</th>
+              <th>Host Phone</th>
+              <th>Host Email</th>
+              <th>Actions</th>
+              <th></th>
             </tr>
-          <% } %>
-        </tbody>
-      </table>
-      <form action="/addEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+          </thead>
+          
+          <tbody>
+            <% if (events.length > 0) { %>
+              <% events.forEach(row => { %>
+                <% if (row.event_status === 'REQUESTED') { %> <!-- Check event_status -->
+                  <tr>
+                    <input type="hidden" value="event_id">
+                    <td><%= row.event_name %></td>
+                    <td><%= new Date(row.event_date).toLocaleDateString('en-US') %></td> <!-- Format date -->
+                    <td><%= row.host_first_name %></td>
+                    <td><%= row.host_last_name%></td> 
+                    <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
+                    <td><%= row.host_email %></td>
+                    <td>
+                      <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                        <button class="info" type="submit">View Event</button>
+                      </form>
+                      <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
+                        <button class="info" type="submit">Edit</button>
+                      </form>
+                      <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
+                        <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                      </form>
+                    </td>
+                    <td>
+                    <form action="/confirmEvent/<%= row.event_id %>" method="GET" class="unique" style="display:inline;">
+                        <button class="info2" type="submit">Confirm Event</button>
+                    </form>
+                    </td>
+                  </tr>
+                  <% } %> <!-- End of event_status condition -->
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="7">No data available</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        <form action="/addRequestedEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+          <button class="info" type="submit">Add</button>
+        </form>
+  </div>
+
+<!--planned events tab-->
+<div id="planned" class="tabcontent">
+  <table>
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Host First Name</th>
+        <th>Host Last Name</th>
+        <th>Host Phone</th>
+        <th>Host Email</th>
+        <th>Event Lead</th>
+        <th>Actions</th>
+        <th></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% if (events.length > 0) { %>
+        <% events.forEach(row => { %>
+          <% if (row.event_status === 'PLANNED') { %> <!-- Check event_status -->
+            <tr>
+              <input type="hidden" value="event_id">
+              <td><%= row.event_name %></td>
+              <td><%= new Date(row.event_date).toLocaleDateString('en-US') %></td> <!-- Format date -->
+              <td><%= row.host_first_name %></td>
+              <td><%= row.host_last_name%></td> 
+              <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
+              <td><%= row.host_email %></td> 
+              <td><%= row.event_lead %></td>
+              <td>
+                <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                  <button class="info" type="submit">View Event</button>
+                </form>
+                <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
+                  <button class="info" type="submit">Edit</button>
+                </form>
+                <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
+                  <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                  </form>
+              </td>
+              <td>
+              <form action="/eventOccurred/<%= row.event_id %>" method="GET" class="unique" style="display:inline;">
+                  <button class="info2" type="submit">Event Occurred</button>
+              </form>
+              </td>
+            </tr>
+            <% } %> <!-- End of event_status condition -->
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="7">No data available</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <form action="/addEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
         <button class="info" type="submit">Add</button>
-      </form>
-</div>
-<div id="News" class="tabcontent">
-  <h3>News</h3>
-  <p>Some news this fine day!</p>
-</div>
-<div id="Contact" class="tabcontent">
-  <h3>Contact</h3>
-  <p>Get in touch, or swing by for a cup of coffee.</p>
-</div>
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
+    </form>
+    </div>
+    </div>
+    <div id="Contact" class="tabcontent">
+      <h3>Contact</h3>
+      <p>Get in touch, or swing by for a cup of coffee.</p>
+    </div>
+
+<!--completed events tab-->
+<div id="completed" class="tabcontent">
+  <table>
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Attendance</th>
+        <th>Pockets</th>
+        <th>Collars</th>
+        <th>Envelopes</th>
+        <th>Vests</th>
+        <th>Completed Vests</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% if (events.length > 0) { %>
+        <% events.forEach(row => { %>
+          <% if (row.event_status === 'COMPLETED') { %> <!-- Check event_status -->
+            <tr>
+              <input type="hidden" value="event_id">
+              <td><%= row.event_name %></td>
+              <td><%= new Date(row.event_date).toLocaleDateString('en-US') %></td> <!-- Format date -->
+              <td><%= row.actual_attendance %></td>
+              <td><%= row.num_pockets%></td> 
+              <td><%= row.num_collars %></td> 
+              <td><%= row.num_envelopes %></td>
+              <td><%= row.num_vests%></td>
+              <td><%= row.num_finished_products%></td>
+              <td>
+                <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                  <button class="info" type="submit">View Event</button>
+                </form>
+                <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
+                  <button class="info" type="submit">Edit</button>
+                </form>
+                <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
+                  <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                  </form>
+              </td>
+            </tr>
+            <% } %> <!-- End of event_status condition -->
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="7">No data available</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <form action="/addEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+    <button class="info" type="submit">Add</button>
+  </form>
 </div>
 
 <script>
