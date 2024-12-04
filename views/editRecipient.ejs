@@ -83,58 +83,33 @@
     <%- include('partials/navbar', { page: 'home' }) %>
 
     <br>
-    <form action="/editUser" method="post">
+    <form action="/editRecipient" method="post">
         <fieldset>
-            <legend><h1>Edit User</h1></legend>
-            <!-- user id does not display-->
-            <input type="hidden" id="user_id" name="user_id" value="<%= user[0].user_id %>">
-
-            <!-- first name -->
-            <label for="user_first_name">First Name: </label>
-            <input type="text" id="user_first_name" name="user_first_name" value="<%= user[0].user_first_name %>">
-            <br><br>
-
-            <!-- last name -->
-            <label for="user_last_name">Last Name: </label>
-            <input type="text" id="user_last_name" name="user_last_name" value="<%= user[0].user_last_name %>">
-            <br><br>
-
-            <!-- email -->
-            <label for="user_email">Email: </label>
-            <input type="text" id="user_email" name="user_email" value="<%= user[0].user_email %>">
-            <br><br>
-
-            <!-- phone -->
-            <label for="user_phone">Phone Number: </label>
-            <input type="text" id="user_phone" name="user_phone" value="<%= user[0].user_phone %>">
-            <br><br>
-
-            <!-- position dropdown -->
-            <label for="user_position">Position: </label>
-            <select name="user_position" id="user_position">
-                <option value="OWNER">Owner</option>
-                <option value="SEWING INSTRUCTOR">Sewing Instructor</option>
-                <option value="HELPER">Helper</option>
+            <legend><h1>Edit Recipient</h1></legend>
+            <input type="hidden" id="vest_id" name="vest_id" value="<%= vest[0].vest_id %>">
+            <label for="vest_first_name">First Name</label>
+            <input type="text" id="vest_first_name" name="vest_first_name" value="<%= vest[0].vest_first_name %>">
+            <label for="vest_last_name">Last Name</label>
+            <input type="text" id="vest_last_name" name="vest_last_name" value="<%= vest[0].vest_last_name %>">
+            <label for="vest_county">County</label>
+            <input type="text" id="vest_county" name="vest_county" value="<%= vest[0].vest_county %>">
+            <label for="vest_state">State</label>
+            <input type="text" id="vest_state" name="vest_state" value="<%= vest[0].vest_state %>">
+            <label for="vest_size">Vest Size</label>
+            <select name="vest_size" id="vest_size">
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="XXXL">XXXL</option>
+                <option value="XXXXL">XXXXL</option>
             </select>
             <br><br>
-
-            <!-- start year -->
-            <label for="user_start_year">Start Year: </label>
-            <input type="date" id="user_start_year" name="user_start_year" value="<%= user[0].user_start_year %>">
-            <br><br>
-
-            <!-- county -->
-            <label for="user_county">County: </label>
-            <input type="text" id="user_county" name="user_county" value="<%= user[0].user_county %>">
-            <br><br>
-
-            <!-- state -->
-            <label for="user_state">State: </label>
-            <input type="text" id="user_state" name="user_state" value="<%= user[0].user_state %>">
         </fieldset>
         <br>
         <button type="submit">Save</button>
     </form>
 </body>
 </html>
-

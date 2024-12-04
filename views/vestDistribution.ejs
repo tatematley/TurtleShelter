@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: white;
+        }
+  
+        label {
+            font-size: 2rem;
+            margin-left: 30px;
+            color: rgb(34, 34, 34);
+        }
+  
+        table {
+            width: 95%;
+            margin-right: 30px;
+            margin-left: 30px;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2);
+        }
+  
+        td {
+            padding: 5px;
+            text-align: center;
+        }
+  
+        tr:nth-child(even) td {
+            background-color: #e3f3fb;
+        }
+  
+        th{
+            padding: 8px;
+            text-align: center;
+        }
+  
+        thead {
+            background-color: #169282ea;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+  
+        button {
+            background-color: #169282ea;
+            color: white;
+            border-radius: 4px !important;
+            padding: 8px 12px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+  
+        button:hover {
+            background-color: #0c7466ea;
+            transform: scale(1.05);
+        }
+  
+        button:active {
+            background-color: #0c7466ea;
+        }
+  
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+  
+        .pagination a {
+            color: #0c7466ea;
+            text-decoration: none;
+            margin: 10px 30px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+  
+        .pagination a:hover {
+            background-color: #0c7466ea;
+        }
+  
+        .pagination .active {
+            background-color: #0c7466ea;
+            color: white;
+            border-color: #0c7466ea;
+        }
+    </style>
+</head>
+<body>
+     <!-- Navbar -->
+     <%- include('partials/navbar', { page: 'vestDistribution', security: security }) %>
+    <br>
+
+     <label><b>Vest Inventory and Distribution</b></label>
+     <br>
+
+     <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>County</th>
+                <th>State</th>
+                <th>Vest Size</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for (let iCount = 0; iCount < vest.length; iCount++) { %>
+                <tr>
+                    <td><%= vest[iCount].vest_first_name %></td>
+                    <td><%= vest[iCount].vest_last_name %></td>
+                    <td><%= vest[iCount].vest_county %></td>
+                    <td><%= vest[iCount].vest_state %></td>
+                    <td><%= vest[iCount].vest_state %></td>
+                    <td>
+                        <form action="/editRecipient/<%= vest[iCount].vest_id %>" method="get">
+                            <button>Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/deleteRecipient/<%= vest[iCount].vest_id %>" method="post">
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+     </table>
+     <br><br>
+     <form action="/distributeVest" method="get">
+        <button type="submit">Add Recipient</button>
+     </form>
+</body>
+</html>

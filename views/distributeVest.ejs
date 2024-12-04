@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1F5476;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        form {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 1.2rem;
+            color: #1F5476;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #1f7646;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #1f7646;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #1f7646;
+        }
+        
+        fieldset {
+            border-radius: 8px;
+        }
+
+        legend {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form action="/distributeVest" method="post">
+        <fieldset>
+            <legend><h1>Distribute Vest</h1></legend>
+            <label for="vest_first_name">First Name</label>
+            <input type="text" name="vest_first_name" id="vest_first_name">
+            <br>
+            <label for="vest_last_name">Last Name</label>
+            <input type="text" name="vest_last_name" id="vest_last_name">
+            <br>
+            <label for="vest_county">County</label>
+            <input type="text" name="vest_county" id="vest_county">
+            <br>
+            <label for="vest_state">State</label>
+            <input type="text" name="vest_state" id="vest_state">
+            <br>
+            <label for="vest_size">Vest Size</label>
+            <select name="vest_size" id="vest_size">
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="XXXL">XXXL</option>
+                <option value="XXXXL">XXXXL</option>
+            </select>
+        </fieldset>
+        <button type="submit">Add Recipient</button>
+    </form>
+</body>
+</html>

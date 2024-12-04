@@ -100,9 +100,25 @@
             <label for="volunteer_email">Email Address:</label>
             <input type="email" id="volunteer_email" name="volunteer_email" required > 
 
-            <!-- Zip Code -->
-            <label for="zip">Zip Code:</label>
-            <input type="number" id="zip" name="zip" > 
+            <!-- County -->
+            <label for="volunteer_county">County:</label>
+            <input type="text" id="volunteer_county" name="volunteer_county">
+
+            <!-- State --> 
+             <label for="volunteer_state">State:</label>
+             <input type="text" id="volunteer_state" name="volunteer_state">
+
+            <!-- Volunteer Source-->
+            <label for="volunteer_source">How did you hear about us?</label>
+            <select id="volunteer_source" name="volunteer_source">
+                <option value="family/friend">Family/Friend</option>
+                <option value="church_event">Church Event</option>
+                <option value="social_media">Social Media</option>
+                <option value="search_engine">Search Engine Search</option>
+                <option value="podcast">Podcast</option>
+                <option value="word_of_mouth">Word of Mouth</option>
+                <option value="other">Other</option>
+            </select>
 
             <!-- Sewing Level -->
             <label for="sewing_level">Sewing Level:</label>
@@ -116,9 +132,10 @@
             <label for="num_monthly_hours">Monthly Number of Hours:</label>
             <input type="number" id="num_monthly_hours" name="num_monthly_hours" > 
 
-            <!-- Number of Volunteers -->
-            <label for="num_volunteers">Number of Volunteers:</label>
-            <input type="number" id="num_volunteers" name="num_volunteers" required > 
+            <!-- Notes area-->
+            <label for="notes">Notes:</label>
+            <textarea name="notes" id="notes"></textarea>
+
 
             <!-- Submit Button -->
             <button type="submit">Save</button>
