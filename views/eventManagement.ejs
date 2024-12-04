@@ -150,7 +150,7 @@ h1{
                     <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
                     <td><%= row.host_email %></td>
                     <td>
-                      <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                      <form action="/viewRequestedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                         <button class="info" type="submit">View Event</button>
                       </form>
                       <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
@@ -211,7 +211,7 @@ h1{
               <td><%= row.host_email %></td> 
               <td><%= row.event_lead %></td>
               <td>
-                <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                <form action="/viewPlannedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                   <button class="info" type="submit">View Event</button>
                 </form>
                 <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
@@ -278,7 +278,7 @@ h1{
               <td><%= row.num_vests%></td>
               <td><%= row.num_finished_products%></td>
               <td>
-                <form action="/eventView/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
+                <form action="/viewCompletedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                   <button class="info" type="submit">View Event</button>
                 </form>
                 <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
