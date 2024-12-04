@@ -83,6 +83,50 @@
             font-size: 1.2rem;
         }
 
+        /* Carousel and Text Container Styling */
+        .text-carousel-wrapper {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 0; /* Only vertical padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-carousel-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%; /* Full width of the page */
+            padding: 0 20px; /* Optional padding for spacing near edges */
+        }
+
+        .text-section {
+            max-width: 50%;
+            text-align: left;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: #fff;
+        }
+
+        #vestCarousel {
+            flex: 1;
+            max-width: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-inner img {
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(100%);
+        }
+
         /* Carousel Section */
         #vestCarousel {
             margin: 40px auto;
@@ -106,24 +150,7 @@
         }
 
 
-        /* Text and Carousel Container Styling */
-        .text-carousel-container {
-            display: flex;
-            justify-content: space-between; /* Create space between text and carousel */
-            align-items: flex-start; /* Align items to the top */
-            gap: 20px; /* Add spacing between text and carousel */
-            margin: 40px auto; /* Center container and add space around it */
-            max-width: 1200px; /* Restrict the width of the section */
-        }
-
-        /* Text Section */
-        .text-section {
-            flex: 1; /* Allow text section to take up available space */
-            max-width: 50%; /* Limit width of the text section */
-            text-align: left; /* Align text to the left */
-            font-size: 50px;
-            font-weight: bold;
-        }
+        
 
         /* Footer styling */
         footer {
@@ -221,11 +248,11 @@
             </div>
             <div class="stat-box">
                 <h3>22° F</h3>
-                <span>Northern Average Winter Tempuratures </span>
+                <span>Northern States's Average Winter Tempuratures </span>
             </div>
             <div class="stat-box">
-                <h3>908</h3>
-                <span>Vests Distributed in November</span>
+                <h3>700</h3>
+                <span>Homeless People Die from Hypothermia in the US Each Year</span>
             </div>
         </div>
     </div>
@@ -237,71 +264,73 @@
 
 
     <!-- Image and Text Section -->
-    <div class="image-text-container">
-        <img src="/vest6.jpg" alt="Example Vest">
-        <p>One winter when Jen was homeless, 7 of her friends froze to death.  
+    <div class="text-carousel-wrapper">
+        <div class="image-text-container">
+            <img src="/vest6.jpg" alt="Example Vest">
+            <p>One winter when Jen was homeless, 7 of her friends froze to death.  
 
-        <br><br>
-        Jen is no longer homeless and has figured out a solution:
-        High-tech foam vests that are inexpensive,
-        keep a person warm to 10 degrees below zero, help SAVE lives, and alleviate suffering.
+            <br><br>
+            Jen is no longer homeless and has figured out a solution:
+            High-tech foam vests that are inexpensive,
+            keep a person warm to 10 degrees below zero, help SAVE lives, and alleviate suffering.
 
-        <br><br>
-        A high-tech but simple solution to help save lives - 
-        a portable "shelter" you can carry with you, just like a turtle...
+            <br><br>
+            A high-tech but simple solution to help save lives - 
+            a portable "shelter" you can carry with you, just like a turtle...
 
-        <br><br>
-        YOU can request vests for your community - and you can make vests and have your friends, business colleagues, church members, or club make vests, too!</p>
-    </div>
-
-    <!-- Text and Carousel Section -->
-    <div class="text-carousel-container">
-        <!-- Text Section -->
-        <div class="text-section">
-            <h2>Over 5,500 vests have been made and distributed by volunteers like you.</h2>
+            <br><br>
+            YOU can request vests for your community - and you can make vests and have your friends, business colleagues, church members, or club make vests, too!</p>
         </div>
 
-    <!-- Carousel Section -->
-    <div id="vestCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/vest1.jpg" class="d-block w-100" alt="Vest 1">
+        <!-- Text and Carousel Section -->
+        <div class="text-carousel-container">
+            <!-- Text Section -->
+            <div class="text-section">
+                <h2>Over 5,900 vests have been made and distributed by volunteers like you.</h2>
             </div>
-            <div class="carousel-item">
-                <img src="/vest2.jpg" class="d-block w-100" alt="Vest 2">
+
+        <!-- Carousel Section -->
+        <div id="vestCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/vest1.jpg" class="d-block w-100" alt="Vest 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest2.jpg" class="d-block w-100" alt="Vest 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest3.jpg" class="d-block w-100" alt="Vest 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest4.jpg" class="d-block w-100" alt="Vest 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest5.jpg" class="d-block w-100" alt="Vest 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest7.jpg" class="d-block w-100" alt="Vest 7">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest8.jpg" class="d-block w-100" alt="Vest 8">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest9.jpg" class="d-block w-100" alt="Vest 9">
+                </div>
+                <div class="carousel-item">
+                    <img src="/vest10.jpg" class="d-block w-100" alt="Vest 10">
+                </div>
             </div>
-            <div class="carousel-item">
-                <img src="/vest3.jpg" class="d-block w-100" alt="Vest 3">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest4.jpg" class="d-block w-100" alt="Vest 4">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest5.jpg" class="d-block w-100" alt="Vest 5">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest7.jpg" class="d-block w-100" alt="Vest 7">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest8.jpg" class="d-block w-100" alt="Vest 8">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest9.jpg" class="d-block w-100" alt="Vest 9">
-            </div>
-            <div class="carousel-item">
-                <img src="/vest10.jpg" class="d-block w-100" alt="Vest 10">
-            </div>
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#vestCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#vestCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#vestCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#vestCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+        </div>
     </div>
 
     <!-- Footer -->
