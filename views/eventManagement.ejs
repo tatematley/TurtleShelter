@@ -6,17 +6,11 @@
     <title>Event Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Set height of body and the document to 100% to enable "full page tabs" */
-        body, html {
-        height: 100%;
-        margin: 0;
-        font-family: Arial;
-        }
 
         /* Style tab links */
         .tablink {
-        background-color: #555;
-        color: white;
+        background-color: rgb(202, 200, 200);
+        color: black;
         float: left;
         border: none;
         outline: none;
@@ -27,87 +21,105 @@
         }
 
         .tablink:hover {
-        background-color: #777;
+        background-color: rgb(173, 173, 173);
         }
 
         /* Style the tab content (and add height:100% for full page content) */
         .tabcontent {
-        color: white;
+        color: black;
         display: none;
         padding: 100px 20px;
         height: 100%;
         }
 
-        #requested {background-color: #00bfa5;}
-        #planned {background-color: purple;}
-        #completed {background-color: orange;}
+        #requested {background-color: rgba(211, 211, 211, 0.199);}
+        #planned {background-color: rgba(211, 211, 211, 0.199);}
+        #completed {background-color: rgba(211, 211, 211, 0.199);}
         
-    table {
-  width: 80%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  font-size: 12px; /* Slightly increase font size for readability */
-  border: 1px solid #007bb5; /* Teal-blue border around the table */
-  box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2); /* Subtle shadow for a clean look */
-}
-th, td {
-  border: 1px solid #007bb5; /* Teal-blue borders */
-  padding: 10px; /* Balanced padding for a cleaner appearance */
-  text-align: center;
-  line-height: 1.5; /* Better line height for readability */
-}
-th {
-  background-color: #007bb5; /* Teal-blue background for headers */
-  color: white; /* White text for contrast */
-  font-weight: bold;
-  text-transform: uppercase; /* Make header text stand out */
-}
-td {
-  background-color: #f9f9f9; /* Light background for cells */
-}
-.unique{
-    background-color: none;
-}
-tr:nth-child(even) td {
-  background-color: #e3f3fb; /* Light teal-blue for alternate rows */
-}
-tr:hover {
-  background-color: #c5e4f3; /* Highlight row on hover for better usability */
-  transition: background-color 0.3s; /* Smooth hover effect */
-}
-td{
-    color: black;
-}
-h1{
-    font-size: x-large;
-    color: black;
-    text-align: center;
-    position: relative;
-    padding: 20px;
-}
-/* Blue */
-.info {
-  border-color: #2196F3;
-  border-radius: 5px;
+        body {
+            background-color: white;
+        }
 
-}
+        label {
+            font-size: 2rem;
+            margin-left: 30px;
+            color: rgb(34, 34, 34);
+        }
 
-.info:hover {
-  background: #2196F3;
-  color: white;
-}
+        table {
+            width: 50% center;
+            margin-right: 30px;
+            margin-left: 30px;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 123, 181, 0.2);
+        }
 
-/* Blue */
-.info2 {
-  border-color: #2196F3;
-  background-color: #2196F3;
-  color: white;
-  border-radius: 5px;
-}
-.info2:hover {
-  color: white;
-  background-color: #00699a;
-}
+        td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #e3f3fb;
+        }
+
+        th{
+            padding: 8px;
+            text-align: center;
+        }
+
+        thead {
+            background-color: #169282ea;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #169282ea;
+            color: white;
+            border-radius: 4px !important;
+            padding: 8px 12px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0c7466ea;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #0c7466ea;
+        }
+
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            color: #0c7466ea;
+            text-decoration: none;
+            margin: 10px 30px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #0c7466ea;
+        }
+
+        .pagination .active {
+            background-color: #0c7466ea;
+            color: white;
+            border-color: #0c7466ea;
+        }
 
     </style>
 </head>
@@ -115,11 +127,14 @@ h1{
      <!-- Navbar -->
      <%- include('partials/navbar', { page: 'eventManagement', security: security }) %>
 
+     <br>
+    <h1 style="margin-left: 50px;"><b>Event Management</b></h1>
+    <br>
 
-    <h1 >Event Management</h1>
-    <button class="tablink" onclick="openPage('requested', this, '#00bfa5')" id="defaultOpen">Requested Events</button>
-<button class="tablink" onclick="openPage('planned', this, 'purple')" >Upcoming Events</button>
-<button class="tablink" onclick="openPage('completed', this, 'orange')">Completed Events</button>
+
+    <button class="tablink" onclick="openPage('requested', this, 'rgba(211, 211, 211, 0.199)')" id="defaultOpen">Requested Events</button>
+    <button class="tablink" onclick="openPage('planned', this, 'rgba(211, 211, 211, 0.199)')" >Upcoming Events</button>
+    <button class="tablink" onclick="openPage('completed', this, 'rgba(211, 211, 211, 0.199)')">Completed Events</button>
 
 <!-- requested events tab-->
 <div id="requested" class="tabcontent">
@@ -132,7 +147,9 @@ h1{
               <th>Host Last Name</th>
               <th>Host Phone</th>
               <th>Host Email</th>
-              <th>Actions</th>
+              <th></th>
+              <th></th>
+              <th></th>
               <th></th>
             </tr>
           </thead>
@@ -153,9 +170,13 @@ h1{
                       <form action="/viewRequestedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                         <button class="info" type="submit">View Event</button>
                       </form>
+                    </td>
+                    <td>
                       <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
                         <button class="info" type="submit">Edit</button>
                       </form>
+                    </td>
+                    <td>
                       <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
                         <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                       </form>
@@ -175,7 +196,9 @@ h1{
               <% } %>
             </tbody>
           </table>
-        <form action="/addRequestedEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+          
+        <br>
+        <form action="/addRequestedEvent" method="GET" style="margin-left: 30px;">
           <button class="info" type="submit">Add</button>
         </form>
   </div>
@@ -192,7 +215,9 @@ h1{
         <th>Host Phone</th>
         <th>Host Email</th>
         <th>Event Lead</th>
-        <th>Actions</th>
+        <th></th>
+        <th></th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -214,9 +239,13 @@ h1{
                 <form action="/viewPlannedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                   <button class="info" type="submit">View Event</button>
                 </form>
+              </td>
+              <td>
                 <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
                   <button class="info" type="submit">Edit</button>
                 </form>
+              </td>
+              <td>
                 <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
                   <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                   </form>
@@ -236,10 +265,11 @@ h1{
         <% } %>
       </tbody>
     </table>
-    <form action="/addPlannedEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+    <br>
+    <form action="/addPlannedEvent" method="GET" style="margin-left: 30px;">
         <button class="info" type="submit">Add</button>
     </form>
-    </div>
+    
     </div>
     <div id="Contact" class="tabcontent">
       <h3>Contact</h3>
@@ -259,7 +289,10 @@ h1{
         <th>Envelopes</th>
         <th>Vests</th>
         <th>Completed Vests</th>
-        <th>Actions</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     
@@ -281,16 +314,20 @@ h1{
                 <form action="/viewCompletedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                   <button class="info" type="submit">View Event</button>
                 </form>
+              </td>
+              <td>
                 <form action="/editEvent/<%= row.event_id %>" method="GET" style="display:inline;">
                   <button class="info" type="submit">Edit</button>
                 </form>
+              </td>
+              <td>
                 <form action="/deleteEvent/<%= row.event_id %>" method="POST" style="display:inline;">
                   <button class="info" type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                   </form>
               </td>
             </tr>
             <% } %> <!-- End of event_status condition -->
-          <% }) %>
+            <% }) %>
         <% } else { %>
           <tr>
             <td colspan="7">No data available</td>
@@ -298,15 +335,20 @@ h1{
         <% } %>
       </tbody>
     </table>
-  <form action="/addCompletedEvent" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+
+  <br>
+  <form action="/addCompletedEvent" method="GET" style="margin-left: 30px;">
     <button class="info" type="submit">Add</button>
   </form>
-</div>
 
-<!--Log out button-->
-<form action="/logout" method="get">
-  <button type="submit" style="margin-left: 10%;">Log Out</button>
-</form>
+
+</div>
+<br>
+  <!--Log out button-->
+  <form action="/logout" method="get">
+    <button type="submit" style="margin-left: 30px;">Log Out</button>
+  </form>
+
 <script>
     function openPage(pageName, elmnt, color) {
         // Hide all tab content by default
