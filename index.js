@@ -47,46 +47,128 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "izzy1213",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.RDS_PORT || 5433,
+        port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     }
 }); 
-const requested = 'REQUESTED'
-const planned = 'PLANNED'
-const completed = 'COMPLETED'
 
 // route to event management
 app.get('/eventManagement', (req, res) =>{
     knex('events')
-    .select(
-        'event_id',
-        'event_name',
-        'host_first_name',
-        'host_last_name',
-        'host_phone',
-        'host_email',
-        'zip',
-        'attendance_estimate',
-        'event_status',
-        'activity_type',
-        'event_date',
-        'start_time',
-        'end_time',
-        'share_story',
-        'event_lead',
-    )
-    .where('event_status', requested)
-    .orderBy('event_date', 'desc')
-    .then(requestedEvents => {
-        res.render('eventManagement', {requestedEvents})
+    .select()
+    .orderBy('event_date', 'asc')
+    .then(events => {
+        res.render('eventManagement', { events });
     })
     .catch(error => {
-        console.error('Error fetching Pokémon for editing:', error);
+        console.error('Error fetching event for editing:', error);
         res.status(500).send('Internal Server Error');
       });
     });
+
+// delete event
+app.post('/deleteEvent/:id', (req, res) => {
+    const id = req.params.id;
+    knex('events')
+      .where('event_id', id)
+      .del() // Deletes the record with the specified ID
+      .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the Pokémon list after deletion
+      })
+      .catch(error => {
+        console.error('Error deleting Event:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
+  app.get('/addRequestedEvent', (req, res) => {
+    res.render('addRequestedEvent');
+  });
+
+  app.post('/events', (req, res) => {
+    // Extract form values from req.body
+    const event_name = req.body.event_name.toUpperCase() || '';
+    const host_first_name = req.body.host_first_name.toUpperCase() || ''; 
+    const host_last_name = req.body.host_last_name.toUpperCase() || '';
+    const host_phone = req.body.host_phone || '';
+    const host_email = req.body.host_email.toUpperCase() || '';// Default to empty string if not provided
+    const host_zip = parseInt(req.body.host_zip); // Convert to integer
+    const event_date = req.body.event_date ;
+    const start_time = req.body.start_time;
+    const end_time = req.body.end_time
+    const share_story = req.body.jen_story ? 'Y' : 'N'; // Checkbox returns true or undefined
+    const activity_type = req.body.activity_type; // Default to 'U' for Unknown
+    const volunteer_num = parseInt(req.body.volunteer_num); // Convert to integer
+    const event_status = 'REQUESTED'
+    // Insert the new Pokémon into the database
+    knex('events')
+        .insert({
+            event_name: event_name,
+            host_first_name: host_first_name,
+            host_last_name: host_last_name,
+            host_phone: host_phone,
+            host_email: host_email,
+            zip: host_zip,
+            activity_type: activity_type,
+            event_date: event_date,
+            start_time: start_time,
+            end_time: end_time,
+            attendance_estimate: volunteer_num,
+            share_story: share_story,
+            event_status: event_status
+        })
+        .then(() => {
+            res.redirect('/events'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+        })
+        .catch(error => {
+            console.error('Error adding :', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+
+  app.post('/addRequestedEvent', (req, res) => {
+    // Extract form values from req.body
+    const event_name = req.body.event_name.toUpperCase() || '';
+    const host_first_name = req.body.host_first_name.toUpperCase() || ''; 
+    const host_last_name = req.body.host_last_name.toUpperCase() || '';
+    const host_phone = req.body.host_phone || '';
+    const host_email = req.body.host_email.toUpperCase() || '';// Default to empty string if not provided
+    const host_zip = parseInt(req.body.host_zip); // Convert to integer
+    const event_date = req.body.event_date ;
+    const start_time = req.body.start_time;
+    const end_time = req.body.end_time
+    const share_story = req.body.jen_story ? 'Y' : 'N'; // Checkbox returns true or undefined
+    const activity_type = req.body.activity_type; // Default to 'U' for Unknown
+    const volunteer_num = parseInt(req.body.volunteer_num); // Convert to integer
+    const event_status = 'REQUESTED'
+    // Insert the new Pokémon into the database
+    knex('events')
+        .insert({
+            event_name: event_name,
+            host_first_name: host_first_name,
+            host_last_name: host_last_name,
+            host_phone: host_phone,
+            host_email: host_email,
+            zip: host_zip,
+            activity_type: activity_type,
+            event_date: event_date,
+            start_time: start_time,
+            end_time: end_time,
+            attendance_estimate: volunteer_num,
+            share_story: share_story,
+            event_status: event_status
+        })
+        .then(() => {
+            res.redirect('/eventManagement'); // Redirect to the Pokémon list page after adding, aka it goes back to the app.get route that you created
+        })
+        .catch(error => {
+            console.error('Error adding :', error);
+            res.status(500).send('Internal Server Error');
+        });
+  });
+  
 
 // get route for home page
 app.get('/', (req, res) =>{
