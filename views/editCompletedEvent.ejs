@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <!-- Link to Bootstrap and Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Form Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            z-index: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255); /* Slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            gap: 20px;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px; /* Space between inputs in the same row */
+        }
+
+        /* Inputs in each row */
+        .input-row input {
+            width: 60%; /* Adjust width as needed */
+            margin-bottom: 4px;
+        }
+
+        .input-row input[type="checkbox"] {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Optional: style labels */
+        .input-row label {
+            width: 100%;
+            margin-right: 2px;
+        }
+
+        fieldset {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
+            width: 100%;
+            height: 25px;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
+            border-color: #169282ea;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #169282ea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0c7466ea;
+        }
+
+        label {
+            font-size: .93rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+
+        /* Optional: If you want to change the width of the calendar dropdown */
+        .flatpickr-calendar {
+            width: 150px; /* Adjust the calendar width as needed */
+        }
+
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <%- include('partials/navbar', { page: 'events' }) %>
+
+    <div class="container">
+        <!-- Form Section -->
+        <form action="/editCompletedEvent/<%= eventName.event_id %>" method="POST">
+            <fieldset>
+                
+                <div class="form-section">
+                    <h2 style="color: #169282ea"><b>Edit Completed Event:</b></h2>
+                    <br>
+                    <div class="input-row">
+                        <label for="event_name" >Group Name:</label>
+                        <input type="text" id="event_name" name="event_name" value="<%= eventName.event_name%>" required>
+                        <br><br>
+
+                        <label for="host_first_name"  >First Name:</label>
+                        <input type="text" id="host_first_name" name="host_first_name" value="<%= eventName.host_first_name%>" required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="host_last_name">Last Name:</label>
+                        <input type="text" id="host_last_name" name="host_last_name"  value="<%= eventName.host_last_name%>" required>
+                        <br><br>
+
+                        <label for="host_phone">Phone Number:</label>
+                        <input type="tel" id="host_phone" name="host_phone" value="<%= eventName.host_phone%>"placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                        <br><br>
+                    </div>
+                    
+                    <div class="input-row">
+                        <label for="host_email">Email Address:</label>
+                        <input type="email" id="host_email" name="host_email" value="<%= eventName.host_email%>" required>
+                        <br><br>
+
+                        <label for="host_zip">Zip Code:</label>
+                        <input type="text" id="host_zip" name="host_zip" value="<%= eventName.zip%>" required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="activity_type">Activity Type:</label>
+                        <select id="activity_type" name="activity_type" style="font-size: 0.75rem;">
+                            <option value="sewing" <%= eventName.activity_type === 'sewing' ? 'selected' : ''%>>Sewing</option>
+                            <option value="non-sewing" <%= eventName.activity_type === 'non-sewing' ? 'selected' : ''%>>Non-Sewing</option>
+                            <option value="both" <%= eventName.activity_type === 'both' ? 'selected' : ''%>>Both</option>
+                        </select>
+                        <br><br>
+
+                        <label for="event_date">Event Date:</label>
+                        <input type="date" id="event_date" name="event_date" value="<%= eventName.event_date.toISOString().split('T')[0]%>" required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="start_time">Start Time:</label>
+                        <input type="time" id="start_time" name="start_time" value="<%= eventName.start_time%>" required>
+                        <br><br>
+
+                        <label for="end_time">End Time:</label>
+                        <input type="time" id="end_time" name="end_time" value="<%= eventName.end_time%>" required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="volunteer_num">Estimated Attendance:</label>
+                        <input type="number" id="volunteer_num" name="volunteer_num" value="<%= eventName.attendance_estimate%>" required>
+                        <br><br>
+
+                        <label for="event_lead">Event Lead:</label>
+                            <select id="event_lead" name="event_lead" style="font-size: 0.75rem;" required>
+                                <% eventLead.forEach(lead => { %>
+                                    <option value="<%= lead.user_id %>" <%= eventName.event_lead === lead.user_id ? 'selected' : '' %>><%= lead.event_lead %></option>
+                                <% }) %>
+                            </select>
+                            <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="actual_attendance">Event Attendance:</label>
+                        <input type="number" id="actual_attendance" name="actual_attendance" value="<%= eventName.actual_attendance%>" min="1">
+                        <br><br>
+
+                        <label for="duration_hours">Event Duration in Hours:</label>
+                        <input type="number" id="duration_hours" name="duration_hours" value="<%= eventName.duration_hours%>" value="0" min="0">
+                        <br><br>
+                    </div>
+
+                    <br><br>
+                    <h2 style="color: #169282ea"><b>Products Completed:</b></h2>
+                    <br>
+
+                        <label for="num_pockets">Pockets Completed:</label>
+                        <input type="number" id="num_pockets" name="num_pockets" style="width: 60%;" value="<%= eventName.num_pockets%>" min="0">
+                        <br>
+
+                        <label for="num_collars">Collars Completed:</label>
+                        <input type="number" id="num_collars" name="num_collars" style="width: 60%;" value="<%= eventName.num_collars%>" min="0">
+                        <br>
+
+                        <label for="num_envelopes">Envelopes Completed:</label>
+                        <input type="number" id="num_envelopes" name="num_envelopes" style="width: 60%;" value="<%= eventName.num_envelopes%>" min="0">
+                        <br>
+
+                        <label for="num_vests">Vests (partial) Completed:</label>
+                        <input type="number" id="num_vests" name="num_vests" style="width: 60%;" value="<%= eventName.num_vests%>" min="0">
+                        <br>
+
+                        <label for="num_finished_products">Vest (full) Completed:</label>
+                        <input type="number" id="num_finished_products" name="num_finished_products" style="width: 60%;" value="<%= eventName.num_finished_products%>" min="0">
+                        <br><br>
+
+                        <input type="checkbox" id="jen_story" name="jen_story" value="Y" <%= eventName.share_story ? 'checked' : '' %>>
+                        <label for="jen_story">Did Jen Share Her Story?</label>
+                        <br><br>
+
+                    
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#end_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+        });
+
+        flatpickr("#start_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+        });
+    </script>
+
+<!-- Footer -->
+<%- include('partials/footer') %>
+</body>
+</html>
