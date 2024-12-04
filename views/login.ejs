@@ -38,11 +38,41 @@
             background-color: orange;
         }
 
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            background-color: #f1f1f1; /* Optional background color */
+        }
+
+        /* Style the circular image */
+        .circle-image {
+            width: 150px; /* Set the desired width */
+            height: 150px; /* Set the desired height */
+            border-radius: 50%; /* Makes the image a perfect circle */
+            overflow: hidden; /* Ensures the image stays within the circle */
+            border: 4px solid #00bfa5; /* Optional border around the circle */
+        }
+
+        /* Ensure the image fits the circle */
+        .circle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image scales nicely */
+        }
     </style>
 </head>
 <body>
     <!--Navigation Bar-->
     <%- include('partials/navbar', { page: 'login', security: security }) %>
+
+    <!--Photo circle-->
+    <div class="circle-container">
+        <div class="circle-image">
+            <img src="logo.png" alt="Circular Photo">
+        </div>
+    </div>
     
     <!-- Centered Login Form -->
     <div class="card">
