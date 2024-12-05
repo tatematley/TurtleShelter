@@ -163,14 +163,17 @@
 </head>
 <body>
      <!-- Navbar -->
-     <%- include('partials/navbar', { page: 'eventManagement', security: security }) %>
+     <%- include('partials/navbar', { page: 'eventManagement', security: security, hiddenView: hiddenView, hiddenSubmit: hiddenSubmit }) %>
 
      <!--Search Bar-->
       <div class="search-container">
           <form action="/searchEvents" method="GET">
               <input type="text" name="query" placeholder="Search Events...">
-              <button type="submit">Search</button>
-          </form>
+              <button type="submit"<%=hiddenView%>>Search</button>
+        </form>
+        <form action="/eventManagement" method="GET">
+            <button type="submit" <%=hiddenSubmit%>>View All</button>
+        </form>
       </div>
      <br>
     <h1 style="margin-left: 50px;"><b>Event Management</b></h1>
