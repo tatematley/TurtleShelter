@@ -118,7 +118,7 @@
                     <input type="text" id="host_last_name" name="host_last_name" required>
                     <br><br>
                     <label for="host_phone">Phone Number:</label>
-                    <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                    <input type="tel" id="host_phone" name="host_phone" placeholder="1234567890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
                     <br><br>
                     <label for="host_email">Email Address:</label>
                     <input type="email" id="host_email" name="host_email">
@@ -130,10 +130,12 @@
                         <option value="non-sewing">Non-Sewing</option>
                         <option value="both">Both</option>
                     </select>
-                    <br><br>
+                    <br><br><br>
+
                     <label for="num_sewers">How Many in your Group can Sew?</label>
                     <input type="number" id="num_sewers" name="num_sewers" value="0" required>
                     <br><br>
+
                     <label for="num_host_machines">How Sewing Machines can your Group Provide?</label>
                     <input type="number" id="num_host_machines" name="num_host_machines" value="0" required>
                     <br><br>
@@ -141,9 +143,11 @@
                     <label for="event_date">Event Date:</label>
                     <input type="date" id="event_date" name="event_date" required>
                     <br><br>
+
                     <label for="start_time">Start Time:</label>
                     <input type="time" id="start_time" name="start_time" required>
                     <br><br>
+
                     <label for="end_time">End Time:</label>
                     <input type="time" id="end_time" name="end_time" required>
                     <br><br>
@@ -171,13 +175,12 @@
                                 <option value="<%= state %>"><%= state %></option>
                             <% }); %>
                         </select>
-                        <br><br>
+                        <br><br><br>
+
                     <label for="volunteer_num">Number of Volunteers:</label>
                     <input type="number" id="volunteer_num" name="volunteer_num" value="1" min="0" required>
                     <br><br>
-                    <label for="jen_story">Do you want Jen to share her story?</label>
-                    <input type="checkbox" id="jen_story" name="jen_story" value="Yes">
-                    <br><br>
+                    
                     <label for="event_source">How did you Hear about us?:</label>
                     <select id="event_source" name="event_source">
                         <option value="family/friend">Family/Friend</option>
@@ -188,7 +191,12 @@
                         <option value="word_of_mouth">Word of Mouth</option>
                         <option value="other">Other</option>
                     </select>
+                    <br><br><br>
+
+                    <input type="checkbox" id="jen_story" name="jen_story" value="Yes" style="margin-right: 10px;">
+                    <label for="jen_story"> Do you want Jen to share her story?</label>                   
                     <br><br>
+
                     <label for="notes">Additional Notes:</label>
                     <input type="text" id="notes" name="notes" >
                     <br><br>
