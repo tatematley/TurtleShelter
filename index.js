@@ -1001,24 +1001,26 @@ app.get('/searchUsers', async (req, res) => {
 // Route for handling search queries
 app.get('/searchEvents', async (req, res) => {
     const query = req.query.query.toUpperCase(); // Get the search query from the URL
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = 15; // Show 15 volunteers per page
-    const offset = (page - 1) * limit; // Calculate offset for the database query
-    // Fetch the total number of volunteer for pagination
-    const totalVolunteer = await knex("users").count('* as count').first();
-    const totalPages = Math.ceil(totalVolunteer.count / limit);
+    // const page = parseInt(req.query.page) || 1; // Default to page 1
+    // const limit = 15; // Show 15 volunteers per page
+    // const offset = (page - 1) * limit; // Calculate offset for the database query
+    // // Fetch the total number of volunteer for pagination
+    // const totalVolunteer = await knex("users").count('* as count').first();
+    // const totalPages = Math.ceil(totalVolunteer.count / limit);
 
     if (!query) {
-        return res.render('search', { users: [] }); // Render with no results if no query
+        return res.render('search', { events: [] }); // Render with no results if no query
     }
 
     try {
-        const users = await knex('volunteers')
+        const events = await knex('events')
             .select('*')
-            .where('user_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
-            .limit(limit)
-            .offset(offset);
-        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+            .where('host_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
+            .orWhere('host_last_name', 'like', `%${query}%`)
+            .orWhere('event_name', 'like', `%${query}%`)
+            // .limit(limit)
+            // .offset(offset);
+        res.render('eventManagement', { events, security });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
