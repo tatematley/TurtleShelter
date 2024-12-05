@@ -16,7 +16,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "Nakedalone12!",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -78,6 +78,7 @@ app.post('/deleteEvent/:id', (req, res) => {
         res.status(500).send('Internal Server Error');
       });
   });
+
   app.get('/addRequestedEvent', (req, res) => {
     res.render('addRequestedEvent', {security});
   });
@@ -931,14 +932,20 @@ app.post("/volunteer", (req,res) => {
 });
 
 // post route to delete volunteer
-app.post("/deleteVolunteer/:id", (req,res) => {
-    knex("volunteer”).where(“volunteer_id", req.params.id).del().then(volunteer =>{
-        res.redirect("/volunteerManagement");
-    }).catch(err => {
-        console.log(err)
-        res.status(500).json({err});
-    });
-});
+app.post('/deleteVolunteer/:id', (req, res) => {
+    const id = req.params.id;
+    knex('volunteers')
+      .where('volunteer_id', id)
+      .del() // Deletes the record with the specified ID
+      .then(() => {
+        res.redirect('/volunteerManagement'); // Redirect to the Pokémon list after deletion
+      })
+      .catch(error => {
+        console.error('Error deleting Volunteer:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
 
 app.get("/vestDistribution", (req, res) => {
     let hiddenSubmit = "hidden";
