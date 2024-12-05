@@ -71,7 +71,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <%- include('partials/navbar', { page: 'home' }) %>
+    <%- include('partials/navbar', { page: 'home', security: security }) %>
 
     <br>
     <form action="/addUser" method="post">
