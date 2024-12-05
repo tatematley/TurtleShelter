@@ -7,139 +7,173 @@
     <title>Edit Volunteers</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+       body {
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f5f5f5;
         }
 
-        h1 {
+        .banner {
+            background: linear-gradient(rgba(92, 88, 88, 0.7), rgba(92, 88, 88, 0.7)),
+                        url('/kid.jpg') no-repeat center center;
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            color: #1F5476;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 3rem;
+            padding: 50px 20px;
         }
 
         form {
-            width: 600px;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 40px auto;
             padding: 20px;
-            border: 1px solid #ddd;
+            background: rgba(211, 211, 211, 0.199); /* Slight transparency */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
         }
 
         label {
-            font-size: 1.2rem;
-            color: #1F5476;
-            margin-bottom: 10px;
-            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
         }
 
-        input, select {
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 1rem;
-            box-sizing: border-box;
         }
 
-        button {
-            width: center;
-            background-color: #1f7646;
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #169282ea;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        button[type="submit"] {
+            background-color: #169282ea;
             color: white;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
-            padding: 10px;
-            font-size: 1.1rem;
+            border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s ease-in-out;
         }
 
-        button:hover {
-            background-color: #0d4b29;
-            transform: scale(1.05);
+        button[type="submit"]:hover {
+            background-color: #0c7466ea;
         }
 
-        button:active {
-            background-color: #1f7646;
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
         }
+
     </style>
 
 </head>
 <body>
-    
+    <!-- Navbar -->
+    <%- include('partials/navbar', { page: 'volunteerManagement'}) %>
+    <br>
+
     <form action="/editVolunteer/<%= volunteerRec.volunteer_id %>" method="POST">
-            <legend>
-                <h1>Edit Volunteer</h1>
-                <!-- First Name -->
-                <label for="volunteer_first_name">First Name</label>
-                <input type="text" id="volunteer_first_name" name="volunteer_first_name" value="<%= volunteerRec.volunteer_first_name %>" > 
+        <fieldset>
+            <legend><h2 style="color: #169282ea"><b>Edit Volunteer</b></h2></legend>
 
-                <!-- Last Name -->
-                <label for="volunteer_last_name">Last Name</label>
-                <input type="text" id="volunteer_last_name" name="volunteer_last_name" value="<%= volunteerRec.volunteer_last_name %>" > 
+            <!-- First Name -->
+            <label for="volunteer_first_name">First Name:</label>
+            <input type="text" id="volunteer_first_name" name="volunteer_first_name" value="<%= volunteerRec.volunteer_first_name %>"> 
 
-                <!-- Age -->
-                <label for="volunteer_age">Age</label>
-                <input type="number" id="volunteer_age" name="volunteer_age" value="<%= volunteerRec.volunteer_age %>" > 
+            <!-- Last Name -->
+            <label for="volunteer_last_name">Last Name:</label>
+            <input type="text" id="volunteer_last_name" name="volunteer_last_name" value="<%= volunteerRec.volunteer_last_name %>"> 
 
-                <!-- Phone -->
-                <label for="volunteer_phone">Phone Number</label>
-                <input type="text" id="volunteer_phone" name="volunteer_phone" value="<%= volunteerRec.volunteer_phone %>" > 
+            <!-- Age -->
+            <label for="volunteer_age">Age:</label>
+            <input type="number" id="volunteer_age" name="volunteer_age" value="<%= volunteerRec.volunteer_age %>"> 
 
-                <!-- Email -->
-                <label for="volunteer_email">Email Address</label>
-                <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteerRec.volunteer_email %>" > 
+            <!-- Phone -->
+            <label for="volunteer_phone">Phone Number:</label>
+            <input type="text" id="volunteer_phone" name="volunteer_phone" value="<%= volunteerRec.volunteer_phone %>"> 
 
-                <!-- County -->
-                <label for="volunteer_county">County:</label>
-                <input type="text" id="volunteer_county" name="volunteer_county" value="<%= volunteerRec.volunteer_county %>">
+            <!-- Email -->
+            <label for="volunteer_email">Email Address:</label>
+            <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteerRec.volunteer_email %>"> 
 
-                <!-- State-->
-                <label for="volunteer_state">State:</label>
-                <input type="text" id="volunteer_state" name="volunteer_state" value="<%= volunteerRec.volunteer_state %>">
+            <!-- County -->
+            <label for="volunteer_county">County:</label>
+            <input type="text" id="volunteer_county" name="volunteer_county" value="<%= volunteerRec.volunteer_county %>">
 
-                <!-- Volunteer Source-->
-                <label for="volunteer_source">How did you hear about us?</label>
-                <select id="volunteer_source" name="volunteer_source">
-                    <option value="family/friend">Family/Friend</option>
-                    <option value="church_event">Church Event</option>
-                    <option value="social_media">Social Media</option>
-                    <option value="search_engine">Search Engine Search</option>
-                    <option value="podcast">Podcast</option>
-                    <option value="word_of_mouth">Word of Mouth</option>
-                    <option value="other">Other</option>
-                </select>
+            <!-- State -->
+            <label for="volunteer_state">State:</label>
+            <input type="text" id="volunteer_state" name="volunteer_state" value="<%= volunteerRec.volunteer_state %>">
 
-                <!-- Sewing Level -->
-                <label for="sewing_level">Sewing Level</label>
-                <select type="text" id="sewing_level" name="sewing_level" required>
-                    <option value= "beginner" <%= volunteerRec.sewing_level === "beginner" ? "selected" : "" %>>Beginner</option>
-                    <option value="intermediate" <%= volunteerRec.sewing_level === "intermediate" ? "selected" : "" %>>Intermediate</option>
-                    <option value="experienced" <%= volunteerRec.sewing_level === "experienced" ? "selected" : "" %>>Experienced</option>
-                </select> 
+            <!-- Volunteer Source -->
+            <label for="volunteer_source">How did you hear about us?</label>
+            <select id="volunteer_source" name="volunteer_source">
+                <option value="family/friend">Family/Friend</option>
+                <option value="church_event">Church Event</option>
+                <option value="social_media">Social Media</option>
+                <option value="search_engine">Search Engine Search</option>
+                <option value="podcast">Podcast</option>
+                <option value="word_of_mouth">Word of Mouth</option>
+                <option value="other">Other</option>
+            </select>
 
-                <!-- Monthly Number of Hours -->
-                <label for="num_monthly_hours">Monthly Number of Hours</label>
-                <input type="number" id="num_monthly_hours" name="num_monthly_hours" value="<%= volunteerRec.num_monthly_hours %>"> 
+            <!-- Sewing Level -->
+            <label for="sewing_level">Sewing Level:</label>
+            <select id="sewing_level" name="sewing_level">
+                <option value="beginner" <%= volunteerRec.sewing_level === "beginner" ? "selected" : "" %>>Beginner</option>
+                <option value="intermediate" <%= volunteerRec.sewing_level === "intermediate" ? "selected" : "" %>>Intermediate</option>
+                <option value="experienced" <%= volunteerRec.sewing_level === "experienced" ? "selected" : "" %>>Experienced</option>
+            </select> 
 
-                <!-- Notes area-->
-                <label for="notes">Notes:</label>
-                <textarea name="notes" id="notes" ><%= volunteerRec.notes %></textarea>
+            <!-- Monthly Number of Hours -->
+            <label for="num_monthly_hours">Monthly Number of Hours:</label>
+            <input type="number" id="num_monthly_hours" name="num_monthly_hours" value="<%= volunteerRec.num_monthly_hours %>"> 
 
-                <!-- Submit Button -->
-                <button type="submit">Save Changes</button>
+            <!-- Notes -->
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes"><%= volunteerRec.notes %></textarea>
 
-            </legend>
-
+            <br>
+            <!-- Submit Button -->
+            <button type="submit">Save Changes</button>
+        </fieldset>
     </form>
-    
 </body>
+
 </html>
