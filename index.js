@@ -17,9 +17,9 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "izzy1213",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.RDS_PORT || 5433,
+        port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     },
     pool: {
@@ -724,7 +724,8 @@ app.get('/editUser/:id', (req, res) => {
                 'login_info.username',
                 'login_info.password')
                 
-                .where('users.user_id', req.params.id).then(myusers => {
+                .where('users.user_id', req.params.id)
+                .first().then(myusers => {
                     res.render('editUser', {user: myusers, security})
                 }).catch(err => {
                     console.log(err);
@@ -733,25 +734,67 @@ app.get('/editUser/:id', (req, res) => {
 });
 
 // podt route for edit user
-app.post('/editUser', (req, res) => {
-    knex('users').join('login_info', 'users.user_id', '=', 'login_info.user_id')
-    .where('user_id', parseInt(req.body.user_id))
-    .update({
-        'users.user_first_name': req.body.user_first_name.toUpperCase(),
-        'users.user_last_name': req.body.user_last_name.toUpperCase(),
-        'users.user_email': req.body.user_email,
-        'users.user_phone': req.body.user_phone,
-        'users.user_position': req.body.user_position,
-        'users.user_start_year': req.body.user_start_year,
-        'users.user_county': req.body.user_county.toUpperCase(),
-        'users.user_state': req.body.user_state.toUpperCase(),
-        'login_info.username': req.body.username,
-        'login_info.password': req.body.password
+app.post('/editUser/:id', async (req, res) => {
+    const trx = await knex.transaction(); // Start a transaction
+    try {
+        const userId = req.params.id; // Get the user_id from the URL parameters
 
-    }).then(myusers => {
+        // Validate and format input
+        const userState = (req.body.user_state || '').toUpperCase();
+        if (userState.length > 2) {
+            throw new Error('State abbreviation must be 2 characters');
+        }
+
+        const userData = {
+            user_first_name: req.body.user_first_name.toUpperCase() || '', 
+            user_last_name: req.body.user_last_name.toUpperCase() || '', 
+            user_email: req.body.user_email.toUpperCase() || '', 
+            user_phone: req.body.user_phone || '', 
+            user_position: req.body.user_position, 
+            user_start_year: req.body.user_start_year, 
+            user_county: req.body.user_county.toUpperCase() || '',  
+            user_state: req.body.user_state // Ensure it's a valid abbreviation
+        };
+
+        // Update the user data in the `users` table
+        const updatedUser = await trx('users')
+            .where('user_id', userId)
+            .update(userData);
+
+        if (!updatedUser) {
+            throw new Error(`User with ID ${userId} not found`);
+        }
+
+        // Prepare login information data
+        const loginData = {
+            username: req.body.username || '',
+            password: req.body.password || '' // Directly use the plain-text password
+        };
+
+        // Update login information in the `login_info` table
+        const updatedLogin = await trx('login_info')
+            .where('user_id', userId)
+            .update(loginData);
+
+        if (!updatedLogin) {
+            // Optional: Handle cases where no login_info exists for this user
+            console.warn(`No login_info found for user ID ${userId}.`);
+        }
+
+        // Commit the transaction if everything goes well
+        await trx.commit();
+
+        // Redirect after successful operation
         res.redirect('/userManagement');
-    });
+    } catch (error) {
+        // Rollback the transaction if an error occurs
+        await trx.rollback();
+        console.error('Error updating user:', error);
+        res.status(400).send('Invalid input or internal server error');
+    }
 });
+
+
 
 // post route to delete user
 app.post('/deleteUser/:id', async (req, res) => {
