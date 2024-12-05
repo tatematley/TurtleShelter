@@ -640,25 +640,28 @@ app.get('/completeEvent/:id', (req, res) => {
   });
 
 // Route to login the user based off of the login_info db
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     try {
         // Query the user table to find the record
-        const user = knex('login_info')
+        const user = await knex('login_info')
             .select('*')
             .where({ username, password }) // Replace with hashed password comparison in production
             .first(); // Returns the first matching record
+
         if (user) {
             security = true;
         } else {
             security = false;
         }
+
+        res.redirect("/volunteerManagement");
     } catch (error) {
         res.status(500).send('Database query failed: ' + error.message);
     }
-    res.redirect("/volunteerManagement")
-  });
+});
+
 app.get('/userManagement', (req, res) => {
     let hiddenSubmit = "hidden";
     let hiddenView = ""
