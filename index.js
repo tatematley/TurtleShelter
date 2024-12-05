@@ -14,7 +14,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "turtles",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -651,7 +651,7 @@ app.post('/login', (req, res) => {
     res.redirect("/volunteerManagement")
   });
 app.get('/userManagement', (req, res) => {
-    knex.select().from('users').then(myusers => {
+    knex.select().from('users').join('login_info', 'users.user_id', '=', 'login_info.user_id').then(myusers => {
         res.render('userManagement', {users: myusers, security})
     });
 });
@@ -661,15 +661,19 @@ app.get('/logout', (req, res) => {
     res.render("index", {security})
   });
 app.get('/editUser/:id', (req, res) => {
-    knex.select('user_id',
-                'user_first_name',
-                'user_last_name',
-                'user_email',
-                'user_position',
-                'user_start_year',
-                'user_county',
-                'user_state',
-                'user_phone').from('users').where('user_id', req.params.id).then(myusers => {
+    knex.select('users.user_id',
+                'users.user_first_name',
+                'users.user_last_name',
+                'users.user_email',
+                'users.user_position',
+                'users.user_start_year',
+                'users.user_county',
+                'users.user_state',
+                'users.user_phone',
+                'login_info.username',
+                'login_info.password').from('users')
+                .join('login_info', 'users.user_id', '=', 'login_info.user_id')
+                .where('users.user_id', req.params.id).then(myusers => {
                     res.render('editUser', {user: myusers, security})
                 }).catch(err => {
                     console.log(err);
@@ -677,31 +681,94 @@ app.get('/editUser/:id', (req, res) => {
                 });
 });
 app.post('/editUser', (req, res) => {
-    knex('users').where('user_id', parseInt(req.body.user_id).update({
-        user_first_name: req.body.user_first_name.toUpperCase(),
-        user_last_name: req.body.user_last_name.toUpperCase(),
-        user_email: req.body.user_email,
-        user_phone: req.body.user_phone,
-        user_position: req.body.user_position,
-        user_start_year: req.body.user_start_year,
-        user_county: req.body.user_county.toUpperCase(),
-        user_state: req.body.user_state.toUpperCase()
-    })).then(myusers => {
+    knex('users').join('login_info', 'users.user_id', '=', 'login_info.user_id')
+    .where('user_id', parseInt(req.body.user_id))
+    .update({
+        'users.user_first_name': req.body.user_first_name.toUpperCase(),
+        'users.user_last_name': req.body.user_last_name.toUpperCase(),
+        'users.user_email': req.body.user_email,
+        'users.user_phone': req.body.user_phone,
+        'users.user_position': req.body.user_position,
+        'users.user_start_year': req.body.user_start_year,
+        'users.user_county': req.body.user_county.toUpperCase(),
+        'users.user_state': req.body.user_state.toUpperCase(),
+        'login_info.username': req.body.username,
+        'login_info.password': req.body.password
+
+    }).then(myusers => {
         res.redirect('/userManagement');
     });
 });
-app.post('/deleteUser/:id', (req, res) => {
-    knex('users').where('user_id', req.body.user_id).del().then(myusers => {
-        res.redirect('/userManagement')
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json({err});
-    });
+
+app.post('/deleteUser/:id', async (req, res) => {
+    const userId = req.params.id; // Using the ID from the route parameter
+
+    try {
+        await knex.transaction(async trx => {
+            // Delete related records in login_info first
+            await trx('login_info').where('user_id', userId).del();
+
+            // Then delete the user record
+            await trx('users').where('user_id', userId).del();
+        });
+
+        // Redirect after successful deletion
+        res.redirect('/userManagement');
+    } catch (err) {
+        console.error('Error deleting user:', err);
+        res.status(500).json({ error: 'Failed to delete user' });
+    }
 });
+
 app.get('/addUser', (req, res) => {
     res.render('addUser', {security});
 });
 
+app.post('/addUser', async (req, res) => {
+    const { 
+        user_first_name, 
+        user_last_name, 
+        user_email, 
+        user_phone, 
+        user_position, 
+        user_start_year, 
+        user_county, 
+        user_state, 
+        username, 
+        password 
+    } = req.body;
+
+    try {
+        await knex.transaction(async trx => {
+            // Insert into the `users` table and let the database auto-generate user_id
+            const [userId] = await trx('users').insert({
+                user_first_name: user_first_name.toUpperCase(),
+                user_last_name: user_last_name.toUpperCase(),
+                user_email,
+                user_phone,
+                user_position,
+                user_start_year,
+                user_county: user_county.toUpperCase(),
+                user_state: user_state.toUpperCase()
+            }).returning('user_id'); // Automatically retrieve the generated user_id
+
+            // Insert into the `login_info` table
+            await trx('login_info').insert({
+                user_id: userId, // Use the auto-generated user_id
+                username,
+                password // Consider hashing the password here
+            });
+        });
+
+        // Redirect after successful inserts
+        res.redirect('/userManagement');
+    } catch (err) {
+        console.error('Error adding user:', err);
+        res.status(500).json({ error: 'Failed to add user' });
+    }
+});
+
+/*
 app.post('/addUser', (req, res) => {
     knex('users').insert({
         user_first_name: req.body.user_first_name.toUpperCase(),
@@ -716,6 +783,7 @@ app.post('/addUser', (req, res) => {
         res.redirect('/userManaagement');
     });
 });
+*/
 
 // get method for logging out
 app.get('/logout', (req, res) => {
