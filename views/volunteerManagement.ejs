@@ -135,13 +135,16 @@
 </head>
 <body>
     <!-- Nav Bar -->
-    <%- include('partials/navbar', { page: 'volunteerManagement', security: security }) %>
+    <%- include('partials/navbar', { page: 'volunteerManagement', security: security, hiddenView: hiddenView, hiddenSubmit: hiddenSubmit }) %>
     <br>
     <!--Search Volunteers-->
     <div class="search-container">
         <form action="/searchVolunteers" method="GET">
             <input type="text" name="query" placeholder="Search Volunteers...">
-            <button type="submit">Search</button>
+            <button type="submit"<%=hiddenView%>>Search</button>
+        </form>
+        <form action="/volunteerManagement" method="GET">
+            <button type="submit" <%=hiddenSubmit%>>View All</button>
         </form>
     </div>
 

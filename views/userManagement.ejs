@@ -117,6 +117,7 @@
             color: white;
             border-radius: 4px !important;
             padding: 8px 12px;
+            margin-left: 5px;
             border: none;
             font-size: 0.9rem;
             cursor: pointer;
@@ -132,17 +133,20 @@
 
 </head>
 <body>
-    <!-- Navbar -->
-    <%- include('partials/navbar', { page: 'userManagement', security: security }) %>
-    <br>
-
-    <!--Search Users-->
-    <div class="search-container">
-        <form action="/searchUsers" method="GET">
-            <input type="text" name="query" placeholder="Search Users...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
+      <!-- Navbar -->
+      <%- include('partials/navbar', { page: 'userManagement', security: security, hiddenSubmit: hiddenSubmit, hiddenView: hiddenView}) %>
+      <br>
+  
+      <!--Search Users-->
+      <div class="search-container">
+          <form action="/searchUsers" method="GET">
+              <input type="text" name="query" placeholder="Search Users...">
+              <button type="submit"<%=hiddenView%>>Search</button>
+          </form>
+          <form action="/userManagement" method="GET">
+              <button type="submit" <%=hiddenSubmit%>>View All</button>
+          </form>
+      </div>
 
     <div>
         <label><b>User Information</b></label>

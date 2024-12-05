@@ -4,6 +4,8 @@ let app = express();
 let path = require("path");
 const port = process.env.PORT || 5004;
 let security = false;
+let hiddenSubmit = "";
+let hiddenView = "hidden"
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended: true}));
@@ -14,7 +16,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "turtles",
+        password: process.env.RDS_PASSWORD || "mom#8181",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -49,11 +51,13 @@ app.get('/jen', (req, res) =>{
 });
 // route to event management
 app.get('/eventManagement', (req, res) =>{
+    let hiddenSubmit = "hidden";
+    let hiddenView = ""
     knex('events')
     .select()
     .orderBy('event_date', 'asc')
     .then(events => {
-        res.render('eventManagement', { events, security });
+        res.render('eventManagement', { events, security, hiddenSubmit, hiddenView });
     })
     .catch(error => {
         console.error('Error fetching event for editing:', error);
@@ -651,8 +655,10 @@ app.post('/login', (req, res) => {
     res.redirect("/volunteerManagement")
   });
 app.get('/userManagement', (req, res) => {
+    let hiddenSubmit = "hidden";
+    let hiddenView = ""
     knex.select().from('users').join('login_info', 'users.user_id', '=', 'login_info.user_id').then(myusers => {
-        res.render('userManagement', {users: myusers, security})
+        res.render('userManagement', {users: myusers, security, hiddenSubmit, hiddenView})
     });
 });
 // get method for logging out
@@ -801,6 +807,8 @@ app.get('/volunteerManagement', async (req, res) => {
         // Fetch the total number of volunteer for pagination
         const totalVolunteer = await knex("volunteers").count('* as count').first();
         const totalPages = Math.ceil(totalVolunteer.count / limit);
+        let hiddenSubmit = "hidden";
+        let hiddenView = ""
         // Fetch the volunteers for the current page
         const volunteer = await knex("volunteers")
             .select(
@@ -822,7 +830,7 @@ app.get('/volunteerManagement', async (req, res) => {
             .limit(limit)
             .offset(offset);
         // Render the page
-        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).send("Error fetching data.");
@@ -933,8 +941,10 @@ app.post("/deleteVolunteer/:id", (req,res) => {
 });
 
 app.get("/vestDistribution", (req, res) => {
+    let hiddenSubmit = "hidden";
+    let hiddenView = ""
     knex.select().from('vest_distribution').then(myvests => {
-        res.render('vestDistribution', {vest: myvests, security});
+        res.render('vestDistribution', {vest: myvests, security, hiddenSubmit, hiddenView});
     });
 });
 
@@ -999,6 +1009,8 @@ app.get('/searchVolunteers', async (req, res) => {
     // Fetch the total number of volunteer for pagination
     const totalVolunteer = await knex("volunteers").count('* as count').first();
     const totalPages = Math.ceil(totalVolunteer.count / limit);
+    let hiddenSubmit = "";
+    let hiddenView = "hidden";
 
     if (!query) {
         return res.render('search', { volunteer: [] }); // Render with no results if no query
@@ -1011,7 +1023,11 @@ app.get('/searchVolunteers', async (req, res) => {
             .orWhere('volunteer_last_name', 'like', `%${query}%`)
             .limit(limit)
             .offset(offset);
-        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+            console.log({
+                volunteer
+            });
+            
+        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
@@ -1021,6 +1037,8 @@ app.get('/searchVolunteers', async (req, res) => {
 // Route for handling search queries
 app.get('/searchVests', async (req, res) => {
     const query = req.query.query.toUpperCase(); // Get the search query from the URL
+    let hiddenSubmit = "";
+    let hiddenView = "hidden";
     // const page = parseInt(req.query.page) || 1; // Default to page 1
     // const limit = 15; // Show 15 volunteers per page
     // const offset = (page - 1) * limit; // Calculate offset for the database query
@@ -1039,7 +1057,7 @@ app.get('/searchVests', async (req, res) => {
             .orWhere('vest_last_name', 'like', `%${query}%`);
             // .limit(limit)
             // .offset(offset);
-        res.render('vestDistribution', { vest: vests, security });
+        res.render('vestDistribution', { vest: vests, security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
@@ -1049,7 +1067,8 @@ app.get('/searchVests', async (req, res) => {
 // Route for handling search queries
 app.get('/searchUsers', async (req, res) => {
     const query = req.query.query.toUpperCase(); // Get the search query from the URL
-
+    let hiddenSubmit = "";
+    let hiddenView = "hidden";
     if (!query) {
         return res.render('search', { users: [] }); // Render with no results if no query
     }
@@ -1059,7 +1078,7 @@ app.get('/searchUsers', async (req, res) => {
             .select('*')
             .where('user_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
             .orWhere('user_last_name', 'like', `%${query}%`)
-        res.render('userManagement', { users: users, security });
+        res.render('userManagement', { users: users, security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
@@ -1068,7 +1087,9 @@ app.get('/searchUsers', async (req, res) => {
 
 // Route for handling search queries
 app.get('/searchEvents', async (req, res) => {
-    const query = req.query.query.toUpperCase(); // Get the search query from the URL
+    const query = req.query.query.toUpperCase(); // Get the search query from the URL]
+    let hiddenSubmit = "";
+    let hiddenView = "hidden";
     // const page = parseInt(req.query.page) || 1; // Default to page 1
     // const limit = 15; // Show 15 volunteers per page
     // const offset = (page - 1) * limit; // Calculate offset for the database query
@@ -1088,7 +1109,7 @@ app.get('/searchEvents', async (req, res) => {
             .orWhere('event_name', 'like', `%${query}%`)
             // .limit(limit)
             // .offset(offset);
-        res.render('eventManagement', { events, security });
+        res.render('eventManagement', { events, security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
