@@ -17,9 +17,9 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "izzy1213",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
-        port: process.env.RDS_PORT || 5432,
+        port: process.env.RDS_PORT || 5433,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
     },
     pool: {
@@ -65,6 +65,11 @@ app.get('/submission', (req, res) =>{
 // get route for the index page
 app.get('/jen', (req, res) =>{
     res.render('jen', {security});
+});
+
+// get route for the dashboard page
+app.get('/dashboard', (req, res) =>{
+    res.render('dashboard', {security});
 });
 
 // route to get event management page and data
