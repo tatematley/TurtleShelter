@@ -507,6 +507,129 @@ app.get('/completeEvent/:id', (req, res) => {
       });
   });
 
+  app.post('/editCompletedEvent/:id', (req, res) => {
+    const id = req.params.id;
+    // Access each value directly from req.body
+
+    knex('events')
+      .where('event_id', id)
+      .update({
+        event_name: req.body.event_name.toUpperCase() || '',
+        host_first_name: req.body.host_first_name.toUpperCase() || '',
+        host_last_name: req.body.host_last_name.toUpperCase() || '',
+        host_phone: req.body.host_phone || '',
+        host_email: req.body.host_email.toUpperCase() || '',
+        activity_type: req.body.activity_type,
+        event_date: req.body.event_date ,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        attendance_estimate: parseInt(req.body.volunteer_num) || 0,
+        share_story: req.body.jen_story ? 'Y' : 'N',
+        event_status: 'COMPLETED',
+        event_lead: parseInt(req.body.event_lead),
+        actual_attendance: parseInt(req.body.actual_attendance) || 0,
+        duration_hours: parseInt(req.body.duration_hours) || 0,
+        num_pockets: parseInt(req.body.num_pockets) || 0,
+        num_collars: parseInt(req.body.num_collars) ||0,
+        num_envelopes: parseInt(req.body.num_envelopes) || 0,
+        num_vests: parseInt(req.body.num_vests) || 0,
+        num_finished_products: parseInt(req.body.num_finished_products) ||0,
+        host_county : req.body.host_county.toUpperCase() || '',
+        host_state : req.body.host_state || '',
+        host_address : req.body.host_address.toUpperCase() || '',
+        host_city : req.body.host_city.toUpperCase() || '',
+        date_created : new Date().toISOString().split('T')[0],
+        notes : req.body.notes.toUpperCase() || '',
+        event_source : req.body.event_source.toUpperCase() || ''
+      })
+      .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the list of Pokémon after saving
+      })
+      .catch(error => {
+        console.error('Error updating event:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
+  app.post('/editPlannedEvent/:id', (req, res) => {
+    const id = req.params.id;
+    // Access each value directly from req.body
+
+    knex('events')
+      .where('event_id', id)
+      .update({
+        event_name: req.body.event_name.toUpperCase() || '',
+        host_first_name: req.body.host_first_name.toUpperCase() || '',
+        host_last_name: req.body.host_last_name.toUpperCase() || '',
+        host_phone: req.body.host_phone || '',
+        host_email: req.body.host_email.toUpperCase() || '',
+        activity_type: req.body.activity_type,
+        event_date: req.body.event_date ,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        attendance_estimate: parseInt(req.body.volunteer_num) || 0,
+        share_story: req.body.jen_story ? 'Y' : 'N',
+        event_status: "PLANNED",
+        event_lead: parseInt(req.body.event_lead),
+        host_county : req.body.host_county.toUpperCase() || '',
+        host_state : req.body.host_state || '',
+        host_address : req.body.host_address.toUpperCase() || '',
+        host_city : req.body.host_city.toUpperCase() || '',
+        date_created : new Date().toISOString().split('T')[0],
+        num_sewers : parseInt(req.body.num_sewers) || 0,
+        num_host_machines : parseInt(req.body.num_host_machines) || 0,
+        num_tsp_machine : parseInt(req.body.num_tsp_machine) || 0,
+        notes : req.body.notes.toUpperCase() || '',
+        event_source : req.body.event_source.toUpperCase() || 0
+      })
+      .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the list of Pokémon after saving
+      })
+      .catch(error => {
+        console.error('Error updating event:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
+  
+  app.post('/editRequestedEvent/:id', (req, res) => {
+    const id = req.params.id;
+    // Access each value directly from req.body
+    knex('events')
+      .where('event_id', id)
+      .update({
+        event_name: req.body.event_name.toUpperCase() || '',
+        host_first_name: req.body.host_first_name.toUpperCase() || '',
+        host_last_name: req.body.host_last_name.toUpperCase() || '',
+        host_phone: req.body.host_phone || '',
+        host_email: req.body.host_email.toUpperCase() || '',
+        activity_type: req.body.activity_type,
+        event_date: req.body.event_date ,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        attendance_estimate: parseInt(req.body.volunteer_num) || 0,
+        share_story: req.body.jen_story ? 'Y' : 'N',
+        event_status: "REQUESTED",
+        host_county : req.body.host_county.toUpperCase() || '',
+        host_state : req.body.host_state || '',
+        host_address : req.body.host_address.toUpperCase() || '',
+        host_city : req.body.host_city.toUpperCase() || '',
+        date_created : new Date().toISOString().split('T')[0],
+        num_sewers : parseInt(req.body.num_sewers) || 0,
+        num_host_machines : parseInt(req.body.num_host_machines) || 0,
+        num_tsp_machine : parseInt(req.body.num_tsp_machine) || 0,
+        notes : req.body.notes.toUpperCase() || '',
+        event_source : req.body.event_source.toUpperCase() || 0
+      })
+      .then(() => {
+        res.redirect('/eventManagement'); // Redirect to the list of Pokémon after saving
+      })
+      .catch(error => {
+        console.error('Error updating event:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
 // Route to login the user based off of the login_info db
 app.post('/login', (req, res) => {
     const username = req.body.username;
