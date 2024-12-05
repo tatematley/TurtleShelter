@@ -89,7 +89,7 @@
     <!-- Navbar -->
     <%- include('partials/navbar', { page: 'vestDistribution'}) %>
     <br>
-
+    <!-- edit recipient form auto populates with their current info-->
     <form action="/editRecipient" method="post">
         
             <h2 style="color: #169282ea"><b>Edit Recipient:</b></h2>
@@ -114,8 +114,8 @@
                 <option value="XXXXL">XXXXL</option>
             </select>
             <br><br>
-        
         <br>
+        <!-- save and update in database -->
         <button type="submit">Save</button>
     </form>
 </body>
