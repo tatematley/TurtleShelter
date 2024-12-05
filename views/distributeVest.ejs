@@ -86,9 +86,13 @@
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <%- include('partials/navbar', { page: 'vestDistribution' }) %>
+    <br>
+
     <form action="/distributeVest" method="post">
         
-            <h1>Distribute Vest</h1>
+            <h2 style="color: #169282ea"><b>Distribute Vest:</b></h2>
             <label for="vest_first_name">First Name</label>
             <input type="text" name="vest_first_name" id="vest_first_name">
             <br>
@@ -112,7 +116,7 @@
                 <option value="XXXL">XXXL</option>
                 <option value="XXXXL">XXXXL</option>
             </select>
-        
+        <br><br>
         <button type="submit">Add Recipient</button>
     </form>
 </body>

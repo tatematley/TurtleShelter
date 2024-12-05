@@ -81,12 +81,13 @@
 </head>
 <body>
     <!-- Navbar -->
-    <%- include('partials/navbar', { page: 'home' }) %>
-
+    <%- include('partials/navbar', { page: 'userManagement'}) %>
     <br>
+
+    
     <form action="/editUser" method="post">
         <fieldset>
-            <legend><h1>Edit User</h1></legend>
+            <legend><h2 style="color: #169282ea"><b>Edit User:</b></h2></legend>
             <!-- user id does not display-->
             <input type="hidden" id="user_id" name="user_id" value="<%= user[0].user_id %>">
 

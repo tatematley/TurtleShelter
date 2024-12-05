@@ -87,12 +87,12 @@
 </head>
 <body>
     <!-- Navbar -->
-    <%- include('partials/navbar', { page: 'home' }) %>
-
+    <%- include('partials/navbar', { page: 'vestDistribution'}) %>
     <br>
+
     <form action="/editRecipient" method="post">
         
-            <h1>Edit Recipient</h1>
+            <h2 style="color: #169282ea"><b>Edit Recipient:</b></h2>
             <input type="hidden" id="vest_id" name="vest_id" value="<%= vest[0].vest_id %>">
             <label for="vest_first_name">First Name: </label>
             <input type="text" id="vest_first_name" name="vest_first_name" value="<%= vest[0].vest_first_name %>">
