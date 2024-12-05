@@ -16,7 +16,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "SuperUser",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -672,7 +672,9 @@ app.get('/logout', (req, res) => {
     res.render("index", {security})
   });
 app.get('/editUser/:id', (req, res) => {
-    knex.select('users.user_id',
+    knex('users')
+    .join('login_info', 'users.user_id', '=', 'login_info.user_id')
+    .select('users.user_id',
                 'users.user_first_name',
                 'users.user_last_name',
                 'users.user_email',
@@ -682,8 +684,8 @@ app.get('/editUser/:id', (req, res) => {
                 'users.user_state',
                 'users.user_phone',
                 'login_info.username',
-                'login_info.password').from('users')
-                .join('login_info', 'users.user_id', '=', 'login_info.user_id')
+                'login_info.password')
+                
                 .where('users.user_id', req.params.id).then(myusers => {
                     res.render('editUser', {user: myusers, security})
                 }).catch(err => {
@@ -735,66 +737,62 @@ app.get('/addUser', (req, res) => {
     res.render('addUser', {security});
 });
 
+
+
 app.post('/addUser', async (req, res) => {
-    const { 
-        user_first_name, 
-        user_last_name, 
-        user_email, 
-        user_phone, 
-        user_position, 
-        user_start_year, 
-        user_county, 
-        user_state, 
-        username, 
-        password 
-    } = req.body;
-
     try {
-        await knex.transaction(async trx => {
-            // Insert into the `users` table and let the database auto-generate user_id
-            const [userId] = await trx('users').insert({
-                user_first_name: user_first_name.toUpperCase(),
-                user_last_name: user_last_name.toUpperCase(),
-                user_email,
-                user_phone,
-                user_position,
-                user_start_year,
-                user_county: user_county.toUpperCase(),
-                user_state: user_state.toUpperCase()
-            }).returning('user_id'); // Automatically retrieve the generated user_id
+        // Validate and format input
+        const userState = (req.body.user_state || '').toUpperCase();
+        if (userState.length > 2) {
+            throw new Error('State abbreviation must be 2 characters');
+        }
 
-            // Insert into the `login_info` table
-            await trx('login_info').insert({
-                user_id: userId, // Use the auto-generated user_id
-                username,
-                password // Consider hashing the password here
-            });
-        });
+        const userData = {
+            user_first_name: req.body.user_first_name.toUpperCase() || '', 
+            user_last_name: req.body.user_last_name.toUpperCase() || '', 
+            user_email: req.body.user_email.toUpperCase() || '', 
+            user_phone: req.body.user_phone || '', 
+            user_position: req.body.user_position, 
+            user_start_year: req.body.user_start_year, 
+            user_county: req.body.user_county.toUpperCase() || '',  
+            user_state: req.body.user_state // Ensure it's a valid abbreviation
+        };
 
-        // Redirect after successful inserts
+        // Insert the user data and retrieve the user_id
+        const [insertedUser] = await knex('users').insert(userData).returning('user_id');
+        const userId = insertedUser.user_id; // Extract the user_id integer
+
+        if (!userId) {
+            throw new Error('User ID not generated');
+        }
+
+        // Insert login information
+        const loginData = {
+            user_id: userId, // Use the extracted integer user_id
+            username: req.body.username || '',
+            password: req.body.password || '' // Directly use the plain-text password
+        };
+
+        await knex('login_info').insert(loginData);
+
+        // Redirect after successful operation
         res.redirect('/userManagement');
-    } catch (err) {
-        console.error('Error adding user:', err);
-        res.status(500).json({ error: 'Failed to add user' });
+    } catch (error) {
+        console.error('Error adding user:', error);
+        res.status(400).send('Invalid input or internal server error');
     }
 });
 
-/*
-app.post('/addUser', (req, res) => {
-    knex('users').insert({
-        user_first_name: req.body.user_first_name.toUpperCase(),
-        user_last_name: req.body.user_last_name.toUpperCase(),
-        user_email: req.body.user_email,
-        user_phone: req.body.user_phone,
-        user_position: req.body.user_position,
-        user_start_year: req.body.user_start_year,
-        user_county: req.body.user_county.toUpperCase(),
-        user_state: req.body.user_state.toUpperCase()
-    }).then(myusers => {
-        res.redirect('/userManaagement');
-    });
+
+
+
+// get route for the dashboard page
+app.get('/dashboard', (req, res) =>{
+    res.render('dashboard', {security});
 });
-*/
+
+
+
 
 // get method for logging out
 app.get('/logout', (req, res) => {
@@ -934,6 +932,8 @@ app.post("/volunteer", (req,res) => {
         res.redirect("/submission");
     });
 });
+
+
 
 // post route to delete volunteer
 app.post('/deleteVolunteer/:id', (req, res) => {
