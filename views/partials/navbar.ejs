@@ -133,6 +133,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- links that are always on nav bar -->
                 <ul class="navbar-nav ms-auto"> <!-- ms-auto aligns to the right -->
                     <li class="nav-item">
                         <a class="nav-link <%= (page === 'home') %>" href="/">Home</a>
@@ -151,6 +152,8 @@
                         <a class="nav-link <%= (page === 'login') %>" href="/login">Login</a>
                     </li>  
                     <% } %>  
+
+                    <!-- if user is logged in, show the manage dropdown in nav bar-->
                     <% if (security) { %>
                         <!-- Dropdown Using Bootstrap -->
                         <div class="dropdown">
@@ -163,11 +166,13 @@
                                 style="background-color: black; border: none; padding-top: 10px;">
                                 Manage
                             </button>
+                            <!-- links to management pages -->
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="/eventManagement">Manage Events</a></li>
                                 <li><a class="dropdown-item" href="/volunteerManagement">Manage Volunteers</a></li>
                                 <li><a class="dropdown-item" href="/userManagement">Manage Users</a></li>
                                 <li><a class="dropdown-item" href="/vestDistribution">Vest Distribution</a></li>
+                                <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
                             </ul>
                         </div>
 
