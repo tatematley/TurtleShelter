@@ -77,6 +77,7 @@ app.get('/eventManagement', (req, res) =>{
     let hiddenSubmit = "hidden";
     let hiddenView = ""
     knex('events')
+    .leftJoin('users', 'events.event_lead', '=', 'users.user_id')
     .select()
     .orderBy('event_date', 'asc')
     .then(events => {
