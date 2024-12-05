@@ -41,7 +41,7 @@
         }
         .input-row input[type="checkbox"] {
             width: 40px;
-            height: 40px;
+            height: 60px;
         }
         /* Optional: style labels */
         .input-row label {
@@ -54,7 +54,7 @@
         }
         input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
             width: 100%;
-            height: 25px;
+            height: 30px;
             padding: 5px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -99,6 +99,7 @@
 <body>
     <!-- Navigation Bar -->
     <%- include('partials/navbar', { page: 'events' }) %>
+
     <div class="container">
         <!-- Form Section -->
         <form action="/addCompletedEvent" method="POST">
@@ -108,56 +109,48 @@
                     <h2 style="color: #169282ea"><b>Add Completed Event:</b></h2>
                     <br>
                     <div class="input-row">
-                        <label for="event_name">Group Name:</label>
-                        <input type="text" id="event_name" name="event_name" required>
+                        <label for="event_name" >Group Name:</label>
+                        <input type="text" id="event_name" name="event_name"  required>
                         <br><br>
-                        <label for="host_first_name">First Name:</label>
-                        <input type="text" id="host_first_name" name="host_first_name" required>
+
+                        <label for="event_lead">Event Lead:</label>
+                        <select id="event_lead" name="event_lead" style="font-size: 0.75rem;" required>
+                            <% eventLead.forEach(lead => { %>
+                                <option value="<%= lead.user_id %>"><%= lead.event_lead %></option>
+                            <% }) %>
+                        </select>
                         <br><br>
+
+                        
                     </div>
+
                     <div class="input-row">
+
+                        <label for="host_first_name"  >First Name:</label>
+                        <input type="text" id="host_first_name" name="host_first_name"  required>
+                        <br><br>
+
                         <label for="host_last_name">Last Name:</label>
-                        <input type="text" id="host_last_name" name="host_last_name" required>
-                        <br><br>
-                        <label for="host_phone">Phone Number:</label>
-                        <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                        <input type="text" id="host_last_name" name="host_last_name"  required>
                         <br><br>
                     </div>
-                    
+                    <br><br>
                     <div class="input-row">
-                        <label for="host_email">Email Address:</label>
-                        <input type="email" id="host_email" name="host_email" required>
+                        <label for="host_address">Event Address <i>(optional)</i></label>
+                        <input type="text" id="host_address" name="host_address"  >
                         <br><br>
                         
                     </div>
+
                     <div class="input-row">
-                        <label for="activity_type">Activity Type:</label>
-                        <select id="activity_type" name="activity_type" style="font-size: 0.75rem;">
-                            <option value="sewing">Sewing</option>
-                            <option value="non-sewing">Non-Sewing</option>
-                            <option value="both">Both</option>
-                        </select>
-                        <br><br>
-                        <label for="event_date">Event Date:</label>
-                        <input type="date" id="event_date" name="event_date" required>
+                        <label for="host_city">Event city <i>(optional)</i></label>
+                        <input type="text" id="host_city" name="host_city"  >
                         <br><br>
                     </div>
+
                     <div class="input-row">
-                        <label for="start_time">Start Time:</label>
-                        <input type="time" id="start_time" name="start_time" required>
-                        <br><br>
-                        <label for="end_time">End Time:</label>
-                        <input type="time" id="end_time" name="end_time" required>
-                        <br><br>
-                    </div>
-                    <label for="host_address">Event Address <i>(optional)</i></label>
-                    <input type="text" id="host_address" name="host_address" >
-                    <br><br>
-                    <label for="host_city">Event city <i>(optional)</i></label>
-                    <input type="text" id="host_city" name="host_city" >
-                    <br><br>
                     <label for="host_county">Event County <i>(required)</i></label>
-                    <input type="text" id="host_county" name="host_county" >
+                    <input type="text" id="host_county" name="host_county"  >
                     <br><br>
 
                     <label for="state">State <i>(required)</i></label>
@@ -170,72 +163,130 @@
                                 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
                             ]; %>
                             <% states.forEach(state => { %>
-                                <option value="<%= state %>"><%= state %></option>
+                                <option value="<%= state %>" ><%= state %></option>
                             <% }); %>
                         </select>
                         <br><br>
-                    <div class="input-row">
-                        <label for="volunteer_num">Estimated Attendance:</label>
-                        <input type="number" id="volunteer_num" name="volunteer_num" value="1" required>
-                        <br><br>
-                        <label for="event_lead">Event Lead:</label>
-                            <select id="event_lead" name="event_lead" style="font-size: 0.75rem;" required>
-                                <% eventLead.forEach(lead => { %>
-                                    <option value="<%= lead.user_id %>"><%= lead.event_lead %></option>
-                                <% }) %>
-                            </select>
-                            <br><br>
                     </div>
-                
+                    <br><br>
                     <div class="input-row">
-                        <label for="actual_attendance">Event Attendance:</label>
-                        <input type="number" id="actual_attendance" name="actual_attendance" value="0" min="1">
+                        <label for="host_phone">Phone Number:</label>
+                        <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
                         <br><br>
-                        <label for="duration_hours">Event Duration in Hours:</label>
-                        <input type="number" id="duration_hours" name="duration_hours" value="0" min="0">
+
+                        <label for="host_email">Email Address:</label>
+                        <input type="email" id="host_email" name="host_email"  required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="activity_type">Activity Type:</label>
+                        <select id="activity_type" name="activity_type" style="font-size: 0.75rem;">
+                            <option value="sewing" >Sewing</option>
+                            <option value="non-sewing" >Non-Sewing</option>
+                            <option value="both">Both</option>
+                        </select>
+                        <br><br>
+
+                        <label for="event_date">Event Date:</label>
+                        <input type="date" id="event_date" name="event_date"  required>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="start_time">Start Time:</label>
+                        <input type="time" id="start_time" name="start_time"  required>
+                        <br><br>
+
+                        <label for="end_time">End Time:</label>
+                        <input type="time" id="end_time" name="end_time"  required>
                         <br><br>
                     </div>
                     <br><br>
-                    <h2 style="color: #169282ea"><b>Products Completed:</b></h2>
-                    <br>
-                        <label for="num_pockets">Pockets Completed:</label>
-                        <input type="number" id="num_pockets" name="num_pockets" style="width: 60%;" value="0" min="0">
-                        <br>
-                        <label for="num_collars">Collars Completed:</label>
-                        <input type="number" id="num_collars" name="num_collars" style="width: 60%;" value="0" min="0">
-                        <br>
-                        <label for="num_envelopes">Envelopes Completed:</label>
-                        <input type="number" id="num_envelopes" name="num_envelopes" style="width: 60%;" value="0" min="0">
-                        <br>
-                        <label for="num_vests">Vests (partial) Completed:</label>
-                        <input type="number" id="num_vests" name="num_vests" style="width: 60%;" value="0" min="0">
-                        <br>
-                        <label for="num_finished_products">Vest (full) Completed:</label>
-                        <input type="number" id="num_finished_products" name="num_finished_products" style="width: 60%;" value="0" min="0">
+                    <div class="input-row">
+                        <label for="num_sewers">How Many in your Group can Sew?</label>
+                        <input type="number" id="num_sewers" name="num_sewers"  min="0" value="0" >
+                        <br><br></div>
+                        <div class="input-row">
+                        <label for="num_host_machines">How Sewing Machines can your Group Provide?</label>
+                        <input type="number" id="num_host_machines" name="num_host_machines"  min="0" value="0">
+                        <br><br></div>
+                        <div class="input-row">
+                        <label for="num_tsp_machine">How Sewing Machines Should Turtle Shelter Provide?</label>
+                        <input type="number" id="num_tsp_machine" name="num_tsp_machines" min="0" value="0" >
                         <br><br>
-                        <input type="checkbox" id="jen_story" name="jen_story" value="Yes">
+                    </div>
+
+                    <div class="input-row">
+                        <label for="volunteer_num">Estimated Attendance:</label>
+                        <input type="number" id="volunteer_num" name="volunteer_num"  min="1" value="1">
+                        <br><br>
+
+                        <label for="actual_attendance">Actual Attendance:</label>
+                        <input type="number" id="actual_attendance" name="actual_attendance" value="1"  min="1">
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="duration_hours">Event Duration in Hours:</label>
+                        <input type="number" id="duration_hours" name="duration_hours"  value="0" min="0">
+                        <br><br>
+
+                        
+                    </div>
+                    <input type="checkbox" id="jen_story" name="jen_story" value="Y">
                         <label for="jen_story">Did Jen Share Her Story?</label>
                         <br><br>
-                        <label for="event_source">How did you Hear about us?:</label>
+                    <br><br>
+                    <label for="event_source">How did you Hear About us?</label>
                     <select id="event_source" name="event_source">
-                        <option value="family/friend">Family/Friend</option>
+                        <option value="family/friend" >Family/Friend</option>
                         <option value="church_event">Church Event</option>
                         <option value="social_media">Social Media</option>
                         <option value="search_engine">Search Engine Search</option>
-                        <option value="podcast">Podcast</option>
-                        <option value="word_of_mouth">Word of Mouth</option>
-                        <option value="other">Other</option>
+                        <option value="podcast" >Podcast</option>
+                        <option value="word_of_mouth" >Word of Mouth</option>
+                        <option value="other" >Other</option>
                     </select>
                     <br><br>
                     <label for="notes">Additional Notes:</label>
-                    <input type="text" id="notes" name="notes" >
+                    <br>
+                    <textarea id="notes" name="notes" style="height: 60px; width: 350px;" ></textarea> 
+                  
+
                     <br><br>
+                    <h2 style="color: #169282ea"><b>Products Completed:</b></h2>
+                    <br>
+
+                        <label for="num_pockets">Pockets Completed:</label>
+                        <input type="number" id="num_pockets" name="num_pockets" style="width: 60%;" value="0" min="0">
+                        <br>
+
+                        <label for="num_collars">Collars Completed:</label>
+                        <input type="number" id="num_collars" name="num_collars" style="width: 60%;" value="0" min="0">
+                        <br>
+
+                        <label for="num_envelopes">Envelopes Completed:</label>
+                        <input type="number" id="num_envelopes" name="num_envelopes" style="width: 60%;" value="0" min="0">
+                        <br>
+
+                        <label for="num_vests">Vests (partial) Completed:</label>
+                        <input type="number" id="num_vests" name="num_vests" style="width: 60%;" value="0" min="0">
+                        <br>
+
+                        <label for="num_finished_products">Vest (full) Completed:</label>
+                        <input type="number" id="num_finished_products" name="num_finished_products" style="width: 60%;" value="0" min="0">
+                        <br><br>
+
+                       
+
                     
                     <button type="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr("#end_time", {
@@ -243,12 +294,14 @@
             noCalendar: true,
             dateFormat: "h:i K",
         });
+
         flatpickr("#start_time", {
             enableTime: true,
             noCalendar: true,
             dateFormat: "h:i K",
         });
     </script>
+
 <!-- Footer -->
 <%- include('partials/footer') %>
 </body>
