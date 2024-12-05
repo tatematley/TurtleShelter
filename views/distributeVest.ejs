@@ -90,6 +90,7 @@
     <%- include('partials/navbar', { page: 'vestDistribution' }) %>
     <br>
 
+    <!-- form for who is receiving vest-->
     <form action="/distributeVest" method="post">
         
             <h2 style="color: #169282ea"><b>Distribute Vest:</b></h2>
@@ -105,6 +106,7 @@
             <label for="vest_state">State</label>
             <input type="text" name="vest_state" id="vest_state">
             <br>
+            <!-- size dropdown -->
             <label for="vest_size">Vest Size</label>
             <select name="vest_size" id="vest_size">
                 <option value="XS">XS</option>
@@ -117,6 +119,7 @@
                 <option value="XXXXL">XXXXL</option>
             </select>
         <br><br>
+        <!-- submits distributeVest post route-->
         <button type="submit">Add Recipient</button>
     </form>
 </body>

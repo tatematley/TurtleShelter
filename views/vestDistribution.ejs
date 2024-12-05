@@ -148,6 +148,7 @@
 
      <label><b>Vest Inventory and Distribution</b></label>
      <br><br>
+     <!-- headers and empty headers for buttons -->
      <table>
         <thead>
             <tr>
@@ -160,6 +161,7 @@
                 <th></th>
             </tr>
         </thead>
+        <!-- auto populate table with info on people who have received vests -->
         <tbody>
             <% for (let iCount = 0; iCount < vest.length; iCount++) { %>
                 <tr>
@@ -183,14 +185,17 @@
         </tbody>
      </table>
      <br><br>
+     <!-- add person receiving vest -->
      <form action="/distributeVest" method="get">
         <button type="submit" style="margin-left: 25px;">Add Recipient</button>
      </form>
      <br>
+     <!-- returns to home index -->
     <form action="/" method="get">
         <button type="submit" style="margin-left: 30px;">Return Home</button>
     </form>
     <br>
+    <!-- logout button -->
     <form action="/logout" method="get">
       <button type="submit" style="margin-left: 30px;">Log Out</button>
     </form>
