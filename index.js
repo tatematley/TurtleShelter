@@ -16,7 +16,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "mom#8181",
+        password: process.env.RDS_PASSWORD || "Nakedalone12!",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -316,7 +316,7 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
       .first() //returns the first element, aka no longer an array, a single object
       .then(events => { // send to pokemon, the following knex is embedded 
             // Render the edit form and pass both pokemon and poke_types
-            res.render('viewCompletedEvent', { events }); // returns the first record pokemon, and all poke_types
+            res.render('viewCompletedEvent', { events, security }); // returns the first record pokemon, and all poke_types
           })
           .catch(error => {
             console.error('Error fetching Events:', error);
@@ -332,7 +332,7 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
           .first() //returns the first element, aka no longer an array, a single object
           .then(events => { // send to pokemon, the following knex is embedded 
                 // Render the edit form and pass both pokemon and poke_types
-                res.render('viewPlannedEvent', { events }); // returns the first record pokemon, and all poke_types
+                res.render('viewPlannedEvent', { events, security }); // returns the first record pokemon, and all poke_types
               })
               .catch(error => {
                 console.error('Error fetching Events:', error);
@@ -347,7 +347,7 @@ app.get('/viewCompletedEvent/:id', (req, res) => { // /:id means parameter that 
               .first() //returns the first element, aka no longer an array, a single object
               .then(events => { // send to pokemon, the following knex is embedded 
                     // Render the edit form and pass both pokemon and poke_types
-                    res.render('viewRequestedEvent', { events }); // returns the first record pokemon, and all poke_types
+                    res.render('viewRequestedEvent', { events, security }); // returns the first record pokemon, and all poke_types
                   })
                   .catch(error => {
                     console.error('Error fetching Events:', error);
@@ -848,7 +848,7 @@ app.get('/editVolunteer/:id', (req, res) => {
         if (!volunteerRec) {
           return res.status(404).send('volunteer not found');
         }
-        res.render('editVolunteer', { volunteerRec });
+        res.render('editVolunteer', { volunteerRec , security});
     })
         .catch(error => {
         console.error('Error fetching the individual volunteer for editing:', error);
@@ -888,7 +888,7 @@ app.get("/returnHome/", (req,res) =>{
 
 // get route to add volunteer
 app.get("/addVolunteer/", (req,res) =>{
-    res.render("addVolunteer");
+    res.render("addVolunteer", {security: security});
 });
 
 // post route to add volunteer
@@ -949,7 +949,7 @@ app.get("/vestDistribution", (req, res) => {
 });
 
 app.get("/distributeVest", (req, res) => {
-    res.render('distributeVest');
+    res.render('distributeVest', {security});
 });
 
 app.post("/distributeVest", (req, res) => {

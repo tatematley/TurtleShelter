@@ -81,12 +81,13 @@
 </head>
 <body>
     <!-- Navbar -->
-    <%- include('partials/navbar', { page: 'home', security: security }) %>
+    <%- include('partials/navbar', { page: 'userManagement'}) %>
+    <br>
 
     <br>
     <form action="/addUser" method="post">
         <fieldset>
-            <legend><h1>Add User</h1></legend>
+            <h2 style="color: #169282ea"><b>Add User:</b></h2>
             <!-- user id does not display -->
             <input type="hidden" id="user_id" name="user_id">
 
