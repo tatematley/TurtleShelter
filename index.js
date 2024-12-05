@@ -699,7 +699,7 @@ app.post('/deleteUser/:id', (req, res) => {
     });
 });
 app.get('/addUser', (req, res) => {
-    res.render('addUser');
+    res.render('addUser', {security});
 });
 
 app.post('/addUser', (req, res) => {

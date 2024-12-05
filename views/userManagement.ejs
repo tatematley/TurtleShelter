@@ -167,7 +167,7 @@
                     <td><%= users[iCount].user_email %></td>
                     <td><%= users[iCount].user_phone %></td>
                     <td><%= users[iCount].user_position %></td>
-                    <td><%= users[iCount].user_county %>, <% users[iCount].user_state %></td>
+                    <td><%= users[iCount].user_county %>, <%= users[iCount].user_state %></td>
                     <td>
                         <form action="/editUser/<%= users[iCount].user_id %>" method="get">
                             <button type="submit">Edit</button>
