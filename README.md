@@ -14,8 +14,8 @@ Volunteer
 
 Admin Login
  - Click Login on nav bar:
-    - Username: MGREEN
-    - Password:SECUREPASSWORD1
+    - Username: ADMIN
+    - Password: PASSWORD123
 
 Manage Events
   - Requested Events
@@ -29,3 +29,9 @@ Manage Volunteers
 
 Manage Users
   - able to view/edit/add/delete admin users
+
+Vest Distribution
+  - Record and view info about the people who have received vests
+
+Dashboard
+  - Contains a tableau dashboard with data pulled from our database
