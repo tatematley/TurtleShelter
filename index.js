@@ -922,4 +922,107 @@ app.post("/deleteRecipient/:id", (req, res) => {
 });
 
 
+// Route for handling search queries
+app.get('/searchVolunteers', async (req, res) => {
+    const query = req.query.query.toUpperCase(); // Get the search query from the URL
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = 15; // Show 15 volunteers per page
+    const offset = (page - 1) * limit; // Calculate offset for the database query
+    // Fetch the total number of volunteer for pagination
+    const totalVolunteer = await knex("volunteers").count('* as count').first();
+    const totalPages = Math.ceil(totalVolunteer.count / limit);
+
+    if (!query) {
+        return res.render('search', { volunteer: [] }); // Render with no results if no query
+    }
+
+    try {
+        const volunteer = await knex('volunteers')
+            .select('*')
+            .where('volunteer_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
+            .orWhere('volunteer_last_name', 'like', `%${query}%`)
+            .limit(limit)
+            .offset(offset);
+        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).send('An error occurred while searching. Please try again later.');
+    }
+});
+
+// Route for handling search queries
+app.get('/searchVests', async (req, res) => {
+    const query = req.query.query.toUpperCase(); // Get the search query from the URL
+    // const page = parseInt(req.query.page) || 1; // Default to page 1
+    // const limit = 15; // Show 15 volunteers per page
+    // const offset = (page - 1) * limit; // Calculate offset for the database query
+    // // Fetch the total number of volunteer for pagination
+    // const totalVolunteer = await knex("volunteers").count('* as count').first();
+    // const totalPages = Math.ceil(totalVolunteer.count / limit);
+
+    if (!query) {
+        return res.render('search', { vests: [] }); // Render with no results if no query
+    }
+
+    try {
+        const vests = await knex('vest_distribution')
+            .select('*')
+            .where('vest_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
+            .orWhere('vest_last_name', 'like', `%${query}%`);
+            // .limit(limit)
+            // .offset(offset);
+        res.render('vestDistribution', { vest: vests, security });
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).send('An error occurred while searching. Please try again later.');
+    }
+});
+
+// Route for handling search queries
+app.get('/searchUsers', async (req, res) => {
+    const query = req.query.query.toUpperCase(); // Get the search query from the URL
+
+    if (!query) {
+        return res.render('search', { users: [] }); // Render with no results if no query
+    }
+
+    try {
+        const users = await knex('users')
+            .select('*')
+            .where('user_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
+            .orWhere('user_last_name', 'like', `%${query}%`)
+        res.render('userManagement', { users: users, security });
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).send('An error occurred while searching. Please try again later.');
+    }
+});
+
+// Route for handling search queries
+app.get('/searchEvents', async (req, res) => {
+    const query = req.query.query.toUpperCase(); // Get the search query from the URL
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = 15; // Show 15 volunteers per page
+    const offset = (page - 1) * limit; // Calculate offset for the database query
+    // Fetch the total number of volunteer for pagination
+    const totalVolunteer = await knex("users").count('* as count').first();
+    const totalPages = Math.ceil(totalVolunteer.count / limit);
+
+    if (!query) {
+        return res.render('search', { users: [] }); // Render with no results if no query
+    }
+
+    try {
+        const users = await knex('volunteers')
+            .select('*')
+            .where('user_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
+            .limit(limit)
+            .offset(offset);
+        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security });
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).send('An error occurred while searching. Please try again later.');
+    }
+});
+
 app.listen(port, () => console.log("Express is listening"));
