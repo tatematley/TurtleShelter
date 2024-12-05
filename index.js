@@ -667,7 +667,7 @@ app.post('/editRequestedEvent/:id', (req, res) => {
   });
 
 // Route to login the user based off of the login_info db
-app.post('/login', async (req, res) => {
+/*app.post('/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -687,7 +687,7 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         res.status(500).send('Database query failed: ' + error.message);
     }
-});
+});*/
 
 // get route for user management 
 app.get('/userManagement', (req, res) => {
