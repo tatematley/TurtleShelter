@@ -666,7 +666,7 @@ app.post('/editRequestedEvent/:id', (req, res) => {
   });
 
 // Route to login the user based off of the login_info db
-app.post('/login', async (req, res) => {
+/*app.post('/login', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -686,7 +686,7 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         res.status(500).send('Database query failed: ' + error.message);
     }
-});
+});*/
 
 // get route for user management 
 app.get('/userManagement', (req, res) => {
@@ -776,6 +776,7 @@ app.get('/addUser', (req, res) => {
 
 // post route to add user
 app.post('/addUser', async (req, res) => {
+    const trx = await knex.transaction(); // Start a transaction
     try {
         // Validate and format input
         const userState = (req.body.user_state || '').toUpperCase();
@@ -792,32 +793,37 @@ app.post('/addUser', async (req, res) => {
             user_county: req.body.user_county.toUpperCase() || '',  
             user_state: req.body.user_state // Ensure it's a valid abbreviation
         };
-        // Insert the user data and retrieve the user_id
-        const [insertedUser] = await knex('users').insert(userData).returning('user_id');
+        
+        // Insert the user data and retrieve the user_id inside the transaction
+        const [insertedUser] = await trx('users').insert(userData).returning('user_id');
         const userId = insertedUser.user_id; // Extract the user_id integer
 
         if (!userId) {
             throw new Error('User ID not generated');
         }
-        // Insert login information
+
+        // Insert login information inside the same transaction
         const loginData = {
             user_id: userId, // Use the extracted integer user_id
             username: req.body.username || '',
             password: req.body.password || '' // Directly use the plain-text password
         };
-        await knex('login_info').insert(loginData);
+
+        await trx('login_info').insert(loginData);
+
+        // Commit the transaction if everything goes well
+        await trx.commit();
+
         // Redirect after successful operation
         res.redirect('/userManagement');
     } catch (error) {
+        // Rollback the transaction if an error occurs
+        await trx.rollback();
         console.error('Error adding user:', error);
         res.status(400).send('Invalid input or internal server error');
     }
 });
 
-// get route for the dashboard page
-app.get('/dashboard', (req, res) =>{
-    res.render('dashboard', {security});
-});
 
 // get method for logging out
 app.get('/logout', (req, res) => {
