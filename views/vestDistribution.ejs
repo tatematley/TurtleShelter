@@ -89,12 +89,60 @@
             color: white;
             border-color: #0c7466ea;
         }
+
+        .search-container {
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            padding: 7px;
+            box-shadow: 0 4px 6px rgba(0, 123, 181, 0.2);
+            position: absolute;
+            top: 70px;
+            right: 30px;
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .search-container button {
+            background-color: #169282ea;
+            color: white;
+            border-radius: 4px !important;
+            padding: 8px 12px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .search-container button:hover {
+            background-color: #0c7466ea;
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
 <body>
      <!-- Navbar -->
      <%- include('partials/navbar', { page: 'vestDistribution', security: security }) %>
     <br>
+
+    <!--Search Vests-->
+    <div class="search-container">
+        <form action="/searchVests" method="GET">
+            <input type="text" name="query" placeholder="Search Recipients...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
      <label><b>Vest Inventory and Distribution</b></label>
      <br><br>
      <table>
