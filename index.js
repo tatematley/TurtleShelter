@@ -17,7 +17,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "SuperUser",
+        password: process.env.RDS_PASSWORD || "mom#8181",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -523,10 +523,8 @@ app.get('/editRequestedEvent/:id', (req, res) => { // /:id means parameter that 
       .where('event_id', id) // where id is equal to the parameter
       .first() //returns the first element, aka no longer an array, a single object
       .then(eventName => { // send to pokemon, the following knex is embedded 
-        
             // Render the edit form and pass both pokemon and poke_types
             res.render('editRequestedEvent', { eventName, security }); // returns the first record pokemon, and all poke_types
-          
       })
       .catch(error => {
         console.error('Error fetching event for editing:', error);
@@ -621,6 +619,7 @@ app.post('/editPlannedEvent/:id', (req, res) => {
 // post route to edit requested events
 app.post('/editRequestedEvent/:id', (req, res) => {
     const id = req.params.id;
+    let onClick = "clicked";
     // Access each value directly from req.body
     knex('events')
       .where('event_id', id)
@@ -649,7 +648,7 @@ app.post('/editRequestedEvent/:id', (req, res) => {
         event_source : req.body.event_source.toUpperCase() || 0
       })
       .then(() => {
-        res.redirect('/eventManagement'); // Redirect to the list of Pokémon after saving
+        res.redirect('/eventManagement', {onClick}); // Redirect to the event management
       })
       .catch(error => {
         console.error('Error updating event:', error);
@@ -909,7 +908,7 @@ app.get("/addVolunteer/", (req,res) =>{
 
 // post route to add volunteer
 app.post("/addVolunteer", (req,res) => {
-    knex("volunteer").insert({
+    knex("volunteers").insert({
         volunteer_first_name: req.body.volunteer_first_name.toUpperCase(),
         volunteer_last_name: req.body.volunteer_last_name.toUpperCase(),
         volunteer_age: parseInt(req.body.volunteer_age),
@@ -920,8 +919,6 @@ app.post("/addVolunteer", (req,res) => {
         volunteer_source: req.body.volunteer_source.toUpperCase(),
         volunteer_county: req.body.volunteer_county.toUpperCase(),
         notes: req.body.notes
-        
-
     }).then(myvolunteer => {
         res.redirect("/volunteerManagement");
     });
@@ -929,7 +926,7 @@ app.post("/addVolunteer", (req,res) => {
 
 // post route to add volunteer from the form 
 app.post("/volunteer", (req,res) => {
-    knex("volunteer").insert({
+    knex("volunteers").insert({
         volunteer_first_name: req.body.volunteer_first_name,
         volunteer_last_name: req.body.volunteer_last_name,
         volunteer_age: req.body.volunteer_age,

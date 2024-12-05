@@ -206,11 +206,11 @@
                     </div>
                     <br><br>
                     <div class="input-row">
-                        <label for="num_sewers">How Many in your Group can Sew?</label>
+                        <label for="num_sewers">How Many in The Group Can Sew?</label>
                         <input type="number" id="num_sewers" name="num_sewers"  value="<%= eventName.num_sewers%>" >
                         <br><br></div>
                         <div class="input-row">
-                        <label for="num_host_machines">How Sewing Machines can your Group Provide?</label>
+                        <label for="num_host_machines">How Sewing Machines Can The Group Provide?</label>
                         <input type="number" id="num_host_machines" name="num_host_machines"  value="<%= eventName.num_host_machines%>" >
                         <br><br></div>
                         <div class="input-row">
@@ -228,7 +228,7 @@
                     </div>
 
                     <input type="checkbox" id="jen_story" name="jen_story" value="Y" <%= eventName.share_story ? 'checked' : '' %>>
-                        <label for="jen_story">Did Jen Share Her Story?</label>
+                        <label for="jen_story">Do They Want Jen to Share Her Story?</label>
                         <br><br>
                     <br><br>
                     <select id="event_source" name="event_source">
@@ -245,7 +245,7 @@
                     <br>
                     <textarea id="notes" name="notes" style="height: 60px; width: 350px;" ><%= eventName.notes%></textarea> 
                   <br><br>
-                    <button type="submit" >Submit</button>
+                    <button type="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
