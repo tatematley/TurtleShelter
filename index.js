@@ -4,6 +4,8 @@ let app = express();
 let path = require("path");
 const port = process.env.PORT || 5004;
 let security = false;
+let hiddenSubmit = "";
+let hiddenView = "hidden"
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended: true}));
@@ -14,7 +16,7 @@ const knex = require("knex")({
     connection: {
         host: process.env.RDS_HOSTNAME || "localhost",
         user: process.env.RDS_USERNAME || "postgres",
-        password: process.env.RDS_PASSWORD || "turtles",
+        password: process.env.RDS_PASSWORD || "mom#8181",
         database: process.env.RDS_DB_NAME || "turtle_shelter",
         port: process.env.RDS_PORT || 5432,
         ssl: process.env.DB_SSL ? {rejectUnauthorized: false} : false
@@ -651,8 +653,10 @@ app.post('/login', (req, res) => {
     res.redirect("/volunteerManagement")
   });
 app.get('/userManagement', (req, res) => {
+    let hiddenSubmit = "hidden";
+    let hiddenView = ""
     knex.select().from('users').join('login_info', 'users.user_id', '=', 'login_info.user_id').then(myusers => {
-        res.render('userManagement', {users: myusers, security})
+        res.render('userManagement', {users: myusers, security, hiddenSubmit, hiddenView})
     });
 });
 // get method for logging out
@@ -1049,7 +1053,8 @@ app.get('/searchVests', async (req, res) => {
 // Route for handling search queries
 app.get('/searchUsers', async (req, res) => {
     const query = req.query.query.toUpperCase(); // Get the search query from the URL
-
+    let hiddenSubmit = "";
+    let hiddenView = "hidden";
     if (!query) {
         return res.render('search', { users: [] }); // Render with no results if no query
     }
@@ -1059,7 +1064,7 @@ app.get('/searchUsers', async (req, res) => {
             .select('*')
             .where('user_first_name', 'like', `%${query}%`) // Add more conditions for other columns as needed
             .orWhere('user_last_name', 'like', `%${query}%`)
-        res.render('userManagement', { users: users, security });
+        res.render('userManagement', { users: users, security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error('Error performing search:', error);
         res.status(500).send('An error occurred while searching. Please try again later.');
