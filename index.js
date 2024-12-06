@@ -994,6 +994,7 @@ app.post("/volunteer", (req,res) => {
         num_monthly_hours: parseInt(req.body.num_monthly_hours),
         volunteer_source: req.body.volunteer_source.toUpperCase(),
         volunteer_county: req.body.volunteer_county.toUpperCase(),
+        volunteer_state: req.body.volunteer_state,
         notes: req.body.notes
         
 
