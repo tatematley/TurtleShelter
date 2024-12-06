@@ -131,7 +131,7 @@ const host_city = req.body.host_city.toUpperCase() || '';
 const date_created = new Date().toISOString().split('T')[0];
 const num_sewers = parseInt(req.body.num_sewers);
 const num_host_machines = parseInt(req.body.num_host_machines);
-const num_tsp_machine = parseInt(req.body.num_tsp_machine);
+const num_tsp_machine = 0;
 const notes = req.body.notes.toUpperCase() || '';
 const event_source = req.body.event_source.toUpperCase() || '';
 // Insert the new Pokémon into the database
@@ -634,7 +634,7 @@ app.post('/editPlannedEvent/:id', (req, res) => {
 // post route to edit requested events
 app.post('/editRequestedEvent/:id', (req, res) => {
     const id = req.params.id;
-    let onClick = "clicked";
+    
     // Access each value directly from req.body
     knex('events')
       .where('event_id', id)
@@ -663,7 +663,7 @@ app.post('/editRequestedEvent/:id', (req, res) => {
         event_source : req.body.event_source.toUpperCase() || 0
       })
       .then(() => {
-        res.redirect('/eventManagement', {onClick}); // Redirect to the event management
+        res.redirect('/eventManagement', ); // Redirect to the event management
       })
       .catch(error => {
         console.error('Error updating event:', error);
@@ -883,12 +883,7 @@ app.get('/logout', (req, res) => {
 // get route to view all volunteers
 app.get('/volunteerManagement', async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1; // Default to page 1
-        const limit = 15; // Show 15 volunteers per page
-        const offset = (page - 1) * limit; // Calculate offset for the database query
-        // Fetch the total number of volunteer for pagination
-        const totalVolunteer = await knex("volunteers").count('* as count').first();
-        const totalPages = Math.ceil(totalVolunteer.count / limit);
+       
         let hiddenSubmit = "hidden";
         let hiddenView = ""
         // Fetch the volunteers for the current page
@@ -908,10 +903,9 @@ app.get('/volunteerManagement', async (req, res) => {
                 "volunteer_state",
                 "notes"
             )
-            .limit(limit)
-            .offset(offset);
+          
         // Render the page
-        res.render('volunteerManagement', { volunteer, currentPage: page, totalPages, page: 'Volunteer', security, hiddenView, hiddenSubmit });
+        res.render('volunteerManagement', { volunteer, page: 'Volunteer', security, hiddenView, hiddenSubmit });
     } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).send("Error fetching data.");
@@ -991,15 +985,16 @@ app.post("/addVolunteer", (req,res) => {
 // post route to add volunteer from the form 
 app.post("/volunteer", (req,res) => {
     knex("volunteers").insert({
-        volunteer_first_name: req.body.volunteer_first_name,
-        volunteer_last_name: req.body.volunteer_last_name,
-        volunteer_age: req.body.volunteer_age,
+        volunteer_first_name: req.body.volunteer_first_name.toUpperCase(),
+        volunteer_last_name: req.body.volunteer_last_name.toUpperCase(),
+        volunteer_age: parseInt(req.body.volunteer_age),
         volunteer_phone: req.body.volunteer_phone,
         volunteer_email: req.body.volunteer_email,
-        zip: req.body.zip,
         sewing_level: req.body.sewing_level,
-        num_monthly_hours: req.body.num_monthly_hours,
-        num_volunteers: req.body.num_volunteers
+        num_monthly_hours: parseInt(req.body.num_monthly_hours),
+        volunteer_source: req.body.volunteer_source.toUpperCase(),
+        volunteer_county: req.body.volunteer_county.toUpperCase(),
+        notes: req.body.notes
         
 
     }).then(myvolunteer => {
