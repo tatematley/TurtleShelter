@@ -15,12 +15,12 @@
 
         form {
             max-width: 600px;
-            margin: 40px auto;
-            margin-top: 80px;
+            margin: 30px auto;
             padding: 20px;
-            background: rgba(211, 211, 211, 0.199); /* Slight transparency */
+            background:rgba(255, 255, 255); /* Slight transparency */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            gap: 20px;
         }
 
         fieldset {
@@ -31,7 +31,7 @@
 
         h1, h2 {
             color: #169282ea;
-            text-align: center;
+            text-align: left;
             font-size: 1.8rem;
             margin-bottom: 20px;
         }
@@ -63,20 +63,18 @@
             resize: none;
         }
 
-        button {
+        button[type="submit"] {
             background-color: #169282ea;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out, transform 0.2s;
+            transition: background-color 0.3s ease-in-out;
         }
-
-        button:hover {
+        button[type="submit"]:hover {
             background-color: #0c7466ea;
-            transform: scale(1.05);
         }
 
         button:active {
@@ -99,6 +97,7 @@
     <form action="/addVolunteer" method="POST">
         <fieldset>
             <h2 style="color: #169282ea; font-weight: bolder;">Add Volunteer:</h2>
+            <br>
 
             <!-- First Name -->
             <label for="volunteer_first_name">First Name:</label>
@@ -139,6 +138,7 @@
                 <option value="word_of_mouth">Word of Mouth</option>
                 <option value="other">Other</option>
             </select>
+            <br><br>
 
             <!-- Sewing Level -->
             <label for="sewing_level">Sewing Level:</label>
@@ -147,6 +147,7 @@
                 <option value="INTERMEDIATE">Intermediate</option>
                 <option value="EXPERIENCED">Experienced</option>
             </select>
+            <br><br>
 
             <!-- Monthly Number of Hours -->
             <label for="num_monthly_hours">Monthly Number of Hours:</label>
@@ -155,6 +156,7 @@
             <!-- Notes -->
             <label for="notes">Notes:</label>
             <textarea name="notes" id="notes"></textarea>
+            <br><br>
 
             <!-- Submit Button -->
             <button type="submit">Save</button>
