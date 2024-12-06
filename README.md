@@ -1,6 +1,10 @@
+# Public View
 Access the website at the following URL:
-  https://turtleproject-group2-6.is404.net/
-
+  (https://tsp26.is404.net/)
+Landing Page
+  - contains some info about organization and photos
+Jen 
+  - contains Jen's story
 Events
   - Allows website guests to request an event
 
@@ -20,9 +24,12 @@ Admin Login
 Manage Events
   - Requested Events
     - Confirm event button sends event to Upcoming Events
+    - view/edit/delte
   - Upcoming Events
     - Event occured button sends event to Completed Events
+    - view/edit/delete
   - Completed Events
+    -view/edit/delete
 
 Manage Volunteers
   - Able to view/edit/add/delete volunteers
