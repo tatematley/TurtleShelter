@@ -48,6 +48,7 @@
             width: 100%;
             margin-right: 2px;
         }
+
         fieldset {
             padding: 20px;
             border-radius: 8px;
@@ -108,17 +109,13 @@
                 <div class="form-section">
                     <h2 style="color: #169282ea"><b>Add Requested Event:</b></h2>
                     <br>
-                    <div class="input-row">
-                        <label for="event_name" >Group Name:</label>
-                        <input type="text" id="event_name" name="event_name"  required>
-                        <br><br>
 
-                        
-                    </div>
+                    <label for="event_name" >Group Name:</label>
+                    <input type="text" id="event_name" name="event_name" style="width:80%;" required>
+                    <br>
 
                     <div class="input-row">
-
-                        <label for="host_first_name"  >First Name:</label>
+                        <label for="host_first_name">First Name:</label>
                         <input type="text" id="host_first_name" name="host_first_name"  required>
                         <br><br>
 
@@ -126,27 +123,26 @@
                         <input type="text" id="host_last_name" name="host_last_name"  required>
                         <br><br>
                     </div>
-                    <br><br>
-                    <div class="input-row">
-                        <label for="host_address">Event Address <i>(optional)</i></label>
-                        <input type="text" id="host_address" name="host_address"  >
-                        <br><br>
-                        
-                    </div>
 
                     <div class="input-row">
-                        <label for="host_city">Event city <i>(optional)</i></label>
+                        <label for="host_address">Event Address <i>(optional):</i></label>
+                        <input  type="text" id="host_address" name="host_address"  >
+                        <br><br>
+                    </div>
+                    
+                    <div class="input-row">
+                        <label for="host_city">Event city <i>(optional):</i></label>
                         <input type="text" id="host_city" name="host_city"  >
                         <br><br>
                     </div>
 
                     <div class="input-row">
-                    <label for="host_county">Event County <i>(required)</i></label>
-                    <input type="text" id="host_county" name="host_county"  >
-                    <br><br>
+                        <label for="host_county">Event County <i>(required):</i></label>
+                        <input type="text" id="host_county" name="host_county"  >
 
-                    <label for="state">State <i>(required)</i></label>
-                        <select id="state" name="host_state" required>
+
+                    <label for="state">State <i>(required):</i></label>
+                        <select style="width:60%;" id="state" name="host_state"  required>
                             <% const states = [
                                 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
                                 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -160,10 +156,9 @@
                         </select>
                         <br><br>
                     </div>
-                    <br><br>
                     <div class="input-row">
                         <label for="host_phone">Phone Number:</label>
-                        <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                        <input type="tel" id="host_phone" name="host_phone" placeholder="1234567890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
                         <br><br>
 
                         <label for="host_email">Email Address:</label>
@@ -194,17 +189,16 @@
                         <input type="time" id="end_time" name="end_time"  required>
                         <br><br>
                     </div>
-                    <br><br>
+
                     <div class="input-row">
-                        <label for="num_sewers">How Many in The Group Can Sew?</label>
+                        <label style="width: 60%;" for="num_sewers">How Many in The Group Can Sew?</label>
                         <input type="number" id="num_sewers" name="num_sewers"  min="0" value="0" >
-                        <br><br></div>
-                        <div class="input-row">
-                        <label for="num_host_machines">How Sewing Machines Can The Group Provide?</label>
+                        <br><br>
+                    </div>
+
+                    <div class="input-row">
+                        <label for="num_host_machines">How Many Sewing Machines Can the Group Provide?</label>
                         <input type="number" id="num_host_machines" name="num_host_machines"  min="0" value="0">
-                        <br><br></div>
-                        <div class="input-row">
-                       
                         <br><br>
                     </div>
 
@@ -212,17 +206,10 @@
                         <label for="volunteer_num">Estimated Attendance:</label>
                         <input type="number" id="volunteer_num" name="volunteer_num"  min="1" value="1">
                         <br><br>
-
                     </div>
-
-                        
-                    </div>
-                    <input type="checkbox" id="jen_story" name="jen_story" value="Y">
-                        <label for="jen_story">Do You Want Jen to Share Her Story?</label>
-                        <br><br>
-                    <br><br>
+ 
                     <label for="event_source">How Did They Hear About us?</label>
-                    <select id="event_source" name="event_source">
+                    <select id="event_source" name="event_source" style="font-size: 12px; width: 60%;">
                         <option value="family/friend" >Family/Friend</option>
                         <option value="church_event">Church Event</option>
                         <option value="social_media">Social Media</option>
@@ -232,12 +219,16 @@
                         <option value="other" >Other</option>
                     </select>
                     <br><br>
+                      
+                    <input style="margin-right: 10px;" type="checkbox" id="jen_story" name="jen_story" value="Y">
+                    <label for="jen_story">Do You Want Jen to Share Her Story?</label>
+                    <br><br>
+
                     <label for="notes">Additional Notes:</label>
                     <br>
-                    <textarea id="notes" name="notes" style="height: 60px; width: 350px;" ></textarea> 
-                  <br><br>
+                    <textarea id="notes" name="notes" style="height: 60px; width: 100%;" ></textarea> 
 
-                    
+                    <br><br>
                     <button type="submit">Submit</button>
                 </div>
             </fieldset>
