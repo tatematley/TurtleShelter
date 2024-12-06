@@ -1,5 +1,5 @@
 Access the website at the following URL:
-  [https://turtleproject-group2-6.is404.net/](https://tsp26.is404.net/)
+  https://turtleproject-group2-6.is404.net/
 
 Events
   - Allows website guests to request an event
