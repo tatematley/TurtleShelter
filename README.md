@@ -1,3 +1,5 @@
+*note: one of our tableau public graph links for our presentation slides did not show up in the pdf that we shared in the zip file, but it is accurate in presentation slides in the box file. 
+
 # Public View
 Access the website at the following URL:
   (https://tsp26.is404.net/)
