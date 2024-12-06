@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,6 +107,7 @@
                 <div class="form-section">
                     <h2 style="color: #169282ea"><b>Add Completed Event:</b></h2>
                     <br>
+
                     <div class="input-row">
                         <label for="event_name" >Group Name:</label>
                         <input type="text" id="event_name" name="event_name"  required>
@@ -120,8 +120,6 @@
                             <% }) %>
                         </select>
                         <br><br>
-
-                        
                     </div>
 
                     <div class="input-row">
@@ -134,26 +132,26 @@
                         <input type="text" id="host_last_name" name="host_last_name"  required>
                         <br><br>
                     </div>
-                    <br><br>
+
                     <div class="input-row">
-                        <label for="host_address">Event Address <i>(optional)</i></label>
+                        <label for="host_address">Event Address <i>(optional):</i></label>
                         <input type="text" id="host_address" name="host_address"  >
                         <br><br>
                         
                     </div>
 
                     <div class="input-row">
-                        <label for="host_city">Event city <i>(optional)</i></label>
+                        <label for="host_city">Event city <i>(optional):</i></label>
                         <input type="text" id="host_city" name="host_city"  >
                         <br><br>
                     </div>
 
                     <div class="input-row">
-                    <label for="host_county">Event County <i>(required)</i></label>
-                    <input type="text" id="host_county" name="host_county"  >
-                    <br><br>
+                        <label for="host_county">Event County <i>(required):</i></label>
+                        <input type="text" id="host_county" name="host_county"  >
+                        <br><br>
 
-                    <label for="state">State <i>(required)</i></label>
+                    <label for="state">State <i>(required):</i></label>
                         <select id="state" name="host_state" required>
                             <% const states = [
                                 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -168,10 +166,9 @@
                         </select>
                         <br><br>
                     </div>
-                    <br><br>
                     <div class="input-row">
                         <label for="host_phone">Phone Number:</label>
-                        <input type="tel" id="host_phone" name="host_phone" placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
+                        <input type="tel" id="host_phone" name="host_phone" placeholder="1234567890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
                         <br><br>
 
                         <label for="host_email">Email Address:</label>
@@ -201,17 +198,20 @@
                         <label for="end_time">End Time:</label>
                         <input type="time" id="end_time" name="end_time"  required>
                         <br><br>
+    
                     </div>
-                    <br><br>
+
                     <div class="input-row">
                         <label for="num_sewers">How Many in the Group could Sew?</label>
                         <input type="number" id="num_sewers" name="num_sewers"  min="0" value="0" >
-                        <br><br></div>
-                        <div class="input-row">
+                        <br><br>
+                    </div>
+                    <div class="input-row">
                         <label for="num_host_machines">How Sewing Machines Did the Group Provide?</label>
                         <input type="number" id="num_host_machines" name="num_host_machines"  min="0" value="0">
-                        <br><br></div>
-                        <div class="input-row">
+                        <br><br>
+                    </div>
+                    <div class="input-row">
                         <label for="num_tsp_machine">How Sewing Machines Turtle Shelter Provided?</label>
                         <input type="number" id="num_tsp_machine" name="num_tsp_machines" min="0" value="0" >
                         <br><br>
@@ -231,13 +231,8 @@
                         <label for="duration_hours">Event Duration in Hours:</label>
                         <input type="number" id="duration_hours" name="duration_hours"  value="0" min="0">
                         <br><br>
-
-                        
                     </div>
-                    <input type="checkbox" id="jen_story" name="jen_story" value="Y">
-                        <label for="jen_story">Did Jen Share Her Story?</label>
-                        <br><br>
-                    <br><br>
+                    
                     <label for="event_source">How They Heard About Us?</label>
                     <select id="event_source" name="event_source">
                         <option value="family/friend" >Family/Friend</option>
@@ -249,9 +244,14 @@
                         <option value="other" >Other</option>
                     </select>
                     <br><br>
+
+                    <input type="checkbox" id="jen_story" name="jen_story" value="Y">
+                    <label for="jen_story">Did Jen Share Her Story?</label>
+                    <br><br>
+                    
                     <label for="notes">Additional Notes:</label>
                     <br>
-                    <textarea id="notes" name="notes" style="height: 60px; width: 350px;" ></textarea> 
+                    <textarea id="notes" name="notes" style="height: 60px; width: 100%;" ></textarea> 
                   
 
                     <br><br>

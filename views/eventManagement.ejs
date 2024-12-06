@@ -247,7 +247,7 @@
           
         <br>
         <form action="/addRequestedEvent" method="GET" style="margin-left: 30px;">
-          <button class="info" type="submit">Add</button>
+          <button class="info" type="submit">Add Event</button>
         </form>
   </div>
 
@@ -282,7 +282,7 @@
               <td><%= row.host_last_name%></td> 
               <td><%= row.host_phone %></td> <!--embeded if statement. if true ?(then) 'yes' :(else) 'no'-->
               <td><%= row.host_email %></td> 
-              <td><%= row.event_lead %></td>
+              <td><%= row.user_first_name %> <%= row.user_last_name %></td>
               <td>
                 <form action="/viewPlannedEvent/<%= row.event_id %>" method="GET" style="display:inline;"> <!--value after the slash is a parameter-->
                   <button class="info" type="submit">View</button>
@@ -315,7 +315,7 @@
     </table>
     <br>
     <form action="/addPlannedEvent" method="GET" style="margin-left: 30px;">
-        <button class="info" type="submit">Add</button>
+        <button class="info" type="submit">Add Event</button>
     </form>
     
     </div>
@@ -337,7 +337,6 @@
         <th>Envelopes</th>
         <th>Vests</th>
         <th>Completed Vests</th>
-        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -386,7 +385,7 @@
 
   <br>
   <form action="/addCompletedEvent" method="GET" style="margin-left: 30px;">
-    <button class="info" type="submit">Add</button>
+    <button class="info" type="submit">Add Event</button>
   </form>
 
 
