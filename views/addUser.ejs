@@ -8,36 +8,27 @@
         /* Custom Form Styling */
         body {
             font-family: 'Arial', sans-serif;
-        }
-        .banner {
-            background: linear-gradient( rgba(92, 88, 88, 0.7), rgba(92, 88, 88, 0.7)), 
-                        url('/kid.jpg') no-repeat center center;
-            background-size: cover;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #ffffff;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-size: 3rem;
-            padding: 50px 20px; /* Add some space around the text */
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
 
         form {
             max-width: 600px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 20px;
-            background: rgba(211, 211, 211, 0.199); /* Slight transparency */
+            background:rgba(255, 255, 255); /* Slight transparency */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            gap: 20px;
         }
+
         fieldset {
             border: 2px solid #ccc;
             padding: 20px;
             border-radius: 8px;
         }
+
         input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="date"], input[type="time"], select {
             width: 100%;
             padding: 10px;
@@ -46,14 +37,21 @@
             border-radius: 4px;
             font-size: 1rem;
         }
+
         input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus {
             border-color: #169282ea;
             outline: none;
         }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
         button[type="submit"] {
             background-color: #169282ea;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
@@ -70,7 +68,17 @@
             font-size: 1rem;
             font-weight: 600;
             color: #555;
+            display: block;
+            margin-bottom: 8px;
         }
+
+        h1, h2 {
+            color: #169282ea;
+            text-align: left;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 768px) {
             form {
                 margin: 20px;
@@ -82,34 +90,34 @@
 <body>
     <!-- Navbar -->
     <%- include('partials/navbar', { page: 'userManagement'}) %>
-    <br>
 
-    <br>
     <form action="/addUser" method="post">
         <fieldset>
             <h2 style="color: #169282ea"><b>Add User:</b></h2>
+            <br>
+            
             <!-- user id does not display -->
             <input type="hidden" id="user_id" name="user_id">
 
             <!-- first name-->
             <label for="user_first_name">First Name: </label>
             <input type="text" id="user_first_name" name="user_first_name">
-            <br><br>
+           
 
             <!-- last name-->
             <label for="user_last_name">Last Name: </label>
             <input type="text" id="user_last_name" name="user_last_name">
-            <br><br>
+     
 
             <!-- email -->
             <label for="user_email">Email: </label>
             <input type="text" id="user_email" name="user_email">
-            <br><br>
+     
 
             <!-- phone -->
             <label for="user_phone">Phone Number: </label>
             <input type="text" id="user_phone" name="user_phone">
-            <br><br>
+        
 
             <!-- user position -->
             <label for="user_position">Position: </label>
@@ -123,15 +131,15 @@
             <!-- start year-->
             <label for="user_start_year">Start Year: </label>
             <input type="date" id="user_start_year" name="user_start_year">
-            <br><br>
+     
 
             <!-- county -->
             <label for="user_county">County: </label>
             <input type="text" id="user_county" name="user_county">
-            <br><br>
+       
 
             <!-- state -->
-            <label for="state">State <i>(required)</i></label>
+            <label for="state">State <i>(required):</i></label>
                         <select id="state" name="user_state" required>
                             <% const states = [
                                 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -144,18 +152,20 @@
                                 <option value="<%= state %>" ><%= state %></option>
                             <% }); %>
                         </select>
+                        <br><br>
 
             <!-- username -->
             <label for="username">Username: </label>
             <input type="text" id="username" name="username">
-            <br><br>
+
 
             <!-- password -->
             <label for="password">Password: </label>
             <input type="text" id="password" name="password">
+        
+            <br><br>
+            <button type="submit">Add</button>
         </fieldset>
-        <br>
-        <button type="submit">Add</button>
     </form>
 </body>
 </html>
