@@ -44,7 +44,7 @@
 
         .input-row input[type="checkbox"] {
             width: 40px;
-            height: 40px;
+            height: 60px;
         }
 
         /* Optional: style labels */
@@ -121,6 +121,7 @@
                 <div class="form-section">
                     <h2 style="color: #169282ea"><b>Edit Completed Event:</b></h2>
                     <br>
+
                     <div class="input-row">
                         <label for="event_name" >Group Name:</label>
                         <input type="text" id="event_name" name="event_name" value="<%= eventName.event_name%>" required>
@@ -133,13 +134,11 @@
                             <% }) %>
                         </select>
                         <br><br>
-
-                        
                     </div>
 
                     <div class="input-row">
 
-                        <label for="host_first_name"  >First Name:</label>
+                        <label for="host_first_name">First Name:</label>
                         <input type="text" id="host_first_name" name="host_first_name" value="<%= eventName.host_first_name%>" required>
                         <br><br>
 
@@ -147,26 +146,26 @@
                         <input type="text" id="host_last_name" name="host_last_name"  value="<%= eventName.host_last_name%>" required>
                         <br><br>
                     </div>
-                    <br><br>
+
                     <div class="input-row">
-                        <label for="host_address">Event Address <i>(optional)</i></label>
+                        <label for="host_address">Event Address <i>(optional):</i></label>
                         <input type="text" id="host_address" name="host_address"  value="<%= eventName.host_address%>">
                         <br><br>
                         
                     </div>
 
                     <div class="input-row">
-                        <label for="host_city">Event city <i>(optional)</i></label>
+                        <label for="host_city">Event city <i>(optional):</i></label>
                         <input type="text" id="host_city" name="host_city"  value="<%= eventName.host_city%>">
                         <br><br>
                     </div>
 
                     <div class="input-row">
-                    <label for="host_county">Event County <i>(required)</i></label>
-                    <input type="text" id="host_county" name="host_county"  value="<%= eventName.host_county%>">
-                    <br><br>
+                        <label for="host_county">Event County <i>(required):</i></label>
+                        <input type="text" id="host_county" name="host_county"  value="<%= eventName.host_county%>">
+                        <br><br>
 
-                    <label for="state">State <i>(required)</i></label>
+                    <label for="state">State <i>(required):</i></label>
                         <select id="state" name="host_state" required>
                             <% const states = [
                                 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -181,7 +180,7 @@
                         </select>
                         <br><br>
                     </div>
-                    <br><br>
+
                     <div class="input-row">
                         <label for="host_phone">Phone Number:</label>
                         <input type="tel" id="host_phone" name="host_phone" value="<%= eventName.host_phone%>"placeholder="(123) 456-7890" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"  required>
@@ -215,17 +214,19 @@
                         <input type="time" id="end_time" name="end_time" value="<%= eventName.end_time%>" required>
                         <br><br>
                     </div>
-                    <br><br>
+ 
                     <div class="input-row">
                         <label for="num_sewers">How Many in Your Group Can Sew?</label>
                         <input type="number" id="num_sewers" name="num_sewers"  value="<%= eventName.num_sewers%>" >
-                        <br><br></div>
-                        <div class="input-row">
-                        <label for="num_host_machines">How Sewing Machines Can Your Group Provide?</label>
+                        <br><br>
+                    </div>
+                    <div class="input-row">
+                        <label for="num_host_machines">How Many Sewing Machines Can Your Group Provide?</label>
                         <input type="number" id="num_host_machines" name="num_host_machines"  value="<%= eventName.num_host_machines%>" >
-                        <br><br></div>
-                        <div class="input-row">
-                        <label for="num_tsp_machine">How Sewing Machines Should Turtle Shelter Provide?</label>
+                        <br><br>
+                    </div>
+                    <div class="input-row">
+                        <label for="num_tsp_machine">How Many Sewing Machines Should Turtle Shelter Provide?</label>
                         <input type="number" id="num_tsp_machine" name="num_tsp_machines"  value="<%= eventName.num_tsp_machine%>">
                         <br><br>
                     </div>
@@ -244,13 +245,9 @@
                         <label for="duration_hours">Event Duration in Hours:</label>
                         <input type="number" id="duration_hours" name="duration_hours" value="<%= eventName.duration_hours%>"min="0">
                         <br><br>
-
-                        
                     </div>
-                    <input type="checkbox" id="jen_story" name="jen_story" value="Y" <%= eventName.share_story ? 'checked' : '' %>>
-                        <label for="jen_story">Did Jen Share Her Story?</label>
-                        <br><br>
-                    <br><br>
+
+                    <label for="event_source">How They Heard About Us?</label>
                     <select id="event_source" name="event_source">
                         <option value="family/friend" <%= eventName.event_source === 'family/friend' ? 'selected' : ''%>>Family/Friend</option>
                         <option value="church_event" <%= eventName.event_source === 'church_event' ? 'selected' : ''%>>Church Event</option>
@@ -261,9 +258,14 @@
                         <option value="other" <%= eventName.event_source === 'other' ? 'selected' : ''%>>Other</option>
                     </select>
                     <br><br>
+
+                    <input type="checkbox" id="jen_story" name="jen_story" value="Y" <%= eventName.share_story ? 'checked' : '' %>>
+                    <label for="jen_story">Did Jen Share Her Story?</label>
+                    <br><br>
+
                     <label for="notes">Additional Notes:</label>
                     <br>
-                    <textarea id="notes" name="notes" style="height: 60px; width: 350px;" ><%= eventName.notes%></textarea> 
+                    <textarea id="notes" name="notes" style="height: 60px; width: 100%;" ><%= eventName.notes%></textarea> 
                   
 
                     <br><br>
