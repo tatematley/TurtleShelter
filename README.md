@@ -1,6 +1,7 @@
 # Public View
 Access the website at the following URL:
   (https://tsp26.is404.net/)
+
 Landing Page
   - contains some info about organization and photos
 Jen 
